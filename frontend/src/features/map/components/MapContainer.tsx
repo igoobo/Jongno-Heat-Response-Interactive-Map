@@ -6,7 +6,7 @@ import { useMapLayer } from '../../../context/MapLayerContext';
 import LoadingOverlay from '../../../components/LoadingOverlay';
 import { useKakaoMap } from '../hooks/useKakaoMap';
 import { Layers } from './Layers';
-import { TemperatureLegend } from '././TemperatureLegend';
+import { TemperatureLegend } from './TemperatureLegend';
 import { TemperatureSlider } from './TemperatureSlider';
 import  ZoomControls from './MapControls/ZoomControls';
 import { MobileTemperatureLegend } from './MobileTemperatureLegend';
@@ -87,3 +87,5 @@ const MapContainer: React.FC = () => {
 };
 
 export default MapContainer;
+
+

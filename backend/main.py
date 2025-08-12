@@ -213,3 +213,6 @@ app.mount("/", StaticFiles(directory="../frontend/dist", html=True), name="stati
 @app.get("/{full_path:path}")
 async def serve_frontend(full_path: str):
     return FileResponse("../frontend/dist/index.html")
+
+
+

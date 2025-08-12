@@ -63,7 +63,7 @@ export const usePolygons = (map: any, layerStates: any, setTempsByPolygon: any, 
             strokeColor: '#004c80',
             strokeOpacity: 0.8,
             fillColor: originalFillColor,
-            fillOpacity: 0.4,
+            fillOpacity: 0.3,
           });
           polygonColorMapRef.current.set(polygon, originalFillColor);
 
