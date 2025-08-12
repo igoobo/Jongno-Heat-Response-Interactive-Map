@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useMapStore } from '../stores/useMapStore';
 
 declare global {
   interface Window {
@@ -51,6 +52,9 @@ export function useKakaoMap({ onMapLoad, onMapIdle }: UseKakaoMapProps) {
 
         const map = new window.kakao.maps.Map(container, options);
         mapRef.current = map;
+        
+        console.log("✅ map initialized", map); // 👈 확인
+        useMapStore.getState().setMap(map); // ✅ 전역으로 저장
 
         if (onMapLoad) {
           onMapLoad(map);

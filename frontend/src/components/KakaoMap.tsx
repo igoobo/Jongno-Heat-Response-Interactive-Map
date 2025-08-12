@@ -9,6 +9,7 @@ import { MapPolygonLayer } from './map/MapPolygonLayer';
 import { MapCoolingCenterLayer } from './map/MapCoolingCenterLayer';
 import { TemperatureLegend } from './map/TemperatureLegend';
 import { TemperatureSlider } from './map/TemperatureSlider';
+import  ZoomControls from './ZoomControls'
 
 const KakaoMap: React.FC = () => {
   const { layerStates } = useMapLayer();
@@ -82,6 +83,7 @@ const KakaoMap: React.FC = () => {
           />
         </>
       )}
+      <ZoomControls map={map} defaultLevel={5} />
     </>
   );
 };

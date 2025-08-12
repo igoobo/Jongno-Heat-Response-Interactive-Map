@@ -16,6 +16,7 @@ const defaultState: LayerStates = {
 const MapLayerContext = createContext<{
   layerStates: LayerStates;
   toggleLayer: (layerId: keyof LayerStates) => void;
+  setAllLayers: (value: boolean) => void; // ✅ 추가
 } | null>(null);
 
 export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -65,9 +66,19 @@ export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     });
   };
+  const setAllLayers = (value: boolean) => {
+    setLayerStates(() => {
+      // ✅ 의존성 고려
+      return {
+        tempDist: value,
+        area: value || defaultState.area,
+        coolingCenter: value,
+      };
+    });
+  };
 
   return (
-    <MapLayerContext.Provider value={{ layerStates, toggleLayer }}>
+    <MapLayerContext.Provider value={{ layerStates, toggleLayer, setAllLayers  }}>
       {children}
     </MapLayerContext.Provider>
   );
