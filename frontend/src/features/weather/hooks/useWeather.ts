@@ -59,14 +59,20 @@ export const useWeather = (location: { lat: number; lng: number }) => {
 
         const { date: today_base_date_dynamic, time: today_base_time_dynamic } = getKmaBaseTime();
         const todayKmaData = await fetchKmaTemperatureExtremes(nx, ny, today_base_date_dynamic, today_base_time_dynamic);
+        const todayKmaFirstData = await fetchKmaTemperatureExtremes(nx, ny, today_base_date_dynamic, '0200');
 
         let todayMinTempKma: number | undefined;
         let todayMaxTempKma: number | undefined;
 
+        
         todayKmaData.forEach((item: any) => {
           if (item.category === 'TMX') {
             todayMaxTempKma = parseFloat(item.fcstValue);
-          } else if (item.category === 'TMN') {
+          }
+        });
+
+        todayKmaFirstData.forEach((item: any) => {
+          if (item.category === 'TMN') {
             todayMinTempKma = parseFloat(item.fcstValue);
           }
         });
