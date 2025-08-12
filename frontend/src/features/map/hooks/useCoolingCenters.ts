@@ -14,7 +14,7 @@ export const useCoolingCenters = (map: any, layerStates: any, onLoad: any) => {
 
     const initCoolingCenters = async () => {
       try {
-        const response = await fetch('/seoul_jongno_rest.json');
+        const response = await fetch('/api/cooling-centers');
         if (!response.ok) throw new Error('Failed to load cooling center data.');
 
         const data = await response.json();
