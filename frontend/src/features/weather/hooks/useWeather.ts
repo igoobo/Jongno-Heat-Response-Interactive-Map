@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDebounce } from './useDebounce';
+import { useDebounce } from '../../../hooks/useDebounce';
 import { fetchCurrentWeather } from '../services/openWeatherService';
 
 export const useWeather = (location: { lat: number; lng: number }) => {

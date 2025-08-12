@@ -1,7 +1,7 @@
-import { useMapLocation } from '../context/MapLocationContext';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { useMapLocation } from '../../../context/MapLocationContext';
+import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/card';
 import { CloudSun } from 'lucide-react';
-import { useWeather } from '@/hooks/useWeather';
+import { useWeather } from '../hooks/useWeather';
 import dayjs from 'dayjs';
 
 const WeatherCard = () => {
@@ -9,7 +9,7 @@ const WeatherCard = () => {
   const { weather } = useWeather(location);
 
   return (
-    <Card className="max-w-xs mx-auto p-4 rounded-lg shadow-md">
+    <Card className="p-4 rounded-lg shadow-md">
       <CardHeader className="pb-2">
         <div className="text-center text-sm text-muted-foreground">
           현재 {dayjs().format('MM.DD')}
@@ -23,12 +23,12 @@ const WeatherCard = () => {
       <CardContent className="flex flex-col items-center space-y-2">
         {weather ? (
           <>
-            <div className="relative w-28 h-28 flex items-center justify-center">
-              <div className="absolute w-28 h-28 rounded-full bg-blue-400 opacity-78 blur-xl" />
+            <div className="relative w-20 h-20 flex items-center justify-center">
+              <div className="absolute w-20 h-20 rounded-full bg-blue-400 opacity-78 blur-xl" />
               <img
                 src={`https://openweathermap.org/img/wn/${weather.icon}@4x.png`}
                 alt="날씨 아이콘"
-                className="w-28 h-28 relative z-10"
+                className="w-20 h-20 relative z-10"
               />
             </div>
 

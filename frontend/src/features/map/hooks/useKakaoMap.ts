@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMapStore } from '../stores/useMapStore';
+import { useMapStore } from '../../../stores/useMapStore';
 
 declare global {
   interface Window {

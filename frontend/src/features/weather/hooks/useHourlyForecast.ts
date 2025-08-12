@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebounce } from "../../../hooks/useDebounce";
 import { fetchHourlyForecast } from "../services/openWeatherService";
 
 type Location = {

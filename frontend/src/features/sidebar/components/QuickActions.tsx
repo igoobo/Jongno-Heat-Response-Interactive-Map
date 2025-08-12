@@ -1,12 +1,12 @@
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { useEffect, useState } from 'react';
-import { Button } from '../ui/button';
+import { Button } from '../../../components/ui/button';
 import { Navigation, Layers, Info, FileText } from 'lucide-react';
-import { useMapStore } from '../../stores/useMapStore';
-import { useCurrentLocation } from '../../hooks/useCurrentLocation'; // 아까 만든 훅
-import { moveToCurrentLocation } from '../controllers/moveToCurrentLocation'; // 아까 만든 함수
-import { moveToFullView } from '../controllers/moveToFullView'; // ✅ 추가
-import { useMapLayer } from '../../context/MapLayerContext'; // ✅ 추가
+import { useMapStore } from '../../../stores/useMapStore';
+import { useCurrentLocation } from '../../../hooks/useCurrentLocation'; // 아까 만든 훅
+import { moveToCurrentLocation } from '../../map/components/MapControls/moveToCurrentLocation'; // 아까 만든 함수
+import { moveToFullView } from '../../map/components/MapControls/moveToFullView'; // ✅ 추가
+import { useMapLayer } from '../../../context/MapLayerContext'; // ✅ 추가
 import HeatGuideModal from './HeatGuideModal'; // 방금 만든 모달 임포트
 const quickActions = [
   { label: '현재 위치', icon: Navigation },
@@ -16,7 +16,7 @@ const quickActions = [
 ];
 
 const QuickActions = () => {
-  const map = useMapStore((state) => state.map);
+  const map = useMapStore((state: any) => state.map);
   const { getLocation, position } = useCurrentLocation();
   const { setAllLayers } = useMapLayer(); // ✅ 전체 레이어 켜기
   const [HeatGuideVisible, setHeatGuideVisible] = useState(false);

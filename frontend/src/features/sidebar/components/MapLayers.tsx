@@ -1,8 +1,8 @@
 // src/components/sidebar/MapLayers.tsx
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Badge } from '../ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
+import { Badge } from '../../../components/ui/badge';
 import { Layers } from 'lucide-react';
-import { useMapLayer } from '../../context/MapLayerContext';
+import { useMapLayer } from '../../../context/MapLayerContext';
 
 const mapLayers = [
   { id: 'tempDist', name: '온도 분포', color: 'bg-red-500' },

@@ -9,8 +9,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useHourlyForecast } from "@/hooks/useHourlyForecast";
-import { useMapLocation } from "@/context/MapLocationContext";
+import { useHourlyForecast } from "../hooks/useHourlyForecast";
+import { useMapLocation } from "../../../context/MapLocationContext";
 
 const formatHour = (dt: number) => {
   const date = new Date(dt * 1000);
