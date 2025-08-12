@@ -1,0 +1,109 @@
+(.venv) C:\Users\world\Downloads\KT\Modern Jongno Map Interface (Copy)\backend>uvicorn main:app --reload
+INFO:     Will watch for changes in these directories: ['C:\\Users\\world\\Downloads\\KT\\Modern Jongno Map Interface (Copy)\\backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [27852] using StatReload
+INFO:     Started server process [3004]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/weather?lat=37.5665&lon=126.978&units=metric&lang=kr&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting Kakao Maps URL: https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=126.978&y=37.5665
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.5665&lon=126.978&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Kakao Maps Response Status: 200
+INFO:     127.0.0.1:60236 - "GET /api/kakao-proxy?lat=37.5665&lng=126.978 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60245 - "GET /api/geojson HTTP/1.1" 200 OK
+Backend: Requesting Kakao Maps URL: https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=126.978&y=37.5665
+Backend: Kakao Maps Response Status: 200
+INFO:     127.0.0.1:60246 - "GET /api/kakao-proxy?lat=37.5665&lng=126.978 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60248 - "GET /api/geojson HTTP/1.1" 200 OK
+Backend: Requesting Kakao Maps URL: https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=126.978&y=37.5665
+Backend: Kakao Maps Response Status: 200
+INFO:     127.0.0.1:60250 - "GET /api/kakao-proxy?lat=37.5665&lng=126.978 HTTP/1.1" 200 OK
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.5758079129331&lon=126.96944265916345&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting Kakao Maps URL: https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=126.978&y=37.5665
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.5758079129331&lon=126.96944265916345&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Kakao Maps Response Status: 200
+INFO:     127.0.0.1:60256 - "GET /api/kakao-proxy?lat=37.5665&lng=126.978 HTTP/1.1" 200 OK
+Backend: Requesting Kakao Maps URL: https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=126.978&y=37.5665
+Backend: OpenWeatherMap Response Status: 200
+INFO:     127.0.0.1:60237 - "GET /api/weather-proxy?lat=37.5665&lng=126.978&type=weather HTTP/1.1" 200 OK
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/weather?lat=37.5665&lon=126.978&units=metric&lang=kr&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Kakao Maps Response Status: 200
+INFO:     127.0.0.1:60262 - "GET /api/kakao-proxy?lat=37.5665&lng=126.978 HTTP/1.1" 200 OK
+Backend: Requesting Kakao Maps URL: https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=126.978&y=37.5665
+Backend: Kakao Maps Response Status: 200
+INFO:     127.0.0.1:60268 - "GET /api/kakao-proxy?lat=37.5665&lng=126.978 HTTP/1.1" 200 OK
+Backend: OpenWeatherMap Response Status: 200
+INFO:     127.0.0.1:60238 - "GET /api/weather-proxy?lat=37.5665&lng=126.978&type=forecast HTTP/1.1" 200 OK
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.5665&lon=126.978&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+INFO:     127.0.0.1:60265 - "GET /api/weather-proxy?lat=37.5665&lng=126.978&type=weather HTTP/1.1" 200 OK
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58683383416135&lon=126.9827954015549&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58683383416135&lon=126.9827954015549&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+INFO:     127.0.0.1:60271 - "GET /api/weather-proxy?lat=37.5665&lng=126.978&type=forecast HTTP/1.1" 200 OK
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.59572361032763&lon=126.96186509933933&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.59572361032763&lon=126.96186509933933&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.61503301152047&lon=126.96878718932294&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.61503301152047&lon=126.96878718932294&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.576924126299346&lon=126.96029412719508&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.576924126299346&lon=126.96029412719508&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57380243291256&lon=126.9636102255866&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57380243291256&lon=126.9636102255866&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58167882827008&lon=126.98601101238319&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58167882827008&lon=126.98601101238319&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57550331216773&lon=126.99154385256861&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57550331216773&lon=126.99154385256861&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57432932080284&lon=127.00473700150815&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57432932080284&lon=127.00473700150815&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57952868756749&lon=127.0021871933712&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57952868756749&lon=127.0021871933712&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.572756581890765&lon=127.01453719197923&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.572756581890765&lon=127.01453719197923&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57562419379324&lon=127.00991776861689&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57562419379324&lon=127.00991776861689&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.579676256921694&lon=127.01344958123215&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.579676256921694&lon=127.01344958123215&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57743756870395&lon=127.01691447646127&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57743756870395&lon=127.01691447646127&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57390384266701&lon=127.01869717124579&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.57390384266701&lon=127.01869717124579&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58437540443238&lon=126.96902116763398&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58437540443238&lon=126.96902116763398&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58682788636291&lon=126.99819576288368&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: Requesting OpenWeatherMap URL: https://api.openweathermap.org/data/2.5/forecast?lat=37.58682788636291&lon=126.99819576288368&units=metric&appid=26f606f6937bd8d8776a0e230acbf142
+Backend: OpenWeatherMap Response Status: 200
+Backend: OpenWeatherMap Response Status: 200
+INFO:     127.0.0.1:60257 - "POST /api/polygon-temperatures HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60255 - "POST /api/polygon-temperatures HTTP/1.1" 200 OK

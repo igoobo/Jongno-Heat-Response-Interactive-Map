@@ -6,13 +6,14 @@ import { useMapLayer } from '../../../context/MapLayerContext';
 import LoadingOverlay from '../../../components/LoadingOverlay';
 import { useKakaoMap } from '../hooks/useKakaoMap';
 import { Layers } from './Layers';
-import { TemperatureLegend } from './TemperatureLegend';
+import { TemperatureLegend } from '././TemperatureLegend';
 import { TemperatureSlider } from './TemperatureSlider';
 import  ZoomControls from './MapControls/ZoomControls';
 import { MobileTemperatureLegend } from './MobileTemperatureLegend';
 import { MobileTemperatureSlider } from './MobileTemperatureSlider';
 import KakaoMapLicense from '../../../components/KakaoMapLicense';
 import { useMapLoading } from '../hooks/useMapLoading';
+import FixedCenterMarker from './FixedCenterMarker';
 
 const MapContainer: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -39,7 +40,9 @@ const MapContainer: React.FC = () => {
   return (
     <>
       {totalLoading && <LoadingOverlay />}
-      <div id="map" style={{ width: "100%", height: "100vh" }}></div>
+      <div id="map" style={{ width: "100%", height: "100vh", position: "relative" }}>
+        <FixedCenterMarker />
+      </div>
       {isDesktop && <KakaoMapLicense />}
       
 
