@@ -45,7 +45,7 @@ const QuickActions = () => {
   return (
     <>
       <Card>
-        <CardHeader className="pb-3">
+        <CardHeader>
           <CardTitle className="text-base">빠른 작업</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
