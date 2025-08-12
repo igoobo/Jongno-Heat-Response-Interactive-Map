@@ -4,11 +4,39 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from .routes import router
+from .routes import router, _fetch_and_parse_kma_warnings # Import the new function
+from apscheduler.schedulers.background import BackgroundScheduler # Import scheduler
 
 app = FastAPI()
 
 app.include_router(router)
+
+from .cache import kma_warnings_cache # Import the global cache
+
+def update_kma_warnings_cache():
+    """Fetches KMA warnings and updates the global cache."""
+    try:
+        warnings = _fetch_and_parse_kma_warnings()
+        kma_warnings_cache["data"] = warnings
+        print("KMA warnings cache updated successfully.")
+    except Exception as e:
+        print(f"Error updating KMA warnings cache: {e}")
+
+# Initialize and start the scheduler
+scheduler = BackgroundScheduler()
+scheduler.add_job(update_kma_warnings_cache, 'interval', hours=1) # Run every hour
+
+@app.on_event("startup")
+async def startup_event():
+    print("Starting scheduler...")
+    scheduler.start()
+    # Initial fetch on startup
+    update_kma_warnings_cache()
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    print("Shutting down scheduler...")
+    scheduler.shutdown()
 
 
 # Serve frontend

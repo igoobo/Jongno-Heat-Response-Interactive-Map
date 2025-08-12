@@ -6,7 +6,11 @@ import { DesktopSidebarFooter } from './DesktopSidebarFooter';
 
 type SidebarTab = 'info' | 'layers';
 
-export const DesktopSidebar: React.FC = () => {
+interface DesktopSidebarProps {
+  map: any; // Accept map prop
+}
+
+export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ map }) => { // Destructure map prop
   const [activeTab, setActiveTab] = useState<SidebarTab>('info');
 
   return (
@@ -15,7 +19,7 @@ export const DesktopSidebar: React.FC = () => {
       <div className="w-full h-full bg-white flex flex-col">
         <DesktopSidebarHeader />
         <div className="absolute top-30 right-0 w-110 z-40 ">
-          <DesktopSidebarContent activeTab={activeTab} />
+          <DesktopSidebarContent activeTab={activeTab} map={map} /> {/* Pass map prop */}
         </div>
         <DesktopSidebarFooter />
       </div>

@@ -19,6 +19,7 @@ class CacheEntry(BaseModel):
 
 KAKAO_REST_API_KEY = os.environ.get("VITE_KAKAO_REST_API_KEY")
 OPENWEATHER_API_KEY = os.environ.get("VITE_OPENWEATHER_API_KEY")
+KMA_API_KEY = os.environ.get("KMA_API_KEY")
 
 CACHE_TTL_SECONDS = 60 * 10  # 10 minutes
 cache: Dict[str, CacheEntry] = {}
@@ -43,6 +44,16 @@ def fetch_external_api(url: str, headers: Optional[Dict[str, str]] = None) -> An
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"External API request failed with error: {e}")
+        raise HTTPException(status_code=500, detail=f"External API request failed: {e}")
+
+
+def fetch_external_text_api(url: str, headers: Optional[Dict[str, str]] = None) -> str:
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.text
     except requests.exceptions.RequestException as e:
         print(f"External API request failed with error: {e}")
         raise HTTPException(status_code=500, detail=f"External API request failed: {e}")
