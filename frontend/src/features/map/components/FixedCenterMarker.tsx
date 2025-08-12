@@ -1,7 +1,14 @@
 import React from 'react';
 import { MapPin } from 'lucide-react';
+import { useCenterMarker } from '../../../context/CenterMarkerContext'; // Import the new hook
 
 const FixedCenterMarker: React.FC = () => {
+  const { isCenterMarkerVisible } = useCenterMarker();
+
+  if (!isCenterMarkerVisible) {
+    return null; // Don't render if not visible
+  }
+
   return (
     <div
       style={{
