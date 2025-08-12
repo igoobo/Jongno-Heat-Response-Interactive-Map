@@ -11,6 +11,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@common/*": [
+        "./src/common/*"
       ]
     },
 
@@ -31,5 +34,5 @@
     "noUncheckedSideEffectImports": true
   },
   "include": ["src",
-"src/types" ]
+"src/common/types" ]
 }
