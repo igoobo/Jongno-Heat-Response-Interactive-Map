@@ -17,6 +17,7 @@ const MapLayerContext = createContext<{
   layerStates: LayerStates;
   toggleLayer: (layerId: keyof LayerStates) => void;
   setAllLayers: (value: boolean) => void; // ✅ 추가
+  setLayerState: (layerId: keyof LayerStates, value: boolean) => void; // Add setLayerState
 } | null>(null);
 
 export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -66,6 +67,14 @@ export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     });
   };
+
+  const setLayerState = (layerId: keyof LayerStates, value: boolean) => { // New function
+    setLayerStates((prev) => ({
+      ...prev,
+      [layerId]: value,
+    }));
+  };
+
   const setAllLayers = (value: boolean) => {
     setLayerStates(() => {
       // ✅ 의존성 고려
@@ -78,7 +87,7 @@ export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   return (
-    <MapLayerContext.Provider value={useMemo(() => ({ layerStates, toggleLayer, setAllLayers  }), [layerStates])}>
+    <MapLayerContext.Provider value={useMemo(() => ({ layerStates, toggleLayer, setAllLayers, setLayerState  }), [layerStates])}>
       {children}
     </MapLayerContext.Provider>
   );

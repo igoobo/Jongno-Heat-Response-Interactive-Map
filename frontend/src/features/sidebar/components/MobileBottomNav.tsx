@@ -1,7 +1,7 @@
 import { Menu, Layers, MapPin } from 'lucide-react';
 import MobileLocationSidebar from './MobileLocationSidebar';
 import MobileMapLayersSidebar from './MobileMapLayersSidebar';
-import MobileMenu from './MobileMenu';
+import { MobileMenu } from './MobileMenu';
 
 interface MobileBottomNavProps {
   onSidebarChange: (activeSidebar: 'location' | 'layers' | 'menu' | null) => void;
