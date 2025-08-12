@@ -1,4 +1,4 @@
-import { X, Navigation, Layers, Info } from 'lucide-react';
+import { X, Navigation, Layers, Info, MapPin } from 'lucide-react'; // Import MapPin icon
 import { Button } from '../../../components/ui/button';
 import { useMapStore } from '../../../stores/useMapStore';
 import { useCurrentLocation } from '../../../hooks/useCurrentLocation';
@@ -6,6 +6,7 @@ import { moveToFullView } from '../../map/components/MapControls/moveToFullView'
 import { useMapLayer } from '../../../context/MapLayerContext';
 import HeatGuideModal from './HeatGuideModal';
 import { useState } from 'react';
+import { toast } from 'react-toastify'; // Import toast
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -15,10 +16,11 @@ interface MobileMenuProps {
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const map = useMapStore((state: any) => state.map);
   const { getLocation } = useCurrentLocation();
-  const { setAllLayers } = useMapLayer();
+  const { setAllLayers, setLayerState } = useMapLayer(); // Destructure setLayerState
   const [HeatGuideVisible, setHeatGuideVisible] = useState(false);
+  const [selectedFacilityType, setSelectedFacilityType] = useState<string>(''); // State for selected facility type
 
-  const handleActionClick = (actionType: string) => {
+  const handleActionClick = async (actionType: string) => { // Make async
     if (actionType === 'currentLocation') {
       getLocation(map);
     } else if (actionType === 'fullView') {
@@ -26,11 +28,41 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
         setAllLayers(true);
         moveToFullView(map);
       }
+    } else if (actionType === 'closestRest') { // New action
+      const currentPosition = await getLocation(map, false); // Get location, prevent auto-pan
+      if (!currentPosition) {
+        toast.error("현재 위치를 알 수 없습니다.");
+        return;
+      }
+      try {
+        let url = `/api/closest-cooling-center?lat=${currentPosition.lat}&lng=${currentPosition.lng}`;
+        if (selectedFacilityType) { // Add filter to URL
+          url += `&facility_type1=${selectedFacilityType}`;
+        }
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('Failed to fetch closest cooling center');
+        }
+        const data = await response.json();
+        if (map && data.lat && data.lon) {
+          if (window.kakao && window.kakao.maps) {
+            const moveLatLon = new window.kakao.maps.LatLng(parseFloat(data.lat), parseFloat(data.lon));
+            setTimeout(() => {
+              map.panTo(moveLatLon);
+            }, 500);
+          }
+        }
+        setLayerState('coolingCenter', true); // Enable coolingCenter layer
+        toast.success("가장 가까운 무더위 쉼터로 이동했습니다!");
+      } catch (err) {
+        console.error("Error fetching closest cooling center:", err);
+        toast.error("무더위 쉼터를 찾는 중 오류가 발생했습니다.");
+      }
     } else if (actionType === 'heatGuide') {
       setHeatGuideVisible(true);
     } else if (actionType === 'help') {
       // Implement help action here, e.g., show a help dialog or navigate to a help page
-      alert('도움말 기능은 아직 구현되지 않았습니다.');
+      alert('도움말 기능은 아직 구현되지 않습니다.');
     }
     onClose(); // Close the menu after an action is performed
   };
@@ -69,6 +101,27 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             <Layers className="w-4 h-4" />
             전체보기
           </Button>
+          <div className="w-full flex items-center justify-between gap-2"> {/* Wrapper div for button and select, using flexbox */}
+            <Button
+              variant="ghost"
+              className="flex-grow justify-start gap-3 h-auto py-3" // flex-grow to take available space
+              onClick={() => handleActionClick('closestRest')}
+            >
+              <MapPin className="w-4 h-4" />
+              가장 가까운 무더위 쉼터
+            </Button>
+            <select
+              id="mobileFacilityType"
+              name="mobileFacilityType"
+              className="block w-auto pl-3 pr-10 py-1 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" // Removed mt-2, w-full, changed to w-auto
+              value={selectedFacilityType}
+              onChange={(e) => setSelectedFacilityType(e.target.value)}
+            >
+              <option value="">모두</option>
+              <option value="공공시설">공공시설</option>
+              <option value="특정계층이용시설">특정계층이용시설</option>
+            </select>
+          </div>
           <Button
             variant="ghost"
             className="w-full justify-start gap-3 h-auto py-3"
@@ -89,4 +142,4 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   );
 };
 
-export default MobileMenu;
+export { MobileMenu }; // Export MobileMenu
