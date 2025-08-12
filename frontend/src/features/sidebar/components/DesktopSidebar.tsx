@@ -1,0 +1,24 @@
+import { useState } from 'react';
+import { DesktopSidebarHeader } from './DesktopSidebarHeader';
+import { DesktopSidebarTabs } from './DesktopSidebarTabs';
+import { DesktopSidebarContent } from './DesktopSidebarContent';
+import { DesktopSidebarFooter } from './DesktopSidebarFooter';
+
+type SidebarTab = 'info' | 'layers';
+
+export const DesktopSidebar: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<SidebarTab>('info');
+
+  return (
+    <div className="hidden md:flex h-full bg-gray-50 border-l border-border shadow-lg">
+      <DesktopSidebarTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className="w-full h-full bg-white flex flex-col">
+        <DesktopSidebarHeader />
+        <div className="absolute top-30 right-0 w-110 z-40 ">
+          <DesktopSidebarContent activeTab={activeTab} />
+        </div>
+        <DesktopSidebarFooter />
+      </div>
+    </div>
+  );
+};
