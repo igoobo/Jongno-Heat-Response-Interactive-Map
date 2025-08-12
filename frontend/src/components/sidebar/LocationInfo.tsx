@@ -1,0 +1,39 @@
+import { useEffect, useState } from 'react';
+import { useMapLocation } from '../../context/MapLocationContext';
+import { fetchRegionName } from '../../services/kakaoMapsService';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { MapPin } from 'lucide-react';
+
+const LocationInfo = () => {
+  const { location } = useMapLocation();
+  const [regionName, setRegionName] = useState('');
+
+  useEffect(() => {
+    const getRegionName = async () => {
+      if (location.lat && location.lng) {
+        const name = await fetchRegionName(location.lat, location.lng);
+        setRegionName(name);
+      }
+    };
+    getRegionName();
+  }, [location]);
+
+  return (
+    <Card className="flex flex-col gap-2">
+      <CardHeader>
+        <CardTitle className="text-base flex items-center gap-2">
+          <MapPin className="w-4 h-4" />
+          현재 지도 위치
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div className="text-sm">
+          <p className="text-muted-foreground">행정구역</p>
+          <p className="text-xl font-bold">{regionName || '조회 중...'}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default LocationInfo;
