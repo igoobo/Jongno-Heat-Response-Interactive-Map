@@ -22,10 +22,48 @@ export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const [layerStates, setLayerStates] = useState<LayerStates>(defaultState);
 
   const toggleLayer = (layerId: keyof LayerStates) => {
-    setLayerStates((prev) => ({
-      ...prev,
-      [layerId]: !prev[layerId],
-    }));
+    setLayerStates((prev) => {
+      const newValue = !prev[layerId];
+
+      switch (layerId) {
+        case 'tempDist':
+          // tempDist를 true로 바꾸면 area도 무조건 true로 변경
+          if (newValue) {
+            return {
+              ...prev,
+              tempDist: true,
+              area: true,
+            };
+          }
+          // tempDist를 false로 바꾸면 tempDist만 false로 변경
+          return {
+            ...prev,
+            tempDist: false,
+          };
+
+        case 'area':
+          // area를 false로 바꾸려고 할 때 tempDist가 true면 tempDist도 false로 변경
+          if (!newValue && prev.tempDist) {
+            return {
+              ...prev,
+              area: false,
+              tempDist: false,
+            };
+          }
+          // 그 외에는 area만 토글
+          return {
+            ...prev,
+            area: newValue,
+          };
+
+        default:
+          // 다른 레이어들은 그냥 토글
+          return {
+            ...prev,
+            [layerId]: newValue,
+          };
+      }
+    });
   };
 
   return (

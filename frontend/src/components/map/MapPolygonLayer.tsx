@@ -21,6 +21,7 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
 }) => {
   const polygonsRef = useRef<any[]>([]);
   const polygonCentersRef = useRef<{ polygon: any; centerLat: number; centerLon: number }[]>([]);
+  const polygonColorMapRef = useRef<Map<any, string>>(new Map()); // ✅ 색상 저장용 Map
 
   const loadGeoJSON = async () => {
     const response = await fetch('/jongno_wgs84.geojson');
@@ -57,6 +58,8 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
         geojson.features.forEach((feature: any) => {
           const coords = feature.geometry.coordinates[0];
           const path = coords.map(([lon, lat]: number[]) => new window.kakao.maps.LatLng(lat, lon));
+          
+          let originalFillColor = '#ffffff'; // Initialize with default white
 
           const polygon = new window.kakao.maps.Polygon({
             map: layerStates.area ? map : null,
@@ -64,22 +67,36 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
             strokeWeight: 2,
             strokeColor: '#004c80',
             strokeOpacity: 0.8,
-            fillColor: '#ffffff',
+            fillColor: originalFillColor, // Default to white initially
             fillOpacity: 0.5,
           });
+          polygonColorMapRef.current.set(polygon, originalFillColor); // ✅ 초기 색상 저장
 
           const { lat, lon } = calculateCentroid(coords);
           polygonCentersRef.current.push({ polygon, centerLat: lat, centerLon: lon });
           polygonsRef.current.push(polygon);
 
+        
           window.kakao.maps.event.addListener(polygon, 'mouseover', () => {
+            console.log("Mouse over polygon");
+            // 현재 색상 저장 (덮어쓰기)
+            const currentColor = polygonColorMapRef.current.get(polygon) ?? '#ffffff';
+            polygonColorMapRef.current.set(polygon, currentColor);
             polygon.setOptions({ fillColor: '#09f' });
           });
 
           window.kakao.maps.event.addListener(polygon, 'mouseout', () => {
-            polygon.setOptions({ fillColor: '#ffffff' });
+            const original = polygonColorMapRef.current.get(polygon) ?? '#ffffff';
+            polygon.setOptions({ fillColor: original });
+          });
+
+          window.kakao.maps.event.addListener(polygon, 'click', () => {
+            map.setLevel(3); // 예: 더 가까이 줌
+            map.panTo(new window.kakao.maps.LatLng(lat, lon)); // 중심 이동
           });
         });
+
+          
 
         await loadTemperatureData();
         onLoad();
@@ -103,6 +120,7 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
     if (!layerStates.tempDist) {
       polygonsRef.current.forEach((polygon) => {
         polygon.setOptions({ fillColor: '#ffffff' });
+        polygonColorMapRef.current.set(polygon, '#ffffff'); // ✅ 색상 추적도 갱신
       });
       return;
     }
@@ -112,6 +130,7 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
       if (temp != null) {
         const fillColor = getColorByTemperature(temp);
         polygon.setOptions({ fillColor });
+        polygonColorMapRef.current.set(polygon, fillColor); // ✅ 현재 색상 저장
       }
     });
   }, [hourIndex, layerStates.tempDist, tempsByPolygon]);
