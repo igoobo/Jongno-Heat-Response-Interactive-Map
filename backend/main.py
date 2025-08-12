@@ -7,8 +7,19 @@ from fastapi.staticfiles import StaticFiles
 from .routes import router, _fetch_and_parse_kma_warnings # Import the new function
 from apscheduler.schedulers.background import BackgroundScheduler # Import scheduler
 
-app = FastAPI()
+from contextlib import asynccontextmanager
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    print("Starting scheduler...")
+    scheduler.start()
+    # Initial fetch on startup
+    update_kma_warnings_cache()
+    yield
+    print("Shutting down scheduler...")
+    scheduler.shutdown()
+
+app = FastAPI(lifespan=lifespan)
 app.include_router(router)
 
 from .cache import kma_warnings_cache # Import the global cache
@@ -25,18 +36,6 @@ def update_kma_warnings_cache():
 # Initialize and start the scheduler
 scheduler = BackgroundScheduler()
 scheduler.add_job(update_kma_warnings_cache, 'interval', hours=1) # Run every hour
-
-@app.on_event("startup")
-async def startup_event():
-    print("Starting scheduler...")
-    scheduler.start()
-    # Initial fetch on startup
-    update_kma_warnings_cache()
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    print("Shutting down scheduler...")
-    scheduler.shutdown()
 
 
 # Serve frontend
