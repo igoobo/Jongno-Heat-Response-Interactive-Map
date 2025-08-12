@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { fetchHourlyForecast } from '../../services/openWeatherService';
-import { getColorByTemperature } from '../../utils/colorUtils';
-import { interpolateTemperatures } from '../../utils/interpolationUtils';
+import { fetchHourlyForecast } from '../../../weather/services/openWeatherService';
+import { getColorByTemperature } from '../../../../utils/colorUtils';
+import { interpolateTemperatures } from '../../../../utils/interpolationUtils';
 
 interface MapPolygonLayerProps {
   map: any;

@@ -1,6 +1,6 @@
 import LocationInfo from './LocationInfo';
-import WeatherCard from '../WeatherCard';
-import HourlyForecastChart from "../HourlyForecastChart";
+import WeatherCard from '../../weather/components/WeatherCard';
+import HourlyForecastChart from "../../weather/components/HourlyForecastChart";
 import { MapPin } from 'lucide-react';
 
 interface DesktopSidebarProps {}

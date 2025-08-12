@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useMapLocation } from '../../context/MapLocationContext';
-import { fetchRegionName } from '../../services/kakaoMapsService';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { useMapLocation } from '../../../context/MapLocationContext';
+import { fetchRegionName } from '../../../services/kakaoMapsService';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { MapPin } from 'lucide-react';
 
 const LocationInfo = () => {

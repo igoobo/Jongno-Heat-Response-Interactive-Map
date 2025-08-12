@@ -20,14 +20,23 @@ const formatLabel = (hourIndex: number, baseDate: Date): string => {
   
   const timeFormat = `${hours}:00`;
 
-  if (hourIndex === 0 || futureDate.getHours() === 0) {
+  // 첫 번째 인덱스는 항상 날짜를 표시하여 기준점을 알려줍니다.
+  if (hourIndex === 0) {
+    return `${month}/${day} ${timeFormat}`;
+  }
+  // 이전 시간의 날짜를 가져옵니다.
+  const previousDate = new Date(baseDate.getTime() + (hourIndex - 3) * 60 * 60 * 1000);
+
+  // 이전 시간과 현재 시간의 날짜(day)가 다를 경우 (즉, 다음 날로 넘어간 첫 시간)
+  // month/day를 함께 표시합니다.
+  if (futureDate.getDate() !== previousDate.getDate()) {
     return `${month}/${day} ${timeFormat}`;
   }
   
   return timeFormat;
 };
 
-export const TemperatureSlider: React.FC<Props> = ({ hourIndex, max, onChange }) => {
+export const MobileTemperatureSlider: React.FC<Props> = ({ hourIndex, max, onChange }) => {
   // 기준 시간을 한 번만 생성하여 모든 레이블 계산에 동일하게 적용
   const baseDate = new Date();
 
@@ -50,9 +59,9 @@ export const TemperatureSlider: React.FC<Props> = ({ hourIndex, max, onChange })
   }, [isPlaying, hourIndex, max, onChange]);
 
   return (
-    <div style={sliderContainerStyle}>
+    <div className="absolute top-3 right-3 z-10 w-[60vw] p-3 bg-white rounded-lg shadow-md">
       {/* ▶ 재생/일시정지 버튼 */}
-      <button onClick={() => setIsPlaying((prev) => !prev)} style={playButtonStyle}>
+      <button onClick={() => setIsPlaying((prev) => !prev)} className="absolute right-3 top-18  -translate-y-1/2 bg-white border border-gray-300 rounded-md px-3 py-1 text-xs cursor-pointer shadow-sm">
         {isPlaying ? '⏸ 정지' : '▶ 재생'}
       </button>
 
@@ -62,67 +71,21 @@ export const TemperatureSlider: React.FC<Props> = ({ hourIndex, max, onChange })
         max={max}
         value={hourIndex}
         onChange={(e) => onChange(Number(e.target.value))}
-        style={{ width: '100%' }}
+        className="w-full"
       />
       
       {/* 눈금과 시간 레이블을 표시하는 컨테이너 */}
-      <div style={ticksContainerStyle}>
+      <div className="flex justify-between w-full mt-2 px-1 box-border">
         {allHourIndices.map((idx) => (
-          <div key={idx} style={tickStyle}>
+          <div key={idx} className="text-center text-xs text-gray-700 flex-1 pointer-events-none">
             {/* 현재 선택된 값(hourIndex)과 일치하는 레이블은 굵게 표시 */}
              <span style={{ fontWeight: idx === hourIndex ? 'bold' : 'normal' }}>
               {/* ⭐️ 변경점: 레이블이 너무 많아지지 않도록 3시간 간격으로만 텍스트 표시 */}
-              {idx % 3 === 0 ? formatLabel(idx, baseDate) : ''}
+              {idx % 6 === 0 ? formatLabel(idx, baseDate) : ''}
             </span>
           </div>
         ))}
       </div>
     </div>
   );
-};
-
-// --- 스타일 정의 ---
-
-const sliderContainerStyle: React.CSSProperties = {
-  position: 'absolute',
-  bottom: 20,
-  left: '45%',
-  transform: 'translateX(-50%)',
-  width: '60%', // 너비를 조금 늘려 레이블이 겹치지 않게 함
-  padding: '12px 16px',
-  backgroundColor: 'rgba(255,255,255,0.9)',
-  borderRadius: 8,
-  boxShadow: '0 0 8px rgba(0,0,0,0.1)',
-  zIndex: 100,
-};
-
-const ticksContainerStyle: React.CSSProperties = {
-  display: 'flex',
-  justifyContent: 'space-between', // 레이블들을 균일한 간격으로 배치
-  width: '100%',
-  marginTop: '8px',
-  padding: '0 5px', // 좌우 패딩을 주어 슬라이더 끝과 맞춤
-  boxSizing: 'border-box',
-};
-
-const tickStyle: React.CSSProperties = {
-  textAlign: 'center',
-  fontSize: '11px', // 폰트 크기를 살짝 줄여 공간 확보
-  color: '#333',
-  // 각 레이블이 독립적으로 공간을 차지하도록 설정
-  flex: 1, 
-  pointerEvents: 'none', 
-};
-
-const playButtonStyle: React.CSSProperties = {
-  position: 'absolute',
-  left: -80,
-  bottom: 20,
-  background: '#fff',
-  border: '1px solid #ccc',
-  borderRadius: 4,
-  padding: '6px 12px',
-  fontSize: '12px',
-  cursor: 'pointer',
-  boxShadow: '0 0 5px rgba(0,0,0,0.1)',
 };

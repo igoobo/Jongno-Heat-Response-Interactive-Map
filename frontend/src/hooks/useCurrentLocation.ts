@@ -12,7 +12,7 @@ const DEFAULT_POSITION = {
 };
 
 // ✅ 고유 ID 설정
-const TOAST_ID = 'location-toast';
+
 
 export function useCurrentLocation() {
   const [position, setPosition] = useState<Position | null>(null);
