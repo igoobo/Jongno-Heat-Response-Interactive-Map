@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { fetchHourlyForecast } from '../../services/openWeatherService';
 import { getColorByTemperature } from '../../utils/colorUtils';
+import { interpolateTemperatures } from '../../utils/interpolationUtils';
 
 interface MapPolygonLayerProps {
   map: any;
@@ -40,12 +41,22 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
   };
 
   const loadTemperatureData = async () => {
-    const temps: number[][] = [];
+    const interpolatedTemps: number[][] = []; // 보간된 1시간 단위 온도를 저장할 배열
+
     for (const { centerLat, centerLon } of polygonCentersRef.current) {
-      const hourlyTemps = await fetchHourlyForecast(centerLat, centerLon);
-      temps.push(hourlyTemps.list.slice(0, 8).map((item: any) => item.main.temp));
+      const hourlyData = await fetchHourlyForecast(centerLat, centerLon);
+      
+      // 1. API로부터 3시간 간격의 원본 데이터를 추출합니다. (기존과 동일)
+      const originalTemps = hourlyData.list.slice(0, 8).map((item: any) => item.main.temp);
+      
+      // 2. 3시간 간격 데이터를 1시간 간격 데이터로 보간합니다. (⭐️ 변경점)
+      const interpolated1hr = interpolateTemperatures(originalTemps);
+      
+      interpolatedTemps.push(interpolated1hr);
     }
-    setTempsByPolygon(temps);
+    
+    // 3. 보간된 1시간 간격 데이터를 상태로 저장합니다. (⭐️ 변경점)
+    setTempsByPolygon(interpolatedTemps);
   };
 
   useEffect(() => {

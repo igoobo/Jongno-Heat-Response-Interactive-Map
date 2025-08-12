@@ -187,3 +187,19 @@
 html {
   font-size: var(--font-size);
 }
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5); /* 반투명 흰색 배경 */
+  backdrop-filter: none; /* 혹시 blur 걸려있으면 제거 */
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: white; /* 이미지 배경이 깨지면 투명으로 */
+  width: 50vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
