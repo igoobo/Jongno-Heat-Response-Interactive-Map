@@ -1,6 +1,6 @@
 import { useMapLocation } from '../../../context/MapLocationContext';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/card';
-import { CloudSun } from 'lucide-react';
+import { CloudSun, ArrowUp, ArrowDown } from 'lucide-react';
 import { useWeather } from '../hooks/useWeather';
 import dayjs from 'dayjs';
 
@@ -39,7 +39,21 @@ const WeatherCard = () => {
             </div>
 
             <div className="text-xs text-muted-foreground">
-              최저 {weather.minTemp?.toFixed(0)}° · 최고 {weather.maxTemp?.toFixed(0)}°
+              최저 {weather.minTemp?.toFixed(0)}° · 최고 {weather.maxTemp?.toFixed(0)}° 
+              {weather.tempDiff !== undefined && (
+                <span className="ml-2 flex items-center">
+                  (어제 대비 
+                  <span className={`${weather.tempDiff > 0 ? 'text-red-500' : 'text-blue-500'} flex items-center`}>
+                    {weather.tempDiff > 0 ? (
+                      <ArrowUp className="w-3 h-3 inline-block ml-1" />
+                    ) : (
+                      <ArrowDown className="w-3 h-3 inline-block ml-1" />
+                    )}
+                    {Math.abs(weather.tempDiff).toFixed(1)}°
+                  </span>
+                  )
+                </span>
+              )}
             </div>
           </>
         ) : (

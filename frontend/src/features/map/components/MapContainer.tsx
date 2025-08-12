@@ -15,7 +15,11 @@ import KakaoMapLicense from '../../../components/KakaoMapLicense';
 import { useMapLoading } from '../hooks/useMapLoading';
 import FixedCenterMarker from './FixedCenterMarker';
 
-const MapContainer: React.FC = () => {
+interface MapContainerProps {
+  onMapInstanceLoad: (map: any) => void;
+}
+
+const MapContainer: React.FC<MapContainerProps> = ({ onMapInstanceLoad }) => {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const { layerStates } = useMapLayer();
   const { setLocation } = useMapLocation();
@@ -32,7 +36,13 @@ const MapContainer: React.FC = () => {
     });
   };
 
-  const { map } = useKakaoMap({ onMapIdle: handleMapIdle, onMapLoad: () => setIsMapLoading(false) });
+  const { map } = useKakaoMap({ 
+    onMapIdle: handleMapIdle, 
+    onMapLoad: (mapInstance: any) => { // Pass mapInstance to onMapInstanceLoad
+      setIsMapLoading(false);
+      onMapInstanceLoad(mapInstance);
+    } 
+  });
 
   const [tempsByPolygon, setTempsByPolygon] = useState<number[][]>([]);
   const [hourIndex, setHourIndex] = useState(0);

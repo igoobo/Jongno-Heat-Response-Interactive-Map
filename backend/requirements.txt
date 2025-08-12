@@ -3,3 +3,4 @@ uvicorn
 whitenoise
 requests
 python-dotenv
+APScheduler
