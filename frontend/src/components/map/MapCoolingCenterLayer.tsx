@@ -3,11 +3,13 @@ import { useEffect, useRef } from 'react';
 interface MapCoolingCenterLayerProps {
   map: any;
   layerStates: any;
+  onLoad: () => void;
 }
 
 export const MapCoolingCenterLayer: React.FC<MapCoolingCenterLayerProps> = ({
   map,
   layerStates,
+  onLoad,
 }) => {
   const markersRef = useRef<any[]>([]);
   const openInfoWindowRef = useRef<any>(null);
@@ -99,6 +101,7 @@ export const MapCoolingCenterLayer: React.FC<MapCoolingCenterLayerProps> = ({
 
         markersRef.current.push(marker);
       });
+      onLoad(); // Call onLoad after all markers are processed
     } catch (error) {
       console.error(error);
     }
@@ -107,6 +110,7 @@ export const MapCoolingCenterLayer: React.FC<MapCoolingCenterLayerProps> = ({
   useEffect(() => {
     if (map) {
       loadCoolingCenters();
+      onLoad();
     }
   }, [map]);
 

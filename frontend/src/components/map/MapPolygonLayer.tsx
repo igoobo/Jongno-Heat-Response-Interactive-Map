@@ -8,6 +8,7 @@ interface MapPolygonLayerProps {
   tempsByPolygon: number[][];
   setTempsByPolygon: (temps: number[][]) => void;
   hourIndex: number;
+  onLoad: () => void;
 }
 
 export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
@@ -16,6 +17,7 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
   tempsByPolygon,
   setTempsByPolygon,
   hourIndex,
+  onLoad,
 }) => {
   const polygonsRef = useRef<any[]>([]);
   const polygonCentersRef = useRef<{ polygon: any; centerLat: number; centerLon: number }[]>([]);
@@ -80,6 +82,7 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
         });
 
         await loadTemperatureData();
+        onLoad();
       } catch (err) {
         console.error("Error initializing polygons:", err);
       }

@@ -15,6 +15,12 @@ const KakaoMap: React.FC = () => {
   const { setLocation } = useMapLocation();
   const debouncedSetLocation = useDebouncedCallback(setLocation, 300);
 
+  const [isMapLoading, setIsMapLoading] = useState(true);
+  const [isPolygonLayerLoading, setIsPolygonLayerLoading] = useState(true);
+  const [isCoolingCenterLayerLoading, setIsCoolingCenterLayerLoading] = useState(true);
+
+  const totalLoading = isMapLoading || isPolygonLayerLoading || isCoolingCenterLayerLoading;
+
   const handleMapIdle = (map: any) => {
     const center = map.getCenter();
     const level = map.getLevel();
@@ -25,7 +31,7 @@ const KakaoMap: React.FC = () => {
     });
   };
 
-  const { map, loading } = useKakaoMap({ onMapIdle: handleMapIdle });
+  const { map } = useKakaoMap({ onMapIdle: handleMapIdle, onMapLoad: () => setIsMapLoading(false) });
 
   const [tempsByPolygon, setTempsByPolygon] = useState<number[][]>([]);
   const [hourIndex, setHourIndex] = useState(0);
@@ -44,7 +50,7 @@ const KakaoMap: React.FC = () => {
 
   return (
     <>
-      {loading && <LoadingOverlay />}
+      {totalLoading && <LoadingOverlay />}
       <div id="map" style={{ width: "100%", height: "100vh" }}></div>
       <KakaoMapLicense />
 
@@ -56,10 +62,12 @@ const KakaoMap: React.FC = () => {
             tempsByPolygon={tempsByPolygon}
             setTempsByPolygon={setTempsByPolygon}
             hourIndex={hourIndex}
+            onLoad={() => setIsPolygonLayerLoading(false)}
           />
           <MapCoolingCenterLayer
             map={map}
             layerStates={layerStates}
+            onLoad={() => setIsCoolingCenterLayerLoading(false)}
           />
         </>
       )}

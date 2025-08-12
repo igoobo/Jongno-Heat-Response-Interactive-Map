@@ -1,31 +1,18 @@
-// components/LoadingOverlay.tsx
-
 import React from 'react';
 
-const overlayStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 검정색
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 99999,
-};
-
-
-const spinnerStyle: React.CSSProperties = {
-  fontSize: '2rem',
-  color: '#fff', // 흰색 글씨
-  fontWeight: 'bold',
-  textShadow: '0 0 5px rgba(0,0,0,0.7)',
-};
 const LoadingOverlay: React.FC = () => {
   return (
-    <div style={overlayStyle}>
-      <div style={spinnerStyle}>🚀 지도를 불러오는 중입니다...</div>
+    <div className="fixed inset-0 bg-white bg-opacity-50 backdrop-blur-sm flex flex-col items-center justify-center z-[99999] space-y-4">
+      <div className="relative flex items-center justify-center">
+        {/* Outer ring (background) */}
+        <div className="w-20 h-20 rounded-full border-4 border-gray-700"></div>
+        {/* Inner ring (spinner) */}
+        <div className="absolute w-20 h-20 rounded-full border-4 border-blue-500 border-t-transparent animate-spin"></div>
+        {/* Center icon/text */}
+        <div className="absolute text-black text-2xl font-bold">🗺️</div>
+      </div>
+      <p className="text-black text-lg font-semibold">지도를 불러오는 중입니다...</p>
+      <p className="text-gray-700 text-sm">잠시만 기다려 주세요.</p>
     </div>
   );
 };
