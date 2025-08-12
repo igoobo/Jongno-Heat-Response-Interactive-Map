@@ -188,18 +188,13 @@ html {
   font-size: var(--font-size);
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5); /* 반투명 흰색 배경 */
-  backdrop-filter: none; /* 혹시 blur 걸려있으면 제거 */
-  z-index: 9999;
-}
+@layer components {
+  .modal-overlay {
+    @apply fixed inset-0 bg-white/50 z-[9999];
+    backdrop-filter: none; /* Tailwind doesn't have a direct utility for this */
+  }
 
-.modal-content {
-  background-color: white; /* 이미지 배경이 깨지면 투명으로 */
-  width: 50vw;
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
+  .modal-content {
+    @apply bg-white w-1/2 h-screen overflow-hidden relative;
+  }
 }

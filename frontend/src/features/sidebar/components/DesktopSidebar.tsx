@@ -18,7 +18,7 @@ export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ map }) => { // D
       <DesktopSidebarTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="w-full h-full bg-white flex flex-col">
         <DesktopSidebarHeader />
-        <div className="absolute top-30 right-0 w-110 z-40 ">
+        <div className="absolute top-24 right-0 w-110 z-40 ">
           <DesktopSidebarContent activeTab={activeTab} map={map} /> {/* Pass map prop */}
         </div>
         <DesktopSidebarFooter />

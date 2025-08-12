@@ -99,12 +99,17 @@ def get_cooling_centers():
 
 
 @router.get("/api/closest-cooling-center")
-def get_closest_cooling_center(lat: float, lng: float):
+def get_closest_cooling_center(lat: float, lng: float, facility_type1: str = None): # Add optional facility_type1
     cooling_centers_path = os.path.join(os.path.dirname(__file__), 'data', 'seoul_jongno_rest.json')
     try:
         with open(cooling_centers_path, 'r', encoding='utf-8') as f:
-            cooling_centers = json.load(f)
+            cooling_centers_data = json.load(f)
         
+        filtered_centers = []
+        for center in cooling_centers_data.get("DATA", []):
+            if facility_type1 is None or center.get("facility_type1") == facility_type1:
+                filtered_centers.append(center)
+
         closest_center = None
         min_distance = float('inf')
 
@@ -126,7 +131,7 @@ def get_closest_cooling_center(lat: float, lng: float):
             distance = R * c
             return distance
 
-        for center in cooling_centers.get("DATA", []): # Assuming "DATA" is the key for the list of centers
+        for center in filtered_centers: # Iterate through filtered centers
             center_lat = float(center.get("lat"))
             center_lng = float(center.get("lon"))
             
@@ -140,7 +145,7 @@ def get_closest_cooling_center(lat: float, lng: float):
         if closest_center:
             return closest_center
         else:
-            raise HTTPException(status_code=404, detail="No cooling centers found")
+            raise HTTPException(status_code=404, detail="No cooling centers found with the given filter")
 
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="seoul_jongno_rest.json not found")
