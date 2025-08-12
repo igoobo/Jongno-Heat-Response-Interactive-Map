@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDebounce } from './useDebounce';
+import { fetchCurrentWeather } from '../services/openWeatherService';
 
 export const useWeather = (location: { lat: number; lng: number }) => {
   const debouncedLocation = useDebounce(location, 500);
@@ -15,13 +16,9 @@ export const useWeather = (location: { lat: number; lng: number }) => {
   useEffect(() => {
     if (!debouncedLocation.lat || !debouncedLocation.lng) return;
 
-    const fetchWeather = async () => {
+    const getWeather = async () => {
       try {
-        const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${debouncedLocation.lat}&lon=${debouncedLocation.lng}&units=metric&lang=kr&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`
-        );
-        const data = await res.json();
-
+        const data = await fetchCurrentWeather(debouncedLocation.lat, debouncedLocation.lng);
         setWeather({
           temp: data.main.temp,
           minTemp: data.main.temp_min,
@@ -34,7 +31,7 @@ export const useWeather = (location: { lat: number; lng: number }) => {
       }
     };
 
-    fetchWeather();
+    getWeather();
   }, [debouncedLocation]);
 
   return { weather };

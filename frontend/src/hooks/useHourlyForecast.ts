@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
+import { fetchHourlyForecast } from "../services/openWeatherService";
 
 type Location = {
   lat: number;
@@ -20,24 +21,17 @@ export function useHourlyForecast(location: Location) {
   const debouncedLocation = useDebounce(location, 300);
 
   useEffect(() => {
-    const fetchForecast = async () => {
-      
+    const getForecast = async () => {
       try {
         setLoading(true);
-        const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
-        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${debouncedLocation.lat}&lon=${debouncedLocation.lng}&units=metric&appid=${apiKey}`;
-        
         const start = Date.now();
         
-        const res = await fetch(url);
-        const result = await res.json();
+        const result = await fetchHourlyForecast(debouncedLocation.lat, debouncedLocation.lng);
 
-        // list: [{ dt, main: { temp, humidity }, ... }]
         if (result?.list) {
-          setData(result.list.slice(0, 8)); // 3시간 간격 x 4 = 24시간치
+          setData(result.list.slice(0, 8));
         }
 
-        // 최소 로딩 시간 보장
         const elapsed = Date.now() - start;
         const MIN_LOADING_MS = 550;
         if (elapsed < MIN_LOADING_MS) {
@@ -51,7 +45,7 @@ export function useHourlyForecast(location: Location) {
     };
 
     if (debouncedLocation.lat && debouncedLocation.lng) {
-      fetchForecast();
+      getForecast();
     }
   }, [debouncedLocation]);
   
