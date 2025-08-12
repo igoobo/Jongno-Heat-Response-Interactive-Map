@@ -104,7 +104,6 @@ Make sure you have the following installed on your system:
         ```
         VITE_KAKAO_MAP_JS_API_KEY=YOUR_KAKAO_APP_KEY_HERE
         ```
-
 4.  **Run the Application:**
 
     -   **Start the backend server:** In your terminal, from the **project root directory**, activate your backend virtual environment, and run:
