@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
-  const [activeMobileSidebar, setActiveMobileSidebar] = useState<'location' | 'layers' | null>(null);
+  const [activeMobileSidebar, setActiveMobileSidebar] = useState<'location' | 'layers' | 'menu' | null>(null);
   return (
     <div className="h-screen w-full bg-background flex flex-col md:flex-row overflow-hidden">
       <MapLocationProvider>
@@ -29,7 +29,7 @@ export default function App() {
             </div>
           ) : (
             <>
-              <MobileBottomNav onSidebarChange={setActiveMobileSidebar} />
+              <MobileBottomNav onSidebarChange={setActiveMobileSidebar} activeSidebar={activeMobileSidebar} />
               {activeMobileSidebar === 'location' && (
                 <div className="absolute top-3 left-3 z-10 w-[30vw]">
                   <WeatherCard />
