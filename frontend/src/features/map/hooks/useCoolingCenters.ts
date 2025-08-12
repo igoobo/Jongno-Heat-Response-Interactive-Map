@@ -54,8 +54,9 @@ export const useCoolingCenters = (map: any, layerStates: any, onLoad: any) => {
             </div>
           `,
           removable: false,
+          zIndex: 20,
         });
-
+        
         window.kakao.maps.event.addListener(marker, 'mouseover', () => {
           if (fixedInfoWindowRef.current !== infowindow) {
             infowindow.open(map, marker);
@@ -94,6 +95,8 @@ export const useCoolingCenters = (map: any, layerStates: any, onLoad: any) => {
       onLoad();
     } catch (error) {
       console.error(error);
+    } finally {
+      onLoad();
     }
   };
 

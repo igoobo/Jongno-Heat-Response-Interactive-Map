@@ -1,14 +1,15 @@
-import { useEffect, useRef } from 'react';
-import { fetchHourlyForecast } from '../../weather/services/openWeatherService';
-import { interpolateTemperatures } from '@/utils/interpolationUtils';
+import { useEffect, useRef, useState } from 'react';
 
 export const usePolygons = (map: any, layerStates: any, setTempsByPolygon: any, onLoad: any) => {
   const polygonsRef = useRef<any[]>([]);
   const polygonCentersRef = useRef<{ polygon: any; centerLat: number; centerLon: number }[]>([]);
   const polygonColorMapRef = useRef<Map<any, string>>(new Map());
+  const [lastFetchTimestamp, setLastFetchTimestamp] = useState(0);
+
+  const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes, matches backend cache TTL
 
   const loadGeoJSON = async () => {
-    const response = await fetch('/jongno_wgs84.geojson');
+    const response = await fetch('/api/geojson');
     if (!response.ok) throw new Error('Failed to load GeoJSON file.');
     return await response.json();
   };
@@ -21,23 +22,34 @@ export const usePolygons = (map: any, layerStates: any, setTempsByPolygon: any, 
     return { lat: avgLat, lon: avgLon };
   };
 
-  const loadTemperatureData = async () => {
-    const interpolatedTemps: number[][] = [];
-    for (const { centerLat, centerLon } of polygonCentersRef.current) {
-      const hourlyData = await fetchHourlyForecast(centerLat, centerLon);
-      const originalTemps = hourlyData.list.slice(0, 8).map((item: any) => item.main.temp);
-      const interpolated1hr = interpolateTemperatures(originalTemps);
-      interpolatedTemps.push(interpolated1hr);
-    }
-    setTempsByPolygon(interpolatedTemps);
+  const loadTemperatureData = async (polygonCenters: { lat: number; lon: number }[]) => {
+    const coords = polygonCenters.map(center => ({ lat: center.lat, lng: center.lon }));
+    const response = await fetch('/api/polygon-temperatures', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(coords),
+    });
+    if (!response.ok) throw new Error('Failed to fetch polygon temperatures from backend');
+    return response.json();
+  };
+
+  const fetchAndSetTemperatures = async (currentPolygonCenters: { lat: number; lon: number }[]) => {
+    console.log('usePolygons: Calling loadTemperatureData');
+    const temps = await loadTemperatureData(currentPolygonCenters); // Pass collected centroids
+    setTempsByPolygon(temps); // Set temps from backend
+    setLastFetchTimestamp(Date.now()); // Update timestamp after successful fetch
   };
 
   useEffect(() => {
     const initPolygons = async () => {
+      console.log('usePolygons: initPolygons called');
       if (!map || !window.kakao) return;
 
       try {
         const geojson = await loadGeoJSON();
+        const currentPolygonCenters: { lat: number; lon: number }[] = [];
 
         geojson.features.forEach((feature: any) => {
           const coords = feature.geometry.coordinates[0];
@@ -51,11 +63,12 @@ export const usePolygons = (map: any, layerStates: any, setTempsByPolygon: any, 
             strokeColor: '#004c80',
             strokeOpacity: 0.8,
             fillColor: originalFillColor,
-            fillOpacity: 0.5,
+            fillOpacity: 0.4,
           });
           polygonColorMapRef.current.set(polygon, originalFillColor);
 
           const { lat, lon } = calculateCentroid(coords);
+          currentPolygonCenters.push({ lat, lon }); // Collect centroids
           polygonCentersRef.current.push({ polygon, centerLat: lat, centerLon: lon });
           polygonsRef.current.push(polygon);
 
@@ -71,20 +84,46 @@ export const usePolygons = (map: any, layerStates: any, setTempsByPolygon: any, 
           });
 
           window.kakao.maps.event.addListener(polygon, 'click', () => {
-            map.setLevel(3);
+            map.setLevel(4);
             map.panTo(new window.kakao.maps.LatLng(lat, lon));
           });
         });
 
-        await loadTemperatureData();
-        onLoad();
+        await fetchAndSetTemperatures(currentPolygonCenters); // Initial fetch
       } catch (err) {
         console.error("Error initializing polygons:", err);
+      } finally {
+        onLoad();
       }
     };
 
     initPolygons();
   }, [map]);
+
+  // Set up interval for re-fetching data when cache expires
+  useEffect(() => {
+    let intervalId: NodeJS.Timeout;
+
+    if (lastFetchTimestamp > 0) {
+      intervalId = setInterval(() => {
+        const now = Date.now();
+        if (now - lastFetchTimestamp >= CACHE_TTL_MS) {
+          console.log('usePolygons: Cache expired, re-fetching data...');
+          // Trigger re-fetch by calling the function that fetches and sets temperatures
+          // Ensure polygonCentersRef.current is populated before calling
+          if (polygonCentersRef.current.length > 0) {
+            fetchAndSetTemperatures(polygonCentersRef.current.map(p => ({ lat: p.centerLat, lon: p.centerLon })));
+          }
+        }
+      }, 5000); // Check every 5 seconds
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [lastFetchTimestamp, map]); // Depend on lastFetchTimestamp and map
 
   return { polygonsRef, polygonColorMapRef, polygonCentersRef };
 };

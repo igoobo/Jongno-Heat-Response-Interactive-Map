@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { useMapStore } from '../../../stores/useMapStore';
 
 declare global {
@@ -85,5 +85,5 @@ export function useKakaoMap({ onMapLoad, onMapIdle }: UseKakaoMapProps) {
     loadEverything();
   }, []);
 
-  return { map: mapRef.current, loading };
+  return useMemo(() => ({ map: mapRef.current, loading }), [mapRef.current, loading]);
 }

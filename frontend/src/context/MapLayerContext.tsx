@@ -1,5 +1,5 @@
 // src/context/MapLayerContext.tsx
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
 
 type LayerStates = {
   tempDist: boolean;
@@ -78,7 +78,7 @@ export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   return (
-    <MapLayerContext.Provider value={{ layerStates, toggleLayer, setAllLayers  }}>
+    <MapLayerContext.Provider value={useMemo(() => ({ layerStates, toggleLayer, setAllLayers  }), [layerStates])}>
       {children}
     </MapLayerContext.Provider>
   );
