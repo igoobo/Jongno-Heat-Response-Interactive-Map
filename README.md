@@ -100,6 +100,10 @@ Make sure you have the following installed on your system:
         ```bash
         npm install
         ```
+        Create a `.env` file in the `frontend` directory and add your API keys:
+        ```
+        VITE_KAKAO_MAP_JS_API_KEY=YOUR_KAKAO_APP_KEY_HERE
+        ```
 
 4.  **Run the Application:**
 
@@ -126,33 +130,35 @@ Make sure you have the following installed on your system:
 . (project root)
 ├── backend/
 │   ├── data/                 # JSON data files (e.g., cooling centers, geojson)
-│   ├── .env                  # Environment variables (API keys)
+│   ├── .env.example          # Example environment variables for backend
+│   ├── .env                  # Environment variables (API keys - ignored by Git)
 │   ├── api_clients.py        # External API fetching logic
 │   ├── cache.py              # Global cache for KMA warnings
 │   ├── main.py               # FastAPI application entry point, scheduler setup
 │   ├── requirements.txt      # Python dependencies
 │   └── routes.py             # API endpoints
 ├── frontend/
-│   ├── public/               # Static assets
+│   ├── public/               # Static assets (icons, images)
 │   ├── src/                  # Frontend source code
-│   │   ├── assets/           # Images, etc.
-│   │   ├── common/           # Common types and utilities
-│   │   ├── components/       # Reusable UI components (e.g., Card, Button)
-│   │   ├── context/          # React Context providers
-│   │   ├── features/         # Feature-specific modules (map, sidebar, weather)
-│   │   │   ├── map/
-│   │   │   ├── sidebar/
-│   │   │   └── weather/
-│   │   ├── hooks/            # Custom React hooks
-│   │   ├── services/         # API service functions
-│   │   ├── stores/           # State management (e.g., Zustand)
-│   │   ├── styles/           # Global CSS (globals.css)
-│   │   └── utils/            # Utility functions (e.g., kmaCoords.ts)
-│   ├── App.tsx               # Main React component
-│   ├── main.tsx              # React entry point
-│   └── vite.config.ts        # Vite configuration
-│   └── package.json          # Frontend dependencies and scripts
-
+│   │   ├── assets/           # React/Vite specific assets
+│   │   ├── common/           # Common types (e.g., Kakao Maps) and libraries
+│   │   ├── components/       # Reusable UI components (e.g., Card, Button, Slider)
+│   │   ├── context/          # React Context providers for global state
+│   │   ├── features/         # Core application features, organized by domain
+│   │   │   ├── map/          # Map components, hooks, and controls
+│   │   │   ├── sidebar/      # Desktop and mobile sidebar components
+│   │   │   └── weather/      # Weather display components and hooks
+│   │   ├── hooks/            # Global custom React hooks
+│   │   ├── services/         # Functions for calling external services (e.g., Kakao)
+│   │   ├── stores/           # Client-side state management (e.g., Zustand)
+│   │   ├── styles/           # Global CSS
+│   │   └── utils/            # Utility functions
+│   ├── .env.example          # Example environment variables for frontend
+│   ├── .env                  # Environment variables (API keys - ignored by Git)
+│   ├── App.tsx               # Main React application component
+│   ├── main.tsx              # React application entry point
+│   ├── package.json          # Frontend dependencies and scripts
+│   └── vite.config.ts        # Vite build tool configuration
 └── README.md                 # Project documentation (this file)
 ```
 
