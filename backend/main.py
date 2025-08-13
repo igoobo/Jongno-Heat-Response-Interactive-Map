@@ -4,7 +4,8 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from .routes import router, _fetch_and_parse_kma_warnings # Import the new function
+from .routes import router
+from .services.kma_service import fetch_and_parse_kma_warnings_data
 from apscheduler.schedulers.background import BackgroundScheduler # Import scheduler
 
 from contextlib import asynccontextmanager
@@ -27,7 +28,7 @@ from .cache import kma_warnings_cache # Import the global cache
 def update_kma_warnings_cache():
     """Fetches KMA warnings and updates the global cache."""
     try:
-        warnings = _fetch_and_parse_kma_warnings()
+        warnings = fetch_and_parse_kma_warnings_data()
         kma_warnings_cache["data"] = warnings
         print("KMA warnings cache updated successfully.")
     except Exception as e:

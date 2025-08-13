@@ -1,11 +1,18 @@
+from typing import Dict, Any, Optional
 import os
 import time
-from typing import Dict, Any, Optional
+import httpx
 
-import requests
+
 from dotenv import load_dotenv
-from fastapi import HTTPException
 from pydantic import BaseModel
+
+# Define a custom exception for external API errors
+class ExternalAPIError(Exception):
+    def __init__(self, message: str, status_code: int = 500):
+        self.message = message
+        self.status_code = status_code
+        super().__init__(self.message)
 
 # Build the path to the .env file relative to this file.
 dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
@@ -40,21 +47,24 @@ def set_in_cache(key: str, data: Any):
     cache[key] = CacheEntry(data=data, timestamp=time.time())
 
 
+# Create a global httpx client for connection pooling
+client = httpx.Client()
+
 def fetch_external_api(url: str, headers: Optional[Dict[str, str]] = None) -> Any:
     try:
-        response = requests.get(url, headers=headers)
+        response = client.get(url, headers=headers)
         response.raise_for_status()
         return response.json()
-    except requests.exceptions.RequestException as e:
+    except httpx.RequestError as e:
         print(f"External API request failed with error: {e}")
-        raise HTTPException(status_code=500, detail=f"External API request failed: {e}")
+        raise ExternalAPIError(message=f"External API request failed: {e}", status_code=500)
 
 
 def fetch_external_text_api(url: str, headers: Optional[Dict[str, str]] = None) -> str:
     try:
-        response = requests.get(url, headers=headers)
+        response = client.get(url, headers=headers)
         response.raise_for_status()
         return response.text
-    except requests.exceptions.RequestException as e:
+    except httpx.RequestError as e:
         print(f"External API request failed with error: {e}")
-        raise HTTPException(status_code=500, detail=f"External API request failed: {e}")
+        raise ExternalAPIError(message=f"External API request failed: {e}", status_code=500)
