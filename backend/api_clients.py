@@ -24,8 +24,8 @@ class CacheEntry(BaseModel):
     timestamp: float
 
 
-KAKAO_REST_API_KEY = os.environ.get("VITE_KAKAO_REST_API_KEY")
-OPENWEATHER_API_KEY = os.environ.get("VITE_OPENWEATHER_API_KEY")
+KAKAO_REST_API_KEY = os.environ.get("KAKAO_REST_API_KEY")
+OPENWEATHER_API_KEY = os.environ.get("OPENWEATHER_API_KEY")
 KMA_API_KEY = os.environ.get("KMA_API_KEY")
 FRIENDLI_TOKENS = os.environ.get("FRIENDLI_TOKENS")
 

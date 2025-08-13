@@ -138,6 +138,7 @@ Make sure you have the following installed on your system:
 . (project root)
 ├── backend/
 │   ├── data/                 # JSON data files (e.g., cooling centers, geojson)
+│   ├── services/             # Backend service modules
 │   ├── .env.example          # Example environment variables for backend
 │   ├── .env                  # Environment variables (API keys - ignored by Git)
 │   ├── api_clients.py        # External API fetching logic
@@ -161,13 +162,6 @@ Make sure you have the following installed on your system:
 │   │   ├── stores/           # Client-side state management (e.g., Zustand)
 │   │   ├── styles/           # Global CSS
 │   │   └── utils/            # Utility functions
-│   ├── .env.example          # Example environment variables for frontend
-│   ├── .env                  # Environment variables (API keys - ignored by Git)
-│   ├── App.tsx               # Main React application component
-│   ├── main.tsx              # React application entry point
-│   ├── package.json          # Frontend dependencies and scripts
-│   └── vite.config.ts        # Vite build tool configuration
-└── README.md                 # Project documentation (this file)
 ```
 
 ## AI Assistance
