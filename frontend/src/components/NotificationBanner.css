@@ -1,0 +1,48 @@
+/* frontend/src/components/NotificationBanner.css */
+.notification-banner {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  left: 70%;
+  transform: translateX(-1%);
+  background-color: rgba(255, 255, 255, 0.8); /* Light, semi-transparent background */
+  color: #333; /* Dark text for contrast */
+  padding: 10px 20px;
+  border-radius: 8px;
+  z-index: 1000; /* Ensure it's above other map elements */
+  gap: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Use opacity and visibility for smooth transitions and to reserve space */
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.notification-banner.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-20px); /* Slide up slightly when hidden */
+}
+
+.notification-banner p {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+.notification-icon {
+  display: flex;
+  align-items: center;
+  color: #333; /* Icon color, matching text */
+}
+
+.notification-close-button {
+  background: none;
+  border: none;
+  color: #333; /* Close button color, matching text */
+  font-size: 1.2em;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.notification-close-button:hover {
+  color: #666; /* Darker hover color */
+}
