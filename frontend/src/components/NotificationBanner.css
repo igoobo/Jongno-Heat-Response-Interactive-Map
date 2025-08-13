@@ -2,19 +2,21 @@
 .notification-banner {
   position: absolute;
   top: 10px; /* Adjust as needed */
-  left: 70%;
-  transform: translateX(-1%);
+  left: calc(80% - 300px); /* Align to left edge of viewport */
   background-color: rgba(255, 255, 255, 0.8); /* Light, semi-transparent background */
   color: #333; /* Dark text for contrast */
   padding: 10px 20px;
   border-radius: 8px;
   z-index: 1000; /* Ensure it's above other map elements */
-  gap: 10px;
+  display: flex; /* Re-add flex display */
+  align-items: center;
+  justify-content: space-between; /* Re-add space-between */
+  /* Removed gap: 10px; to make it flush */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   /* Use opacity and visibility for smooth transitions and to reserve space */
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.5s ease-out, visibility 0.5s ease-out, transform 0.5s ease-out;
+  min-height: 60px; /* Added min-height to prevent size changes */
 }
 
 .notification-banner.hidden {
