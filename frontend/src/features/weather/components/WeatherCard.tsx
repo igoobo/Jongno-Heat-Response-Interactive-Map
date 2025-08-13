@@ -3,22 +3,26 @@ import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui
 import { CloudSun, ArrowUp, ArrowDown } from 'lucide-react';
 import { useWeather } from '../hooks/useWeather';
 import dayjs from 'dayjs';
+import { useMediaQuery } from '../../../hooks/useMediaQuery'; // New import
 
 const WeatherCard = () => {
   const { location } = useMapLocation();
   const { weather } = useWeather(location);
+  const isDesktop = useMediaQuery('(min-width: 768px)'); // Detect desktop/mobile
 
   return (
     <Card className="p-4 rounded-lg shadow-md">
-      <CardHeader className="pb-2">
-        <div className="text-center text-sm text-muted-foreground">
-          현재 {dayjs().format('MM.DD')}
-        </div>
-        <CardTitle className="text-base flex items-center justify-center gap-2 mt-2">
-          <CloudSun className="w-5 h-5" />
-          현재 위치 날씨
-        </CardTitle>
-      </CardHeader>
+      {isDesktop && ( // Conditionally render CardHeader for desktop only
+        <CardHeader className="pb-2">
+          <div className="text-center text-sm text-muted-foreground">
+            현재 {dayjs().format('MM.DD')}
+          </div>
+          <CardTitle className="text-base flex items-center justify-center gap-2 mt-2">
+            <CloudSun className="w-5 h-5" />
+            현재 위치 날씨
+          </CardTitle>
+        </CardHeader>
+      )}
 
       <CardContent className="flex flex-col items-center space-y-2">
         {weather ? (
@@ -38,21 +42,24 @@ const WeatherCard = () => {
               <span className="font-semibold capitalize">{weather.description}</span>
             </div>
 
-            <div className="text-xs text-muted-foreground">
+            <div className="text-xs md:text-sm text-muted-foreground">
               최저 {weather.minTemp?.toFixed(0)}° · 최고 {weather.maxTemp?.toFixed(0)}° 
               {weather.tempDiff !== undefined && (
-                <span className="ml-2 flex items-center">
-                  (어제 대비 
-                  <span className={`${weather.tempDiff > 0 ? 'text-red-500' : 'text-blue-500'} flex items-center`}>
-                    {weather.tempDiff > 0 ? (
-                      <ArrowUp className="w-3 h-3 inline-block ml-1" />
-                    ) : (
-                      <ArrowDown className="w-3 h-3 inline-block ml-1" />
-                    )}
-                    {Math.abs(weather.tempDiff).toFixed(1)}°
+                <> {/* Use Fragment to wrap multiple elements */}
+                  <br className="md:hidden" /> {/* New line only on mobile */}
+                  <span className="ml-2 flex items-center">
+                    (<span style={{ fontSize: '1em', whiteSpace: 'nowrap' }}>어제 대비</span> 
+                    <span className={`${weather.tempDiff > 0 ? 'text-red-500' : 'text-blue-500'} flex items-center`}>
+                      {weather.tempDiff > 0 ? (
+                        <ArrowUp className="w-3 h-3 inline-block ml-1" />
+                      ) : (
+                        <ArrowDown className="w-3 h-3 inline-block ml-1" />
+                      )}
+                      {Math.abs(weather.tempDiff).toFixed(1)}°
+                    </span>
+                    )
                   </span>
-                  )
-                </span>
+                </>
               )}
             </div>
           </>
