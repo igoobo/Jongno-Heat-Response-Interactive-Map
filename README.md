@@ -24,6 +24,7 @@ This project provides a modern web interface for exploring Jongno (Seoul) map da
 - Provides AI-generated weather-based advice and information via a persistent notification banner on the map.
 - Integrates real-time weather data and KMA warnings into AI responses.
 - User-dismissible notification.
+- The chat feature utilizes the `K-intelligence/Midm-2.0-Base-Instruct` model.
 
 ### User Interface
 - Responsive design for both desktop and mobile devices.
