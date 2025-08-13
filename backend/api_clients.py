@@ -20,6 +20,7 @@ class CacheEntry(BaseModel):
 KAKAO_REST_API_KEY = os.environ.get("VITE_KAKAO_REST_API_KEY")
 OPENWEATHER_API_KEY = os.environ.get("VITE_OPENWEATHER_API_KEY")
 KMA_API_KEY = os.environ.get("KMA_API_KEY")
+FRIENDLI_TOKENS = os.environ.get("FRIENDLI_TOKENS")
 
 CACHE_TTL_SECONDS = 60 * 10  # 10 minutes
 cache: Dict[str, CacheEntry] = {}

@@ -2,6 +2,7 @@ import os
 import json
 from typing import List
 
+from openai import OpenAI
 from fastapi import APIRouter, HTTPException, Body, Depends
 from pydantic import BaseModel
 
@@ -13,6 +14,7 @@ from .api_clients import (
     KAKAO_REST_API_KEY,
     OPENWEATHER_API_KEY,
     KMA_API_KEY,
+    FRIENDLI_TOKENS,
 )
 from .utils import interpolate_temperatures
 
@@ -49,8 +51,7 @@ def kakao_proxy(coords: Coordinates = Depends()):
     return data
 
 
-@router.get("/api/weather-proxy")
-def weather_proxy(coords: Coordinates = Depends(), type: str = "weather"):
+def _get_weather_data(coords: Coordinates, type: str = "weather"):
     if not OPENWEATHER_API_KEY:
         raise HTTPException(status_code=500, detail="OpenWeather API key not configured in backend")
 
@@ -70,6 +71,11 @@ def weather_proxy(coords: Coordinates = Depends(), type: str = "weather"):
     data = fetch_external_api(url)
     set_in_cache(cache_key, data)
     return data
+
+
+@router.get("/api/weather-proxy")
+def weather_proxy(coords: Coordinates = Depends(), type: str = "weather"):
+    return _get_weather_data(coords, type)
 
 
 @router.post("/api/polygon-temperatures")
@@ -236,3 +242,42 @@ from .cache import kma_warnings_cache # Import the global cache
 def get_kma_weather_warnings():
     return kma_warnings_cache["data"]
 
+
+client = OpenAI(
+    api_key=FRIENDLI_TOKENS,
+    base_url="https://api.friendli.ai/serverless/v1",
+)
+
+@router.get("/api/chat")
+def chat():
+    # Coordinates for the center of Gwanghwmun
+    coords = Coordinates(lat=37.5760, lng=126.9769)
+    weather_data = _get_weather_data(coords, type="weather")
+    kma_warnings = kma_warnings_cache["data"]
+    
+    # Extract relevant weather information
+    temp = weather_data.get("main", {}).get("temp")
+    weather_desc = weather_data.get("weather", [{}])[0].get("description")
+
+    # Prepare KMA warnings string
+    warnings_str = ""
+    if kma_warnings:
+        warnings_list = [w.get("WRN") + " " + w.get("LVL") for w in kma_warnings if w.get("WRN") and w.get("LVL")]
+        if warnings_list:
+            warnings_str = f" 현재 기상 특보는 다음과 같습니다: {', '.join(warnings_list)}."
+
+    # Prepare the prompt for the language model
+    prompt = f"현재 기온은 {temp}°C이고, 날씨는 '{weather_desc}'입니다.{warnings_str} 이 정보를 바탕으로 사용자에게 유용한 정보를 제공해주세요."
+
+    completion = client.chat.completions.create(
+        model="K-intelligence/Midm-2.0-Base-Instruct",
+        messages=[
+            {"role": "system", 
+             "content": "당신은 사용자에게 현재 날씨 정보를 기반으로 유용한 조언을 해주는 AI 비서입니다."},
+            {"role": "user", 
+             "content": prompt},
+        ],
+    )
+
+    answer = completion.choices[0].message.content
+    return {"answer": answer}
