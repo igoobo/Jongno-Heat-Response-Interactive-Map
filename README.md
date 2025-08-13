@@ -51,6 +51,7 @@ This project provides a modern web interface for exploring Jongno (Seoul) map da
 - **python-dotenv**: For managing environment variables.
 - **Pydantic**: Data validation and settings management using Python type hints.
 - **OpenAI**: Python client for interacting with OpenAI-compatible APIs (used for AI chat).
+- **FriendliAI**: Used to accelerate the AI model for chat responses.
 
 ## Getting Started
 
