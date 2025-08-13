@@ -210,7 +210,7 @@ def _fetch_and_parse_kma_warnings():
                 continue
             
             parts = [p.strip() for p in line.split(",")]
-            if len(parts) >= 10 and parts[0] == "L1100000":
+            if len(parts) >= 10 and parts[0] == "L1100000" and parts[6] == "폭염":
                 filtered_data.append({
                     "REG_UP": parts[0],
                     "REG_UP_KO": parts[1],
