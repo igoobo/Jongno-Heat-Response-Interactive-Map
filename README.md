@@ -164,6 +164,14 @@ Make sure you have the following installed on your system:
 │   │   └── utils/            # Utility functions
 ```
 
+## Screenshots
+
+### Map Layers - Example 1
+![Map Layers Example 1](assets/map-layer-example-1.png)
+
+### Map Layers - Example 2
+![Map Layers Example 2](assets/map-layer-example-2.png)
+
 ## AI Assistance
 
 This project was developed with the assistance of AI models, specifically Google Gemini and ChatGPT, Figma Make. 
