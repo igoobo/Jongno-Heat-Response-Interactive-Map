@@ -20,6 +20,11 @@ This project provides a modern web interface for exploring Jongno (Seoul) map da
 - Filter cooling centers by facility type (e.g., public facilities, facilities for specific groups).
 - Map pans to the closest found cooling center.
 
+### AI Chat & Notifications
+- Provides AI-generated weather-based advice and information via a persistent notification banner on the map.
+- Integrates real-time weather data and KMA warnings into AI responses.
+- User-dismissible notification.
+
 ### User Interface
 - Responsive design for both desktop and mobile devices.
 - Sidebar for detailed information and controls on desktop.
@@ -44,6 +49,7 @@ This project provides a modern web interface for exploring Jongno (Seoul) map da
 - **Requests**: HTTP library for making external API calls.
 - **python-dotenv**: For managing environment variables.
 - **Pydantic**: Data validation and settings management using Python type hints.
+- **OpenAI**: Python client for interacting with OpenAI-compatible APIs (used for AI chat).
 
 ## Getting Started
 
@@ -88,6 +94,7 @@ Make sure you have the following installed on your system:
         KAKAO_REST_API_KEY=your_kakao_rest_api_key
         OPENWEATHER_API_KEY=your_openweathermap_api_key
         KMA_API_KEY=your_kma_api_key
+        FRIENDLI_TOKENS=your_friendli_ai_token # New API Key
         ```
 
 3.  **Set up the Frontend:**
