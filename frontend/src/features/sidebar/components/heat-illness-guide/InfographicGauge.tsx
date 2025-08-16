@@ -61,7 +61,7 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ score, color
         {/* 윤곽선 역할 (굵게) */}
         <line
           x1="100"
-          y1="100"
+          y1="98"
           x2="100"
           y2="40"
           stroke="black"
