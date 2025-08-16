@@ -6,9 +6,10 @@ import MapLayers from './MapLayers';
 import QuickActions from '././QuickActions';
 import { SidebarPanel } from './SidebarPanel';
 import { ClosestCoolingCenterCard } from './ClosestCoolingCenterCard'; // Import the new component
+import { HeatIllnessGuide } from './HeatIllnessGuide';
 
 interface DesktopSidebarContentProps {
-  activeTab: 'info' | 'layers';
+  activeTab: 'info' | 'layers' | 'heat-illness';
   map: any; // Accept map prop
 }
 
@@ -25,6 +26,9 @@ export const DesktopSidebarContent: React.FC<DesktopSidebarContentProps> = ({ ac
         <ClosestCoolingCenterCard map={map} /> {/* Render the new component */}
         <MapLayers />
         <QuickActions />
+      </SidebarPanel>
+      <SidebarPanel isActive={activeTab === 'heat-illness'} className="space-y-4 bg-white">
+        <HeatIllnessGuide />
       </SidebarPanel>
     </div>
   );

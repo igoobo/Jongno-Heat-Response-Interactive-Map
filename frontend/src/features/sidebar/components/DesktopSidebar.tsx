@@ -4,7 +4,7 @@ import { DesktopSidebarTabs } from './DesktopSidebarTabs';
 import { DesktopSidebarContent } from './DesktopSidebarContent';
 import { DesktopSidebarFooter } from './DesktopSidebarFooter';
 
-type SidebarTab = 'info' | 'layers';
+type SidebarTab = 'info' | 'layers' | 'heat-illness';
 
 interface DesktopSidebarProps {
   map: any; // Accept map prop
