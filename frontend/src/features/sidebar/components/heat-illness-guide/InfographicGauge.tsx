@@ -2,15 +2,17 @@ import React from 'react';
 
 
 interface InfographicGaugeProps {
-  riskLevel: number;
+  score: number | null;
   color: string;
 }
 
-export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ riskLevel, color }) => {
-  const gaugeColors = ['#10b981', '#f59e0b', '#ef4444', '#dc2626'];
-  const riskLabels = ['관심', '주의', '경고', '위험'];
-  
-  const needleAngle = -157.5 + (riskLevel + 1) * 45;
+import { HEAT_ILLNESS_STAGES } from './stages'; // Add this import
+import type { Stage } from './types';
+
+export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ score, color }) => {
+  // Removed hardcoded gaugeColors and riskLabels
+
+  const needleAngle = score !== null ? -157.5 + 67.5 + (score * 1.8) : -157.5 + 67.5; // Adjusted needle angle calculation
   
   return (
     <div className="relative w-56 h-56 flex items-center justify-center">
@@ -18,8 +20,8 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ riskLevel, c
         {[0, 1, 2, 3].map((segment) => {
           const startAngle = segment * 45 - 180;
           const endAngle = (segment + 1) * 45 - 180;
-          const isActive = segment < riskLevel;
-          const segmentColor = isActive ? gaugeColors[segment] : '#e5e5e5';
+          const isActive = score !== null && score > (segment === 0 ? 0 : HEAT_ILLNESS_STAGES[segment - 1].threshold);
+          const segmentColor = isActive ? HEAT_ILLNESS_STAGES[segment].color : '#e5e5e5';
           
           const startAngleRad = (startAngle * Math.PI) / 180;
           const endAngleRad = (endAngle * Math.PI) / 180;
@@ -55,6 +57,19 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ riskLevel, c
           strokeWidth="3"
         />
         
+
+        {/* 윤곽선 역할 (굵게) */}
+        <line
+          x1="100"
+          y1="100"
+          x2="100"
+          y2="40"
+          stroke="black"
+          strokeWidth="6"
+          strokeLinecap="round"
+          transform={`rotate(${needleAngle} 100 100)`}
+        />
+
         <line
           x1="100"
           y1="100"
@@ -70,35 +85,37 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ riskLevel, c
       
       <div className="absolute inset-0 flex items-end justify-center pb-4">
         <div className="text-center">
-          <div className="text-xs font-medium text-gray-600 mb-1">RISK LEVEL</div>
-          <div 
+          <div className="text-xs font-medium text-gray-600 mb-1">현재 수준</div>
+          <div
             className="text-sm font-bold px-3 py-1 rounded-full text-white"
             style={{ backgroundColor: color }}
           >
-            {riskLabels[riskLevel - 1]}
+            {score !== null ? HEAT_ILLNESS_STAGES.find((s: Stage) => score <= s.threshold)?.name || '알 수 없음' : '로딩 중...'}
           </div>
         </div>
       </div>
       
       
-      {[1, 2, 3, 4].map((stage) => {
-        const angle = (stage * 45) - 180 - 25;
+      {HEAT_ILLNESS_STAGES.map((stage, index) => {
+        const angle = ((index + 1) * 45) - 180 - 25; // Adjust angle for 0-indexed array
         const angleRad = (angle * Math.PI) / 180;
         const radius = 85;
         const x = 100 + radius * Math.cos(angleRad);
         const y = 100 + radius * Math.sin(angleRad);
         
+        const isActive = score !== null && score > (index === 0 ? 0 : HEAT_ILLNESS_STAGES[index - 1].threshold);
+
         return (
           <div
-            key={stage}
+            key={stage.id}
             className="absolute w-6 h-6 flex items-center justify-center text-xs font-bold text-white rounded-full"
             style={{
               left: `${x - 12}px`,
               top: `${y - 12}px`,
-              backgroundColor: stage <= riskLevel ? gaugeColors[stage - 1] : '#d1d5db'
+              backgroundColor: isActive ? stage.color : '#d1d5db'
             }}
           >
-            {stage}
+            {index + 1}
           </div>
         );
       })}

@@ -1,10 +1,11 @@
 import { Thermometer, AlertTriangle, AlertCircle, Skull } from 'lucide-react';
 import type { Stage } from './types';
 
-export const stages: Stage[] = [
+export const HEAT_ILLNESS_STAGES: Stage[] = [
   {
     id: 1,
-    severity: "열 스트레스",
+    name: "관심", // Renamed from severity
+    threshold: 25, // Example threshold
     riskLevel: 1,
     color: "#10b981",
     bgColor: "bg-emerald-50",
@@ -15,7 +16,8 @@ export const stages: Stage[] = [
   },
   {
     id: 2,
-    severity: "열 탈진",
+    name: "주의", // Renamed from severity
+    threshold: 50, // Example threshold
     riskLevel: 2,
     color: "#f59e0b",
     bgColor: "bg-amber-50",
@@ -26,7 +28,8 @@ export const stages: Stage[] = [
   },
   {
     id: 3,
-    severity: "열 경련",
+    name: "경고", // Renamed from severity
+    threshold: 75, // Example threshold
     riskLevel: 3,
     color: "#ef4444",
     bgColor: "bg-red-50",
@@ -37,7 +40,8 @@ export const stages: Stage[] = [
   },
   {
     id: 4,
-    severity: "열사병",
+    name: "위험", // Renamed from severity
+    threshold: 100, // Example threshold
     riskLevel: 4,
     color: "#dc2626",
     bgColor: "bg-red-100",

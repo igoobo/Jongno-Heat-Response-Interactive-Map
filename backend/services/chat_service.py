@@ -157,6 +157,10 @@ def get_heat_stages_response(coords: Coordinates) -> Any:
              "content": f"""
                         사용자에게 입력받은 내용을 바탕으로 온열질환 발생 가능 점수가 몇 점인지 제공하세요.
                         오직 출력은 정수 숫자 형태여야 합니다.
+                        예시1) 56
+                        예시2) 45
+                        예시3) 40
+                        예시4) 65
                         """},
             {"role": "user", 
              "content": reasoning},
