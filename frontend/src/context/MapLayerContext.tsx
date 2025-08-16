@@ -8,7 +8,7 @@ type LayerStates = {
 };
 
 const defaultState: LayerStates = {
-  tempDist: false,
+  tempDist: true,
   coolingCenter: false, // ✅ 처음부터 false
   area: true,
 };
