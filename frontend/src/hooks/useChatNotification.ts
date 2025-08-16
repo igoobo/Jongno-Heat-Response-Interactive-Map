@@ -20,7 +20,7 @@ const useChatNotification = (): ChatNotification => {
     const fetchChatResponse = async () => {
       setIsChatLoading(true);
       try {
-        const response = await fetch('/api/chat');
+        const response = await fetch('/api/notification');
         const data = await response.json();
         if (data && data.answer) {
           setNotificationMessage(data.answer);

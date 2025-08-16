@@ -54,8 +54,14 @@ def get_kma_weather_warnings():
     return kma_service.get_cached_kma_warnings_data()
 
 
-@router.get("/api/chat")
+@router.get("/api/notification")
 def chat():
     # Coordinates for the center of Gwanghwmun
     coords = Coordinates(lat=37.5760, lng=126.9769)
-    return chat_service.get_chat_response(coords)
+    return chat_service.get_notification_response(coords)
+
+@router.get("/api/heat-stages")
+def chat():
+    # Coordinates for the center of Gwanghwmun
+    coords = Coordinates(lat=37.5760, lng=126.9769)
+    return chat_service.get_heat_stages_response(coords)

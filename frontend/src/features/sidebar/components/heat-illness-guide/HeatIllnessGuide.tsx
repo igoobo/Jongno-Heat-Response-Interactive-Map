@@ -30,7 +30,7 @@ export const HeatIllnessGuide: React.FC = () => {
           >
             {stage.severity}
           </span>
-          <div className="text-sm text-gray-600 mt-2">{formattedDate}</div>
+          <div className="text-sm text-gray-600 mt-2">{formattedDate} | 점수: </div>
         </CardHeader>
 
         <CardContent className="space-y-6">
