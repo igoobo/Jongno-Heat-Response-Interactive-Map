@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useCurrentLocation } from '../../../hooks/useCurrentLocation';
 import { toast } from 'react-toastify';
 import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
@@ -10,22 +9,19 @@ interface ClosestCoolingCenterCardProps {
 }
 
 export const ClosestCoolingCenterCard: React.FC<ClosestCoolingCenterCardProps> = ({ map }) => {
-  const { getLocation } = useCurrentLocation();
   const [closestCenter, setClosestCenter] = useState<any>(null);
   const [selectedFacilityType, setSelectedFacilityType] = useState<string>('');
 
   const findClosestCoolingCenter = async () => {
-    console.log("Attempting to get current location...");
-    const currentPosition = await getLocation(map, false);
+    if (!map) return;
 
-    console.log("Location obtained - currentPosition:", currentPosition);
-    if (!currentPosition) {
-      toast.error("현재 위치를 알 수 없습니다.");
-      return;
-    }
+    const center = map.getCenter();
+    const currentPosition = {
+      lat: center.getLat(),
+      lng: center.getLng(),
+    };
 
     try {
-      console.log("Current position for closest rest search:", currentPosition.lat, currentPosition.lng);
       let url = `/api/closest-cooling-center?lat=${currentPosition.lat}&lng=${currentPosition.lng}`;
       if (selectedFacilityType) {
         url += `&facility_type1=${selectedFacilityType}`;
@@ -35,25 +31,17 @@ export const ClosestCoolingCenterCard: React.FC<ClosestCoolingCenterCardProps> =
         throw new Error('Failed to fetch closest cooling center');
       }
       const data = await response.json();
-      console.log("Closest cooling center data:", data);
       setClosestCenter(data);
-      toast.success("가장 가까운 무더위 쉼터를 찾았습니다!");
+      toast.success("지도 중심에서 가장 가까운 무더위 쉼터를 찾았습니다!");
 
       if (map && data.lat && data.lon) {
-        console.log("Moving map to:", data.lat, data.lon);
         if (window.kakao && window.kakao.maps) {
-          console.log("window.kakao.maps is available.");
           const moveLatLon = new window.kakao.maps.LatLng(parseFloat(data.lat), parseFloat(data.lon));
           setTimeout(() => {
             map.panTo(moveLatLon);
-            console.log("Map panned to new location.");
           }, 500);
-        } else {
-          console.error("window.kakao.maps is not available. Cannot pan map.");
         }
-      } else {
-        console.log("Map or coordinates not available for panning:", { map: !!map, lat: data.lat, lon: data.lon });
-      }
+      } 
     } catch (err) {
       console.error("Error fetching closest cooling center:", err);
       toast.error("무더위 쉼터를 찾는 중 오류가 발생했습니다.");

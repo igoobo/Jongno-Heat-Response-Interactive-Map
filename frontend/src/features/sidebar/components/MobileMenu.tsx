@@ -1,7 +1,6 @@
 import { X, Navigation, Layers, Info, MapPin } from 'lucide-react'; // Import MapPin icon
 import { Button } from '../../../components/ui/button';
 import { useMapStore } from '../../../stores/useMapStore';
-import { useCurrentLocation } from '../../../hooks/useCurrentLocation';
 import { moveToFullView } from '../../map/components/MapControls/moveToFullView';
 import { useMapLayer } from '../../../context/MapLayerContext';
 import HeatGuideModal from './HeatGuideModal';
@@ -15,25 +14,27 @@ interface MobileMenuProps {
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const map = useMapStore((state: any) => state.map);
-  const { getLocation } = useCurrentLocation();
   const { setAllLayers, setLayerState } = useMapLayer(); // Destructure setLayerState
   const [HeatGuideVisible, setHeatGuideVisible] = useState(false);
   const [selectedFacilityType, setSelectedFacilityType] = useState<string>(''); // State for selected facility type
 
   const handleActionClick = async (actionType: string) => { // Make async
     if (actionType === 'currentLocation') {
-      getLocation(map);
+      // To-Do: Implement get location for mobile
     } else if (actionType === 'fullView') {
       if (map) {
         setAllLayers(true);
         moveToFullView(map);
       }
     } else if (actionType === 'closestRest') { // New action
-      const currentPosition = await getLocation(map, false); // Get location, prevent auto-pan
-      if (!currentPosition) {
-        toast.error("현재 위치를 알 수 없습니다.");
-        return;
-      }
+      if (!map) return;
+
+      const center = map.getCenter();
+      const currentPosition = {
+        lat: center.getLat(),
+        lng: center.getLng(),
+      };
+
       try {
         let url = `/api/closest-cooling-center?lat=${currentPosition.lat}&lng=${currentPosition.lng}`;
         if (selectedFacilityType) { // Add filter to URL
@@ -53,7 +54,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           }
         }
         setLayerState('coolingCenter', true); // Enable coolingCenter layer
-        toast.success("가장 가까운 무더위 쉼터로 이동했습니다!");
+        toast.success("지도 중심에서 가장 가까운 무더위 쉼터로 이동했습니다!");
       } catch (err) {
         console.error("Error fetching closest cooling center:", err);
         toast.error("무더위 쉼터를 찾는 중 오류가 발생했습니다.");
