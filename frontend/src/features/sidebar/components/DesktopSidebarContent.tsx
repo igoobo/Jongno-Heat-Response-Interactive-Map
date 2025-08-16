@@ -6,7 +6,7 @@ import MapLayers from './MapLayers';
 import QuickActions from '././QuickActions';
 import { SidebarPanel } from './SidebarPanel';
 import { ClosestCoolingCenterCard } from './ClosestCoolingCenterCard'; // Import the new component
-import { HeatIllnessGuide } from './HeatIllnessGuide';
+import { HeatIllnessGuide } from './heat-illness-guide/HeatIllnessGuide';
 
 interface DesktopSidebarContentProps {
   activeTab: 'info' | 'layers' | 'heat-illness';

@@ -12,7 +12,7 @@ export const DesktopSidebarFooter: React.FC = () => {
             Weather data provided by <a href="https://openweathermap.org/">OpenWeather</a> © 2012–2025 OpenWeather®
           </div>
           <div>
-            Weather data from <a href="https://apihub.kma.go.kr/"> <br/> 
+            and <a href="https://apihub.kma.go.kr/">
             Korea Meteorological Administration (KMA)</a>
             <span> (KOGL 제1유형)</span>
           </div>
