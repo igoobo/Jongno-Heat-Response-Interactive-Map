@@ -1,6 +1,6 @@
 // src/components/sidebar/MapLayers.tsx
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
+import { ToggleSwitch } from './ToggleSwitch';
 import { Layers } from 'lucide-react';
 import { useMapLayer } from '../../../context/MapLayerContext';
 
@@ -28,13 +28,11 @@ const MapLayers = () => {
               <div className={`w-3 h-3 rounded-full ${layer.color}`} />
               <span className="text-lg md:text-sm">{layer.name}</span>
             </div>
-            <Button
-              variant={layerStates[layer.id as keyof typeof layerStates] ? 'default' : 'secondary'}
-              className="cursor-pointer"
-              onClick={() => toggleLayer(layer.id as keyof typeof layerStates)}
-            >
-              {layerStates[layer.id as keyof typeof layerStates] ? '활성' : '비활성'}
-            </Button>
+            <ToggleSwitch
+              id={layer.id} // Pass unique ID
+              checked={layerStates[layer.id as keyof typeof layerStates]}
+              onChange={() => toggleLayer(layer.id as keyof typeof layerStates)}
+            />
           </div>
         ))}
       </CardContent>
