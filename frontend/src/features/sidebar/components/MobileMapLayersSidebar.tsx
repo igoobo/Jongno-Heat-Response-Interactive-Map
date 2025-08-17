@@ -10,12 +10,13 @@ const MobileMapLayersSidebar: React.FC<MobileMapLayersSidebarProps> = ({ isOpen,
   return (
     <div
       className={`
-        fixed left-0 w-full bg-white p-4 shadow-lg rounded-t-lg z-50
+        fixed left-0 w-full bg-white p-4 rounded-t-lg z-50
         transition-all duration-300 ease-out
       `}
       style={{
-        maxHeight: 'calc(100vh - 4rem)', // 4rem (64px) is the height of MobileBottomNav
-        bottom: isOpen ? '4rem' : '-100%', // Move off-screen when closed
+        bottom: '4rem', // Fixed position above the bottom nav
+        maxHeight: isOpen ? 'calc(100vh - 4rem)' : '0', // Animate height
+        overflow: 'hidden', // Hide content when collapsed
       }}
     >
       <div className="flex justify-end">
