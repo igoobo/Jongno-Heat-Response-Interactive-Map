@@ -121,7 +121,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             <select
               id="mobileFacilityType"
               name="mobileFacilityType"
-              className="block w-auto pl-3 pr-7 py-1 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" // Removed mt-2, w-full, changed to w-auto
+              className="block w-auto pl-3 pr-5 py-1 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" // Removed mt-2, w-full, changed to w-auto
               value={selectedFacilityType}
               onChange={(e) => setSelectedFacilityType(e.target.value)}
             >
