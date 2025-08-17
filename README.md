@@ -116,6 +116,7 @@ Make sure you have the following installed on your system:
     -   Install the required npm packages:
         ```bash
         npm install
+        npm run build
         ```
         Create a `.env` file in the `frontend` directory and add your API keys:
         ```
