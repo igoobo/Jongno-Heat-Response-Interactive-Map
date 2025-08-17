@@ -3,10 +3,12 @@ import MobileBottomNav from './MobileBottomNav';
 import MobileMapLayersSidebar from './MobileMapLayersSidebar';
 import MobileLocationSidebar from './MobileLocationSidebar';
 import WeatherCard from '../../weather/components/WeatherCard';
-import { MapLayersFab } from '../../map/components/MapLayersFab'; // Import MapLayersFab
+import { HeatIllnessGuide } from './heat-illness-guide/HeatIllnessGuide'; // Import HeatIllnessGuide
+import { MapLayersFab } from '../../map/components/MapLayersFab'; // Import MapLayersFa
+import { X } from 'lucide-react'; // Import X
 
 export const MobileSidebar = () => {
-  const [activeMobileSidebar, setActiveMobileSidebar] = useState<'location' | 'layers' | 'menu' | null>(null);
+  const [activeMobileSidebar, setActiveMobileSidebar] = useState<'location' | 'layers' | 'menu' | 'heatGuide' | null>(null); // Add 'heatGuide'
 
   return (
     <>
@@ -19,6 +21,29 @@ export const MobileSidebar = () => {
       <MobileLocationSidebar isOpen={activeMobileSidebar === 'location'} onClose={() => setActiveMobileSidebar(null)} />
       <MobileMapLayersSidebar isOpen={activeMobileSidebar === 'layers'} onClose={() => setActiveMobileSidebar(null)} />
       <MapLayersFab onClick={() => setActiveMobileSidebar('layers')} /> {/* Add MapLayersFab */}
+      {activeMobileSidebar === 'heatGuide' && (
+        <div
+          className={`
+            fixed left-0 w-full bg-white p-4 rounded-t-lg z-50
+            transition-all duration-300 ease-out
+          `}
+          style={{
+            maxHeight: 'calc(100vh - 4rem)', // 4rem (64px) is the height of MobileBottomNav
+            bottom: activeMobileSidebar === 'heatGuide' ? '4rem' : '-100%', // Move off-screen when closed
+            overflowY: 'auto', // Enable scrolling for content
+          }}
+        >
+          <div className="flex justify-end">
+            <button onClick={() => setActiveMobileSidebar(null)} className="text-gray-500 hover:text-gray-700">
+              <X size={24} />
+            </button>
+          </div>
+          <div className="mt-4 space-y-4 pb-4">
+            <HeatIllnessGuide />
+          </div>
+          
+        </div>
+      )}
     </>
   );
 };
