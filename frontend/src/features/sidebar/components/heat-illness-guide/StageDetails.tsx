@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Stage } from './types';
+import { SymptomItem } from './SymptomItem';
 
 
 interface StageDetailsProps {
@@ -14,16 +15,10 @@ export const StageDetails: React.FC<StageDetailsProps> = ({ stage }) => {
       </div>
 
       <div className="space-y-3">
-        <h4 className="font-semibold text-gray-800">증상:</h4>
+        <h4 className="font-semibold text-gray-800">symtoms:</h4>
         <div className="grid grid-cols-2 gap-2">
           {stage.symptoms.map((symptom, index) => (
-            <div key={index} className="flex items-center gap-2 text-sm">
-              <div 
-                className="w-2 h-2 rounded-full" 
-                style={{ backgroundColor: stage.color }}
-              />
-              {symptom}
-            </div>
+            <SymptomItem key={index} symptom={symptom} color={stage.color} />
           ))}
         </div>
       </div>
@@ -32,7 +27,7 @@ export const StageDetails: React.FC<StageDetailsProps> = ({ stage }) => {
         borderColor: stage.color,
         backgroundColor: 'rgba(255, 255, 255, 0.7)'
       }}>
-        <h4 className="font-semibold text-gray-800 mb-2">추천:</h4>
+        <h4 className="font-semibold text-gray-800 mb-2">recommend actions:</h4>
         <p className="text-sm text-gray-700">{stage.action}</p>
       </div>
     </div>
