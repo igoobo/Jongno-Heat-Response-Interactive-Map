@@ -38,12 +38,12 @@ const WeatherCard = () => {
 
             <div className="text-5xl font-bold">{weather.temp.toFixed(1)}°</div>
 
-            <div className="text-sm text-muted-foreground">
+            <div className="text-[16px] text-muted-foreground">
               <span className="font-semibold capitalize">{weather.description}</span>
             </div>
 
-            <div className="text-xs md:text-sm text-muted-foreground">
-              최저 {weather.minTemp?.toFixed(0)}° · 최고 {weather.maxTemp?.toFixed(0)}° 
+            <div className="text-base md:text-sm text-muted-foreground">
+              최저 {weather.minTemp?.toFixed(0)}°  최고 {weather.maxTemp?.toFixed(0)}° 
               {weather.tempDiff !== undefined && (
                 <> {/* Use Fragment to wrap multiple elements */}
                   <br className="md:hidden" /> {/* New line only on mobile */}

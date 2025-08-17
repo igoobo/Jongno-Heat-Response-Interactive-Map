@@ -6,6 +6,7 @@ import { useMapLayer } from '../../../context/MapLayerContext';
 import HeatGuideModal from './HeatGuideModal';
 import { useState } from 'react';
 import { toast } from 'react-toastify'; // Import toast
+import { useCurrentLocation } from '../../../hooks/useCurrentLocation'; // Import useCurrentLocation
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -17,10 +18,15 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const { setAllLayers, setLayerState } = useMapLayer(); // Destructure setLayerState
   const [HeatGuideVisible, setHeatGuideVisible] = useState(false);
   const [selectedFacilityType, setSelectedFacilityType] = useState<string>(''); // State for selected facility type
+  const { getLocation } = useCurrentLocation(); // Call the hook
 
   const handleActionClick = async (actionType: string) => { // Make async
     if (actionType === 'currentLocation') {
-      // To-Do: Implement get location for mobile
+      if (map) {
+        await getLocation(map, true); // Pass map and true to pan
+      } else {
+        toast.error("지도를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+      }
     } else if (actionType === 'fullView') {
       if (map) {
         setAllLayers(true);
@@ -88,7 +94,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
         <div className="mt-4 space-y-2 pb-4">
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 h-auto py-3"
+            className="text-lg md:text-sm w-full justify-start gap-3 h-auto py-3"
             onClick={() => handleActionClick('currentLocation')}
           >
             <Navigation className="w-4 h-4" />
@@ -96,7 +102,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           </Button>
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 h-auto py-3"
+            className="text-lg md:text-sm w-full justify-start gap-3 h-auto py-3"
             onClick={() => handleActionClick('fullView')}
           >
             <Layers className="w-4 h-4" />
@@ -105,7 +111,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           <div className="w-full flex items-center justify-between gap-2"> {/* Wrapper div for button and select, using flexbox */}
             <Button
               variant="ghost"
-              className="flex-grow justify-start gap-3 h-auto py-3" // flex-grow to take available space
+              className="text-lg md:text-sm flex-grow justify-start gap-3 h-auto py-3" // flex-grow to take available space
               onClick={() => handleActionClick('closestRest')}
             >
               <MapPin className="w-4 h-4" />
@@ -114,7 +120,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             <select
               id="mobileFacilityType"
               name="mobileFacilityType"
-              className="block w-auto pl-3 pr-10 py-1 text-sm border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" // Removed mt-2, w-full, changed to w-auto
+              className="block w-auto pl-3 pr-7 py-1 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md" // Removed mt-2, w-full, changed to w-auto
               value={selectedFacilityType}
               onChange={(e) => setSelectedFacilityType(e.target.value)}
             >
@@ -125,7 +131,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           </div>
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 h-auto py-3"
+            className="text-lg md:text-sm w-full justify-start gap-3 h-auto py-3"
             onClick={() => handleActionClick('help')}
           >
             <Info className="w-4 h-4" />

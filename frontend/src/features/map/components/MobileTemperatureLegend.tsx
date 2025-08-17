@@ -10,11 +10,11 @@ export const MobileTemperatureLegend = () => {
   ];
 
   return (
-    <div className="absolute top-3 left-3 z-10 p-2 bg-white/40 rounded-lg shadow-md h-[14vh] w-[20vw]">
+    <div className="absolute top-23 left-4 z-10 p-2 bg-white/60 rounded-lg shadow-md h-14vh w-20vw">
       {tempRanges.map((item, idx) => (
         <div key={idx} className="flex items-center mb-1">
           <div className="w-3 h-3 mr-2" style={{ backgroundColor: item.color }} />
-          <span className="text-xs">{item.label}</span>
+          <span className="text-[16px]">{item.label}</span>
         </div>
       ))}
     </div>

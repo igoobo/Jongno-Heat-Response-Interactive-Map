@@ -57,17 +57,17 @@ const KmaWeatherWarning = () => {
   if (heatWarnings.length === 0) {
     return (
       <div className="absolute top-7 left-7 bg-white/80 p-2 rounded-lg shadow-lg z-10 flex items-center space-x-2">
-        <p className="text-sm">현재 폭염 특보 없음</p>
+        <p className="text-[16px]">현재 폭염 특보 없음</p>
         <div className="w-4 h-4 rounded-full bg-white border border-gray-300"></div>
       </div>
     );
   }
 
   return (
-    <div className="absolute top-4 left-4 bg-white/80 p-2 rounded-lg shadow-lg z-10 flex items-center space-x-2">
+    <div className="absolute top-4 left-4 bg-white/80 p-2 rounded-lg shadow-lg z-10 flex items-center space-x-2 border-2">
       <div>
-        <p className="text-xs">폭염 특보</p>
-        <p className="text-sm font-semibold">{heatWarnings[0].LVL}</p>
+        <p className="text-[15px]">폭염 특보</p>
+        <p className="text-[16px] text-right font-semibold">{heatWarnings[0].LVL}</p>
       </div>
       <div className={`w-4 h-4 rounded-full ${getWarningColor(heatWarnings[0].LVL)}`}></div>
     </div>

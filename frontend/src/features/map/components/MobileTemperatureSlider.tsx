@@ -61,7 +61,7 @@ export const MobileTemperatureSlider: React.FC<Props> = ({ hourIndex, max, onCha
   return (
     <div className="absolute top-3 right-3 z-10 w-[60vw] p-3 bg-white rounded-lg shadow-md">
       {/* ▶ 재생/일시정지 버튼 */}
-      <button onClick={() => setIsPlaying((prev) => !prev)} className="absolute right-3 top-18  -translate-y-1/2 bg-white border border-gray-300 rounded-md px-3 py-1 text-xs cursor-pointer shadow-sm">
+      <button onClick={() => setIsPlaying((prev) => !prev)} className="absolute right-3 top-22  -translate-y-1/2 bg-white border border-gray-300 rounded-md px-3 py-1 text-lg cursor-pointer shadow-sm">
         {isPlaying ? '⏸ 정지' : '▶ 재생'}
       </button>
 
@@ -77,7 +77,7 @@ export const MobileTemperatureSlider: React.FC<Props> = ({ hourIndex, max, onCha
       {/* 눈금과 시간 레이블을 표시하는 컨테이너 */}
       <div className="flex justify-between w-full mt-2 px-1 box-border">
         {allHourIndices.map((idx) => (
-          <div key={idx} className="text-center text-xs text-gray-700 flex-1 pointer-events-none">
+          <div key={idx} className="text-center text-lg text-gray-700 flex-1 pointer-events-none">
             {/* 현재 선택된 값(hourIndex)과 일치하는 레이블은 굵게 표시 */}
              <span style={{ fontWeight: idx === hourIndex ? 'bold' : 'normal' }}>
               {/* ⭐️ 변경점: 레이블이 너무 많아지지 않도록 3시간 간격으로만 텍스트 표시 */}

@@ -26,7 +26,7 @@ const MapLayers = () => {
           <div key={layer.id} className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className={`w-3 h-3 rounded-full ${layer.color}`} />
-              <span className="text-sm">{layer.name}</span>
+              <span className="text-lg md:text-sm">{layer.name}</span>
             </div>
             <Badge
               variant={layerStates[layer.id as keyof typeof layerStates] ? 'default' : 'secondary'}

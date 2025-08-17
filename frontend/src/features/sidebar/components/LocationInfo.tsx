@@ -27,7 +27,7 @@ const LocationInfo = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
-        <div className="text-sm">
+        <div className="text-base">
           <p className="text-muted-foreground">행정구역</p>
           <p className="text-xl font-bold">{regionName || '조회 중...'}</p>
         </div>
