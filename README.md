@@ -26,6 +26,14 @@ This project provides a modern web interface for exploring Jongno (Seoul) map da
 - User-dismissible notification.
 - The chat feature utilizes the `K-intelligence/Midm-2.0-Base-Instruct` model.
 
+### Heat Illness Guide Enhancements
+
+The Heat Illness Guide has been enhanced with interactive elements to provide more detailed information:
+
+-   **Interactive Symptoms**: Each symptom now reveals additional details (`extraInfo`) when hovered over or clicked. A small info icon (ⓘ) visually indicates the presence of this extra information.
+-   **Interactive Main Heat Illness**: The main heat illness listed for each stage now also provides expanded information (including details on conditions like Heat Syncope and Heat Edema) when hovered over or clicked. An info icon (ⓘ) serves as a visual cue.
+-   **Interactive First Aid**: First aid instructions are now interactive, displaying further details upon hover or click, accompanied by an info icon (ⓘ).
+
 ### User Interface
 - Responsive design for both desktop and mobile devices.
 - Sidebar for detailed information and controls on desktop.
@@ -171,6 +179,9 @@ Make sure you have the following installed on your system:
 
 ### Map Layers - Example 2
 ![Map Layers Example 2](assets/map-layer-example-2.png)
+
+### Map Layers - Example 3
+![Map Layers Example 3](assets/map-layer-example-3.png)
 
 ## AI Assistance
 
