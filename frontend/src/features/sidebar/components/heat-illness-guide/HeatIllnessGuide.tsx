@@ -31,6 +31,10 @@ export const HeatIllnessGuide: React.FC = () => {
     };
 
     fetchHeatStages();
+
+    const intervalId = setInterval(fetchHeatStages, 300000); // 5 minutes
+
+    return () => clearInterval(intervalId);
   }, []);
 
   // Determine the current stage based on the score
