@@ -60,25 +60,26 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ score, color
 
         {/* 윤곽선 역할 (굵게) */}
         <line
-          x1="100"
-          y1="98"
-          x2="100"
-          y2="40"
+          x1="0"
+          y1="-2"
+          x2="0"
+          y2="-60" // Length of the needle (100 - 40 = 60)
           stroke="black"
           strokeWidth="6"
           strokeLinecap="round"
-          transform={`rotate(${needleAngle} 100 100)`}
+          transform={`translate(100 100) rotate(${needleAngle})`} // Translate to center, then rotate
+          className="transition-all duration-700 ease-out"
         />
 
         <line
-          x1="100"
-          y1="100"
-          x2="100"
-          y2="40"
+          x1="0"
+          y1="0"
+          x2="0"
+          y2="-60" // Length of the needle
           stroke={color}
           strokeWidth="4"
           strokeLinecap="round"
-          transform={`rotate(${needleAngle} 100 100)`}
+          transform={`translate(100 100) rotate(${needleAngle})`} // Translate to center, then rotate
           className="transition-all duration-700 ease-out"
         />
       </svg>
