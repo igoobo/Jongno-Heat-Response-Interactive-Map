@@ -20,7 +20,13 @@ export const MobileSidebar = () => {
       )}
       <MobileLocationSidebar isOpen={activeMobileSidebar === 'location'} onClose={() => setActiveMobileSidebar(null)} />
       <MobileMapLayersSidebar isOpen={activeMobileSidebar === 'layers'} onClose={() => setActiveMobileSidebar(null)} />
-      <MapLayersFab onClick={() => setActiveMobileSidebar('layers')} /> {/* Add MapLayersFab */}
+      <MapLayersFab onClick={() => {
+        if (activeMobileSidebar === 'layers') {
+          setActiveMobileSidebar(null);
+        } else {
+          setActiveMobileSidebar('layers');
+        }
+      }} /> {/* Add MapLayersFab */}
       {activeMobileSidebar === 'heatGuide' && (
         <div
           className={`
