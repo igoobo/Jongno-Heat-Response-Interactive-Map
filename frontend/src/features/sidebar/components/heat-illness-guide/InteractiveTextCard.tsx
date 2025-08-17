@@ -56,13 +56,13 @@ export const InteractiveTextCard: React.FC<InteractiveTextCardProps> = ({ text, 
         className="w-2 h-2 rounded-full"
         style={{ backgroundColor: color }}
       />
-      <span className="flex items-center gap-1">
+      <span className="text-lg md:text-sm flex items-center gap-1">
         {text}
         {extraInfo && <Info size={14} className="text-gray-400" />}
       </span>
       {extraInfo && (
         <div
-          className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-800 text-white text-sm rounded transition-opacity duration-300 pointer-events-none z-10
+          className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-gray-800 text-white text-base md:text-sm rounded transition-opacity duration-300 pointer-events-none z-10
             ${(showExtraInfo || isPinned) ? 'opacity-100' : 'opacity-0'}
           `}
         >

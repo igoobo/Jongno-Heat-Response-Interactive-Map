@@ -86,9 +86,9 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ score, color
       
       <div className="absolute inset-0 flex items-end justify-center pb-4">
         <div className="text-center">
-          <div className="text-xs font-medium text-gray-600 mb-1">현재 수준</div>
+          <div className="text-lg md:text-xs font-medium text-gray-600 mb-1">현재 수준</div>
           <div
-            className="text-sm font-bold px-3 py-1 rounded-full text-white"
+            className="text-lg md:text-sm font-bold px-3 py-1 rounded-full text-white"
             style={{ backgroundColor: color }}
           >
             {score !== null ? HEAT_ILLNESS_STAGES.find((s: Stage) => score <= s.threshold)?.name || '알 수 없음' : '로딩 중...'}
@@ -109,7 +109,7 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ score, color
         return (
           <div
             key={stage.id}
-            className="absolute w-6 h-6 flex items-center justify-center text-xs font-bold text-white rounded-full"
+            className="absolute w-6 h-6 flex items-center justify-center text-lg md:text-xs font-bold text-white rounded-full"
             style={{
               left: `${x - 12}px`,
               top: `${y - 12}px`,

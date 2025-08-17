@@ -16,7 +16,7 @@ export const StageDetails: React.FC<StageDetailsProps> = ({ stage }) => {
       </div>
 
       <div className="space-y-3">
-        <h4 className="font-semibold text-gray-800">주요 온열질환:</h4>
+        <h4 className="text-lg md:text-sm font-semibold text-gray-800">주요 온열질환:</h4>
         <div className="grid grid-cols-2 gap-2">
           {stage.mainIllness.map((item, index) => (
             <InteractiveTextCard key={index} text={item.illness} extraInfo={item.extraInfo} color={stage.color} />
@@ -25,7 +25,7 @@ export const StageDetails: React.FC<StageDetailsProps> = ({ stage }) => {
       </div>
 
       <div className="space-y-3">
-        <h4 className="font-semibold text-gray-800">주요 증상:</h4>
+        <h4 className="text-lg md:text-sm font-semibold text-gray-800">주요 증상:</h4>
         <div className="grid grid-cols-2 gap-2">
           {stage.symptoms.map((symptom, index) => (
             <SymptomItem key={index} symptom={symptom} color={stage.color} />
@@ -37,8 +37,8 @@ export const StageDetails: React.FC<StageDetailsProps> = ({ stage }) => {
         borderColor: stage.color,
         backgroundColor: 'rgba(255, 255, 255, 0.7)'
       }}>
-        <h4 className="font-semibold text-gray-800 mb-2">추천:</h4>
-        <p className="text-sm text-gray-700">{stage.action}</p>
+        <h4 className="text-lg md:text-sm font-semibold text-gray-800 mb-2">추천:</h4>
+        <p className="text-base text-gray-700">{stage.action}</p>
       </div>
     </div>
   );

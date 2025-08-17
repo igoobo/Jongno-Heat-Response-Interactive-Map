@@ -1,4 +1,4 @@
-import { Menu, MapPin, Thermometer } from 'lucide-react';
+import { Menu, MapPin, Flame } from 'lucide-react';
 import MobileLocationSidebar from './MobileLocationSidebar';
 import MobileMapLayersSidebar from './MobileMapLayersSidebar';
 import { MobileMenu } from './MobileMenu';
@@ -22,13 +22,13 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onSidebarChange, acti
             <Menu className="w-7 h-7 mb-2 text-gray-500" />
             <span className="text-lg text-gray-500">Menu</span>
           </button>
-          <button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50" onClick={() => handleButtonClick('heatGuide')}>
-            <Thermometer className="w-7 h-7 mb-2 text-gray-500" />
-            <span className="text-lg text-gray-500">Heat Guide</span>
-          </button>
           <button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50" onClick={() => handleButtonClick('location')}>
             <MapPin className="w-7 h-7 mb-2 text-gray-500" />
             <span className="text-lg text-gray-500">Location</span>
+          </button>
+           <button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50" onClick={() => handleButtonClick('heatGuide')}>
+            <Flame className="w-7 h-7 mb-2 text-gray-500" />
+            <span className="text-lg text-gray-500">Heat Guide</span>
           </button>
         </div>
       </div>

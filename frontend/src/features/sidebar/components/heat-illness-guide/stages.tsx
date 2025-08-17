@@ -19,7 +19,7 @@ export const HEAT_ILLNESS_STAGES: Stage[] = [
       { symptom: "가벼운 피로감", extraInfo: "더위로 인해 피곤하거나 나른함을 느낄 수 있습니다." },
       { symptom: "갈증 증가", extraInfo: "체내 수분이 부족하다는 신호입니다." }
     ],
-    action: "수분을 충분히 섭취하고 그늘에서 휴식하세요",
+    action: "수분을 충분히 섭취하고 그늘에서 휴식하세요.",
     firstAid: "시원한 물을 마시고, 서늘한 곳에서 쉬며, 젖은 수건으로 몸을 닦아 체온을 낮춥니다.",
     icon: <Thermometer className="w-6 h-6" />
   },
@@ -42,7 +42,7 @@ export const HEAT_ILLNESS_STAGES: Stage[] = [
       { symptom: "메스꺼움", extraInfo: "구토하고 싶은 느낌이 들며 속이 울렁거립니다." },
       { symptom: "두통", extraInfo: "머리가 지끈거리거나 둔하게 아픈 증상입니다." }
     ],
-    action: "시원한 곳으로 이동하고, 찬물로 몸을 식히세요",
+    action: "시원한 곳으로 이동하고, 찬물로 몸을 식히세요.",
     firstAid: "환자를 서늘한 곳으로 옮기고, 옷을 헐겁게 하며, 찬물로 몸을 닦거나 부채질을 하여 체온을 낮춥니다. 의식이 있다면 스포츠 음료를 마시게 합니다.",
     icon: <AlertTriangle className="w-6 h-6" />
   },
@@ -64,7 +64,7 @@ export const HEAT_ILLNESS_STAGES: Stage[] = [
       { symptom: "피로", extraInfo: "정신적 또는 육체적 활동이나 질병으로 인한 극심한 피로감입니다." },
       { symptom: "어지러움", extraInfo: "빙글빙글 도는 느낌이나 균형이 무너진 듯한 감각이 듭니다." }
     ],
-    action: "증상 발현 시 즉시 의료진의 진료를 받으세요",
+    action: "증상 발현 시 즉시 의료진의 진료를 받으세요.",
     firstAid: "즉시 119에 신고하고, 환자를 서늘한 곳으로 옮겨 옷을 벗기고, 찬물로 몸을 적시거나 얼음 주머니를 사용하여 체온을 낮춥니다. 의식이 없는 환자에게는 아무것도 먹이지 않습니다.",
     icon: <AlertCircle className="w-6 h-6" />
   },
@@ -85,7 +85,7 @@ export const HEAT_ILLNESS_STAGES: Stage[] = [
       { symptom: "뜨겁고 건조한 피부", extraInfo: "피부가 만졌을 때 뜨겁고, 건조하거나 약간 습할 수 있습니다." },
       { symptom: "빠른 맥박", extraInfo: "체온 조절을 위해 심장이 더 빠르고 강하게 뛰는 상태입니다." },
     ],
-    action: "증상 발현 시 즉시 응급 구조를 요청하세요",
+    action: "증상 발현 시 즉시 응급 구조를 요청하세요.",
     firstAid: "즉시 119에 신고하고, 구급대원이 올 때까지 환자를 서늘한 곳으로 옮겨 옷을 벗기고, 찬물로 몸을 적시거나 얼음 주머니를 사용하여 체온을 낮춥니다. 의식이 없는 환자에게는 아무것도 먹이지 않습니다.",
     icon: <Skull className="w-6 h-6" />
   }

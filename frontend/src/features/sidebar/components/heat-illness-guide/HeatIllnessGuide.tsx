@@ -87,13 +87,13 @@ export const HeatIllnessGuide: React.FC = () => {
             <CardTitle className="text-2xl">온열질환 수준</CardTitle>
           </div>
           <span
-            className="text-sm px-4 py-1 rounded-full text-white flex items-center justify-center gap-2"
+            className="text-lg md:text-sm px-4 py-1 rounded-full text-white flex items-center justify-center gap-2"
             style={{ backgroundColor: determinedStage.color }}
           >
             {determinedStage.icon}
             {determinedStage.name} {/* Use determinedStage.name for severity */}
           </span>
-          <div className="text-sm text-gray-600 mt-2">
+          <div className="text-base md:text-sm text-gray-600 mt-2">
             {formattedDate} | 점수: {score !== null ? score : '로딩 중...'}
           </div>
         </CardHeader>
