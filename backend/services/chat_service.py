@@ -159,8 +159,6 @@ def get_heat_stages_response(coords: Coordinates) -> Any:
                         오직 출력은 정수 숫자 형태여야 합니다.
                         예시1) 56
                         예시2) 45
-                        예시3) 40
-                        예시4) 65
                         """},
             {"role": "user", 
              "content": reasoning},
