@@ -16,12 +16,19 @@ const defaultState: LayerStates = {
 const MapLayerContext = createContext<{
   layerStates: LayerStates;
   toggleLayer: (layerId: keyof LayerStates) => void;
-  setAllLayers: (value: boolean) => void; // ✅ 추가
-  setLayerState: (layerId: keyof LayerStates, value: boolean) => void; // Add setLayerState
+  setAllLayers: (value: boolean) => void;
+  setLayerState: (layerId: keyof LayerStates, value: boolean) => void;
+  isMapLayersSidebarOpen: boolean; // New state
+  toggleMapLayersSidebar: () => void; // New function
 } | null>(null);
 
 export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [layerStates, setLayerStates] = useState<LayerStates>(defaultState);
+  const [isMapLayersSidebarOpen, setIsMapLayersSidebarOpen] = useState(false); // New state
+
+  const toggleMapLayersSidebar = () => { // New function
+    setIsMapLayersSidebarOpen((prev) => !prev);
+  };
 
   const toggleLayer = (layerId: keyof LayerStates) => {
     setLayerStates((prev) => {
@@ -87,7 +94,7 @@ export const MapLayerProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   return (
-    <MapLayerContext.Provider value={useMemo(() => ({ layerStates, toggleLayer, setAllLayers, setLayerState  }), [layerStates])}>
+    <MapLayerContext.Provider value={useMemo(() => ({ layerStates, toggleLayer, setAllLayers, setLayerState, isMapLayersSidebarOpen, toggleMapLayersSidebar }), [layerStates, isMapLayersSidebarOpen])}>
       {children}
     </MapLayerContext.Provider>
   );

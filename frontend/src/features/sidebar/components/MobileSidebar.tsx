@@ -3,6 +3,7 @@ import MobileBottomNav from './MobileBottomNav';
 import MobileMapLayersSidebar from './MobileMapLayersSidebar';
 import MobileLocationSidebar from './MobileLocationSidebar';
 import WeatherCard from '../../weather/components/WeatherCard';
+import { MapLayersFab } from '../../map/components/MapLayersFab'; // Import MapLayersFab
 
 export const MobileSidebar = () => {
   const [activeMobileSidebar, setActiveMobileSidebar] = useState<'location' | 'layers' | 'menu' | null>(null);
@@ -17,6 +18,7 @@ export const MobileSidebar = () => {
       )}
       <MobileLocationSidebar isOpen={activeMobileSidebar === 'location'} onClose={() => setActiveMobileSidebar(null)} />
       <MobileMapLayersSidebar isOpen={activeMobileSidebar === 'layers'} onClose={() => setActiveMobileSidebar(null)} />
+      <MapLayersFab onClick={() => setActiveMobileSidebar('layers')} /> {/* Add MapLayersFab */}
     </>
   );
 };
