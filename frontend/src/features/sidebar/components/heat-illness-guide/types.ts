@@ -6,7 +6,9 @@ export interface Stage {
   color: string;
   bgColor: string;
   description: string;
+  mainIllness: { illness: string; extraInfo?: string; }[];
   symptoms: { symptom: string; extraInfo?: string; }[];
   action: string;
+  firstAid: string;
   icon: React.ReactNode;
 }

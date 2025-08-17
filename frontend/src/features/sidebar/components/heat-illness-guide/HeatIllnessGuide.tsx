@@ -80,7 +80,7 @@ export const HeatIllnessGuide: React.FC = () => {
   const formattedDate = `${year}.${month}.${day}`;
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
+    <div className="w-full max-w-2xl mx-auto p-1">
       <Card className={`border-2 transition-all duration-500`} style={{ borderColor: determinedStage.color }}>
         <CardHeader className="text-center pb-4">
           <div className="flex items-center justify-center gap-3 mb-2">
