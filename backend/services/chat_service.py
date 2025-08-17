@@ -51,13 +51,13 @@ def get_notification_response(coords: Coordinates) -> Any:
     # Prepare KMA warnings string
     warnings_str = ""
     if kma_warnings:
-        warnings_list = [w.get("WRN") + " " + w.get("LVL") for w in kma_warnings if w.get("WRN") and w.get("LVL")]
+        warnings_list = [w.get("WRN") + " " + w.get("LVL") for w in kma_warnings[:1] if w.get("WRN") and w.get("LVL")]
         if warnings_list:
             warnings_str = f" 현재 기상 특보는 다음과 같습니다: {', '.join(warnings_list)}."
 
     # Prepare the prompt for the language model
     prompt = f"현재 기온은 {temp}°C이고, 날씨는 '{weather_desc}'입니다.{warnings_str}{highest_temp_str} 이 정보를 바탕으로 사용자에게 유용한 정보를 제공해주세요."
-
+    
     completion = client.chat.completions.create(
         model="K-intelligence/Midm-2.0-Base-Instruct",
         messages=[
@@ -142,7 +142,7 @@ def get_heat_stages_response(coords: Coordinates) -> Any:
                         - {warnings_list}에서 '폭염주의' 시 +15점, '폭염경보' 시 +25점
                         - {weather_desc}에서 흐림·비·구름많음일 경우 -5점 (단, 기온이 매우 높은 경우 제외)
                         - 점수는 최소 0, 최대 100으로 제한
-                        문장의 마지막에는 무조건 다음 형식을 지켜주세요.
+                        점수 산정 식을 재검토하여 오류가 있는 지 확인하세요.
                         """},
             {"role": "user", 
              "content": prompt},
