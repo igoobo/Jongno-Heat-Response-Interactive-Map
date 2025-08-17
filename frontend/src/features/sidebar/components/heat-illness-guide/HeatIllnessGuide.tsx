@@ -84,16 +84,13 @@ export const HeatIllnessGuide: React.FC = () => {
       <Card className={`border-2 transition-all duration-500`} style={{ borderColor: determinedStage.color }}>
         <CardHeader className="text-center pb-4">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <div style={{ color: determinedStage.color }}>
-              {/* Assuming icon is part of the stage object, if not, it needs to be handled */}
-              {/* {determinedStage.icon} */}
-            </div>
             <CardTitle className="text-2xl">온열질환 수준</CardTitle>
           </div>
           <span
-            className="text-sm px-4 py-1 rounded-full text-white"
+            className="text-sm px-4 py-1 rounded-full text-white flex items-center justify-center gap-2"
             style={{ backgroundColor: determinedStage.color }}
           >
+            {determinedStage.icon}
             {determinedStage.name} {/* Use determinedStage.name for severity */}
           </span>
           <div className="text-sm text-gray-600 mt-2">
