@@ -64,6 +64,8 @@ from .cache import cache # Import cache
 
 # ... (other imports)
 
+import time
+
 @router.get("/api/heat-stages")
 def get_heat_stages(): # Renamed function for clarity
     CACHE_KEY = "heat_stages_data"
@@ -71,10 +73,21 @@ def get_heat_stages(): # Renamed function for clarity
 
     cached_data = cache.get(CACHE_KEY)
     if cached_data:
-        return cached_data
+        return {"answer": cached_data}
 
     # Coordinates for the center of Gwanghwmun
     coords = Coordinates(lat=37.5760, lng=126.9769)
-    response_data = chat_service.get_heat_stages_response(coords)
-    cache.set(CACHE_KEY, response_data, CACHE_TTL)
-    return response_data
+    
+    for _ in range(3):
+        response_data = chat_service.get_heat_stages_response(coords)
+        answer = response_data.get("answer")
+
+        try:
+            answer_float = float(answer)
+            cache.set(CACHE_KEY, answer_float, CACHE_TTL)
+            return {"answer": answer_float}
+        except (ValueError, TypeError):
+            time.sleep(2)
+            continue
+
+    return {"error": "Invalid answer format after multiple retries"}, 400
