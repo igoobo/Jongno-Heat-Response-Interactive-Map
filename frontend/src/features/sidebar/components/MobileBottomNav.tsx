@@ -16,7 +16,7 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onSidebarChange, acti
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 z-100 w-full h-20 bg-white border-t border-gray-200">
+      <div className="fixed bottom-0 left-0 z-10000 w-full h-20 bg-white border-t border-gray-200">
         <div className="grid h-full max-w-lg grid-cols-3 mx-auto font-medium">
           <button type="button" className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50" onClick={() => handleButtonClick('location')}>
             <MapPin className="w-7 h-7 mb-2 text-gray-500" />

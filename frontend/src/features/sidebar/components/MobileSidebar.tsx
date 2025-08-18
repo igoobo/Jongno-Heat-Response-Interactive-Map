@@ -30,7 +30,7 @@ export const MobileSidebar = () => {
       {activeMobileSidebar === 'heatGuide' && (
         <div
           className={`
-            fixed left-0 w-full bg-white p-4 rounded-t-lg z-20000 
+            fixed left-0 w-full bg-white p-4 rounded-t-lg z-9000 
             transition-all duration-300 ease-out
           `}
           style={{
