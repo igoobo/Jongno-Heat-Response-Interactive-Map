@@ -9,10 +9,13 @@ import { useMediaQuery } from './hooks/useMediaQuery';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import KmaWeatherWarning from './features/weather/KmaWeatherWarning';
+import { ChatFab } from './features/sidebar/components/chat-sidebar/ChatFab';
+import { ChatModal } from './features/sidebar/components/chat-sidebar/ChatModal';
 
 export default function App() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const [map, setMap] = useState<any>(null); // State to hold the map instance
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
   return (
     <div className="h-screen w-full bg-background flex flex-col md:flex-row overflow-hidden">
@@ -35,6 +38,8 @@ export default function App() {
           )}
         </MapLayerProvider>
       </MapLocationProvider>
+      <ChatFab onClick={() => setIsChatModalOpen(true)} />
+      <ChatModal open={isChatModalOpen} onOpenChange={setIsChatModalOpen} />
       <ToastContainer
           position="top-center"
           autoClose={3000}

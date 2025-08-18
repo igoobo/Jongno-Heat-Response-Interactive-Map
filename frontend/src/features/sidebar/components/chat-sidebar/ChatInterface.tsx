@@ -95,9 +95,9 @@ export function ChatInterface() {
               <AlertTriangle className="h-5 w-5 text-red-600" />
             </div>
             <div>
-              <CardTitle className="text-xl">Heat-Illness Information Assistant</CardTitle>
+              <CardTitle className="text-xl">온열질환 정보 도우미</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">
-                Get reliable information about heat-related illnesses, prevention, and treatment
+                온열질환, 예방, 치료에 대한 신뢰할 수 있는 정보 제공
               </p>
             </div>
           </div>

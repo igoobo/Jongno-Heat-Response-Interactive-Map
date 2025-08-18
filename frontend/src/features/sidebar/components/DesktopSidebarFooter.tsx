@@ -1,9 +1,14 @@
 import * as React from 'react';
 
-export const DesktopSidebarFooter: React.FC = () => {
+interface DesktopSidebarFooterProps {
+  children?: React.ReactNode;
+}
+
+export const DesktopSidebarFooter: React.FC<DesktopSidebarFooterProps> = ({ children }) => {
   return (
     <div className="mt-auto p-6 border-t border-border">
-      <div className="text-center space-y-2">
+      {children}
+      <div className="text-center space-y-2 mt-4">
         <p className="text-xs text-muted-foreground">
           Jongno Heat Response Interactive Map
         </p>

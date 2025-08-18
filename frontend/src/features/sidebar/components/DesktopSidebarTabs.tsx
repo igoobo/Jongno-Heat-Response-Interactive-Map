@@ -1,9 +1,9 @@
-import { MapPin, Layers, Flame, MessageSquare} from 'lucide-react';
+import { MapPin, Layers, Flame } from 'lucide-react';
 import * as React from 'react';
 
 interface DesktopSidebarTabsProps {
-  activeTab: 'info' | 'layers' | 'heat-illness' | 'chat';
-  setActiveTab: (tab: 'info' | 'layers' | 'heat-illness' | 'chat') => void;
+  activeTab: 'info' | 'layers' | 'heat-illness';
+  setActiveTab: (tab: 'info' | 'layers' | 'heat-illness') => void;
 }
 
 export const DesktopSidebarTabs: React.FC<DesktopSidebarTabsProps> = ({ activeTab, setActiveTab }) => {
@@ -29,13 +29,6 @@ export const DesktopSidebarTabs: React.FC<DesktopSidebarTabsProps> = ({ activeTa
         title="Heat Illness Guide"
       >
         <Flame className="w-5 h-5" />
-      </button>
-      <button
-        onClick={() => setActiveTab('chat')}
-        className={`w-10 h-10 rounded-md flex items-center justify-center transition-colors duration-200 ${activeTab === 'chat' ? 'bg-primary text-primary-foreground shadow-md' : 'text-gray-600 hover:bg-gray-100'}`}
-        title="Chat"
-      >
-        <MessageSquare className="w-5 h-5" />
       </button>
     </div>
   );
