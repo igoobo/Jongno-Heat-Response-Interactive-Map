@@ -38,7 +38,7 @@ export default function App() {
           )}
         </MapLayerProvider>
       </MapLocationProvider>
-      <ChatFab onClick={() => setIsChatModalOpen(true)} />
+      <ChatFab onClick={() => setIsChatModalOpen(true)} isDesktop={isDesktop} />
       <ChatModal open={isChatModalOpen} onOpenChange={setIsChatModalOpen} />
       <ToastContainer
           position="top-center"
