@@ -1,133 +1,145 @@
-from typing import Any, List
+import os
+import json
+import numpy as np
+import faiss
+import logging
+from typing import List, Dict, Any
 from openai import OpenAI
-from datetime import datetime # Import datetime
+from datetime import datetime
+from sentence_transformers import SentenceTransformer
 
 from ..models import Coordinates
 from .weather_service import get_weather_data
 from ..cache import kma_warnings_cache
 from ..api_clients import FRIENDLI_TOKENS
-from .kma_service import get_kma_temperature_extremes_data # Import KMA service
+from .kma_service import get_kma_temperature_extremes_data
 
+# --- 로깅 설정 ---
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# --- FriendliAI 클라이언트 설정 ---
 client = OpenAI(
     api_key=FRIENDLI_TOKENS,
     base_url="https://api.friendli.ai/serverless/v1",
 )
 
+# --- RAG 관련 전역 변수 및 모델 ---
+STORAGE_DIR = "backend/storage"
+FAISS_INDEX_PATH = os.path.join(STORAGE_DIR, "vector.index")
+CHUNKS_PATH = os.path.join(STORAGE_DIR, "chunks_with_metadata.json")
+
+embedding_model = None
+faiss_index = None
+chunks_with_metadata: List[Dict] = []
+
+def load_rag_pipeline():
+    """애플리케이션 시작 시, 미리 전처리된 RAG 데이터 파일을 로드합니다."""
+    global faiss_index, chunks_with_metadata, embedding_model
+    logging.info("RAG 파이프라인 로드를 시작합니다.")
+    
+    logging.info("임베딩 모델을 로드합니다. (ko-sbert-nli)")
+    embedding_model = SentenceTransformer('jhgan/ko-sbert-nli')
+
+    if not os.path.exists(FAISS_INDEX_PATH) or not os.path.exists(CHUNKS_PATH):
+        logging.error(f"전처리된 파일을 찾을 수 없습니다. '{FAISS_INDEX_PATH}' 또는 '{CHUNKS_PATH}'가 필요합니다.")
+        logging.error("먼저 /backenn/preprocess.py를 실행하여 전처리 파일을 생성해주세요.")
+        return
+
+    logging.info(f"'{FAISS_INDEX_PATH}'에서 FAISS 인덱스를 로드합니다.")
+    faiss_index = faiss.read_index(FAISS_INDEX_PATH)
+
+    logging.info(f"'{CHUNKS_PATH}'에서 메타데이터 포함 텍스트 청크를 로드합니다.")
+    with open(CHUNKS_PATH, 'r', encoding='utf-8') as f:
+        chunks_with_metadata = json.load(f)
+    
+    logging.info("RAG 파이프라인 로드가 완료되었습니다.")
+
 def get_notification_response(coords: Coordinates) -> Any:
     weather_data = get_weather_data(coords, type="weather")
     kma_warnings = kma_warnings_cache["data"]
     
-    # Get current date and time for KMA API
     now = datetime.now()
     base_date = now.strftime("%Y%m%d")
-    # For simplicity, let's use the current hour and round down to the nearest 3-hour mark for base_time
-    # This might need more robust logic for production, but for a quick integration, it's fine.
-    # A more accurate approach would be to find the latest available base_time.
     current_hour = now.hour
-    if current_hour < 2: base_time = "2300" # Previous day's last
+    if current_hour < 2: base_time = "2300"
     elif current_hour < 5: base_time = "0200"
     elif current_hour < 8: base_time = "0500"
     elif current_hour < 11: base_time = "0800"
     else: base_time = "1100"
 
-    # Fetch KMA temperature extremes (using hardcoded nx, ny for Gwanghwamun as per routes.py)
     highest_temp_str = ""
     try:
         kma_temps = get_kma_temperature_extremes_data(base_date, base_time, nx=60, ny=127)
         tmx_items = [item for item in kma_temps if item.get("category") == "TMX"]
         if tmx_items:
-            # Assuming the first TMX item is the relevant one
             highest_temp = tmx_items[0].get("fcstValue")
             if highest_temp:
                 highest_temp_str = f" 오늘 최고 기온은 {highest_temp}°C로 예상됩니다."
     except Exception as e:
         print(f"Failed to fetch KMA temperature extremes: {e}")
-        # Continue without highest temperature if fetch fails
 
-    # Extract relevant weather information
     temp = weather_data.get("main", {}).get("temp")
     weather_desc = weather_data.get("weather", [{}])[0].get("description")
 
-    # Prepare KMA warnings string
     warnings_str = ""
     if kma_warnings:
         warnings_list = [w.get("WRN") + " " + w.get("LVL") for w in kma_warnings[:1] if w.get("WRN") and w.get("LVL")]
         if warnings_list:
             warnings_str = f" 현재 기상 특보는 다음과 같습니다: {', '.join(warnings_list)}."
 
-    # Prepare the prompt for the language model
     prompt = f"현재 기온은 {temp}°C이고, 날씨는 '{weather_desc}'입니다.{warnings_str}{highest_temp_str} 이 정보를 바탕으로 사용자에게 유용한 정보를 제공해주세요."
     
     completion = client.chat.completions.create(
         model="K-intelligence/Midm-2.0-Base-Instruct",
         messages=[
-            {"role": "system", 
-             "content": "당신은 사용자에게서 입력 받은 데이터를 기반으로 답해주는 AI 알리미입니다. \
-                        날씨에 대한 요약과 그에 따른 온열 질환 예방을 위해 필요한 조치를 설명하는 자료를 만들고 \
-                        온열 질환이 발생하지 않는 날씨라면 필요 조치를 생략하고 그 이유를 표현해주세요.    \
-                        사용자에게 간결하고 명확하게 30자 이내로 설명해주세요. \
-                        강조는 사용하지 말아야하며, 대신에 이모티콘은 사용해도 됩니다."},
-            {"role": "user", 
-             "content": prompt},
+            {"role": "system", "content": "당신은 사용자에게서 입력 받은 데이터를 기반으로 답해주는 AI 알리미입니다. 날씨에 대한 요약과 그에 따른 온열 질환 예방을 위해 필요한 조치를 설명하는 자료를 만들고 온열 질환이 발생하지 않는 날씨라면 필요 조치를 생략하고 그 이유를 표현해주세요.    사용자에게 간결하고 명확하게 30자 이내로 설명해주세요. 강조는 사용하지 말아야하며, 대신에 이모티콘은 사용해도 됩니다."},
+            {"role": "user", "content": prompt},
         ],
     )
 
     answer = completion.choices[0].message.content
     return {"answer": answer}
 
-
-
 def get_heat_stages_response(coords: Coordinates) -> Any:
     weather_data = get_weather_data(coords, type="weather")
     kma_warnings = kma_warnings_cache["data"]
     
-    # Get current date and time for KMA API
     now = datetime.now()
     base_date = now.strftime("%Y%m%d")
-    # For simplicity, let's use the current hour and round down to the nearest 3-hour mark for base_time
-    # This might need more robust logic for production, but for a quick integration, it's fine.
-    # A more accurate approach would be to find the latest available base_time.
     current_hour = now.hour
-    if current_hour < 2: base_time = "2300" # Previous day's last
+    if current_hour < 2: base_time = "2300"
     elif current_hour < 5: base_time = "0200"
     elif current_hour < 8: base_time = "0500"
     elif current_hour < 11: base_time = "0800"
     else: base_time = "1100"
 
-    # Fetch KMA temperature extremes (using hardcoded nx, ny for Gwanghwamun as per routes.py)
     highest_temp = 0
     highest_temp_str = ""
     try:
         kma_temps = get_kma_temperature_extremes_data(base_date, base_time, nx=60, ny=127)
         tmx_items = [item for item in kma_temps if item.get("category") == "TMX"]
         if tmx_items:
-            # Assuming the first TMX item is the relevant one
             highest_temp = tmx_items[0].get("fcstValue")
             if highest_temp:
                 highest_temp_str = f" 오늘 최고 기온은 {highest_temp}°C로 예상됩니다."
     except Exception as e:
         print(f"Failed to fetch KMA temperature extremes: {e}")
-        # Continue without highest temperature if fetch fails
 
-    # Extract relevant weather information
     temp = weather_data.get("main", {}).get("temp")
     weather_desc = weather_data.get("weather", [{}])[0].get("description")
 
-    # Prepare KMA warnings string
     warnings_str = ""
     if kma_warnings:
         warnings_list = [w.get("WRN") + " " + w.get("LVL") for w in kma_warnings[:1] if w.get("WRN") and w.get("LVL")]
         if warnings_list:
             warnings_str = f" 현재 기상 특보는 다음과 같습니다: {', '.join(warnings_list)}."
 
-    # Prepare the prompt for the language model
     prompt = f"현재 기온은 {temp}°C이고, 날씨는 '{weather_desc}'입니다.{warnings_str}{highest_temp_str} 이 정보를 바탕으로 온열질환 발생 가능성 점수를 제공해주세요."
     
     completion = client.chat.completions.create(
         model="K-intelligence/Midm-2.0-Base-Instruct",
         messages=[
-            {"role": "system", 
-             "content": f"""
+            {"role": "system", "content": f"""
                         당신은 온열질환 예방 전문가입니다. 
                         사용자가 제공하는 현재 기온, 날씨 요약, 기상 특보 여부와 종류, 최고 기온(℃)을 기반으로
                         0~100 사이의 '온열질환 발생 가능 점수'를 산출하세요. 
@@ -144,8 +156,7 @@ def get_heat_stages_response(coords: Coordinates) -> Any:
                         - 점수는 최소 0, 최대 100으로 제한
                         점수 산정 식을 재검토하여 오류가 있는 지 확인하세요.
                         """},
-            {"role": "user", 
-             "content": prompt},
+            {"role": "user", "content": prompt},
         ],
     )
     reasoning = completion.choices[0].message.content
@@ -153,17 +164,73 @@ def get_heat_stages_response(coords: Coordinates) -> Any:
     completion = client.chat.completions.create(
         model="K-intelligence/Midm-2.0-Base-Instruct",
         messages=[
-            {"role": "system", 
-             "content": f"""
+            {"role": "system", "content": f"""
                         사용자에게 입력받은 내용을 바탕으로 온열질환 발생 가능 점수가 몇 점인지 제공하세요.
                         오직 출력은 정수 숫자 형태여야 합니다.
                         예시1) 56
                         예시2) 45
                         """},
-            {"role": "user", 
-             "content": reasoning},
+            {"role": "user", "content": reasoning},
         ],
     )
     answer = completion.choices[0].message.content
-    return {"reasoning": reasoning,
-            "answer" : answer}
+    return {"reasoning": reasoning, "answer" : answer}
+
+def get_rag_response(question: str) -> Dict[str, Any]:
+    """사용자의 질문을 받아 RAG를 통해 답변을 생성합니다."""
+    if faiss_index is None or not chunks_with_metadata or embedding_model is None:
+        return {
+            "error": "RAG 시스템이 준비되지 않았습니다. 서버 로그를 확인하고 preprocess.py를 실행했는지 확인해주세요."
+        }
+
+    logging.info(f"수신된 질문: {question}")
+
+    # 1. 질문을 벡터로 변환
+    question_embedding = embedding_model.encode([question])
+
+    # 2. FAISS에서 유사한 청크 검색 (상위 3개)
+    k = 3
+    distances, indices = faiss_index.search(np.array(question_embedding), k)
+
+    # 3. 검색된 청크의 내용과 메타데이터(출처) 가져오기
+    retrieved_data = [chunks_with_metadata[i] for i in indices[0]]
+    
+    context_parts = []
+    for item in retrieved_data:
+        context_parts.append(f"[출처: {item['source']}]\n{item['content']}")
+    context = "\n\n---\n\n".join(context_parts)
+    
+    logging.info(f"검색된 컨텍스트:\n{context[:500]}...")
+
+    # 4. FriendliAI에 전달할 프롬프트 구성
+    prompt = f"""당신은 주어진 여러 메뉴얼 내용을 종합하여 사용자의 질문에 답변하는 AI 전문가입니다.
+                아래에 제공된 메뉴얼 내용을 참고하여 질문에 대해 가장 정확하고 관련성 높은 답변을 생성해주세요.
+                답변 시, 어떤 문서의 내용을 참고했는지 명시하면 좋습니다.
+
+                [참고 메뉴얼 내용]
+                {context}
+
+                [사용자 질문]
+                {question}
+
+                [답변]
+                """
+
+    try:
+        logging.info("FriendliAI API를 호출합니다.")
+        completion = client.chat.completions.create(
+            model="K-intelligence/Midm-2.0-Base-Instruct",
+            messages=[
+                {"role": "system", "content": "당신은 여러 폭염 대응 메뉴얼을 종합하여 답변하는 전문가입니다. 주어진 정보를 바탕으로 사용자 질문에 간결하고 명확하게 답변해주세요."},
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=500,
+        )
+        answer = completion.choices[0].message.content
+        logging.info(f"FriendliAI 응답: {answer}")
+        
+        return {"answer": answer, "retrieved_context": retrieved_data}
+
+    except Exception as e:
+        logging.error(f"FriendliAI API 호출 중 오류 발생: {e}")
+        return {"error": f"AI 모델 호출 중 오류가 발생했습니다: {str(e)}"}

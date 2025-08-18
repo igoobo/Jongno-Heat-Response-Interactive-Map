@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .routes import router
 from .services.kma_service import fetch_and_parse_kma_warnings_data
+from .services import chat_service
 from apscheduler.schedulers.background import BackgroundScheduler # Import scheduler
 
 from contextlib import asynccontextmanager
@@ -16,6 +17,8 @@ async def lifespan(app: FastAPI):
     scheduler.start()
     # Initial fetch on startup
     update_kma_warnings_cache()
+    # Load the RAG pipeline
+    chat_service.load_rag_pipeline()
     yield
     print("Shutting down scheduler...")
     scheduler.shutdown()

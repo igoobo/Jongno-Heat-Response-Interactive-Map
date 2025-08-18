@@ -4,7 +4,7 @@ from typing import List
 
 from fastapi import APIRouter, Body, Depends
 
-from .models import Coordinates
+from .models import Coordinates, QueryRequest
 from .services.weather_service import get_weather_data, get_polygon_temperatures_data
 from .services import geojson_service, kakao_service, cooling_center_service, kma_service, chat_service
 
@@ -91,3 +91,7 @@ def get_heat_stages(): # Renamed function for clarity
             continue
 
     return {"error": "Invalid answer format after multiple retries"}, 400
+
+@router.post("/api/ask")
+async def ask_question(request: QueryRequest):
+    return chat_service.get_rag_response(request.question)
