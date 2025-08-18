@@ -25,7 +25,7 @@ export function ChatFab({ onClick }: ChatFabProps) {
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Chat with our Heat-Illness Information Assistant</p>
+          <p>온열질환 정보 도우미랑 이야기를 나눠보세요</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

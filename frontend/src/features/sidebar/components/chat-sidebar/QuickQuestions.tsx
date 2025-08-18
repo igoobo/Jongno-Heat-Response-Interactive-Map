@@ -7,12 +7,12 @@ interface QuickQuestionsProps {
 
 export function QuickQuestions({ onQuestionClick }: QuickQuestionsProps) {
   const quickQuestions = [
-    "What are the symptoms of heat exhaustion?",
-    "How can I prevent heat stroke?", 
-    "What should I do if someone has heat stroke?",
-    "How much water should I drink in hot weather?",
-    "What are the risk factors for heat-related illness?",
-    "When should I seek medical attention for heat illness?"
+    "열탈진의 증상은 무엇인가요?",
+    "열사병을 예방하려면 어떻게 해야 하나요?", 
+    "누군가 열사병에 걸렸을 때 어떻게 해야 하나요?",
+    "더운 날씨에는 물을 얼마나 마셔야 하나요?",
+    "온열질환의 위험 요인은 무엇인가요?",
+    "온열질환 발생 시 언제 병원을 가야 하나요?"
   ];
 
   return (

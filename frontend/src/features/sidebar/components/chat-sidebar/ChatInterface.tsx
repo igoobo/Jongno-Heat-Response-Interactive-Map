@@ -17,7 +17,7 @@ export function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm your heat-illness information assistant. I can help you learn about heat-related conditions, prevention strategies, symptoms to watch for, and when to seek medical care. What would you like to know?",
+      content: "안녕하세요! 저는 온열질환 정보 도우미예요. 폭염 속에서 꼭 알아야 할 온열질환 종류, 예방 방법, 증상, 그리고 병원에 가야 하는 시점까지 한 번에 알려드릴게요.",
       isUser: false,
       timestamp: new Date().toLocaleTimeString()
     }
