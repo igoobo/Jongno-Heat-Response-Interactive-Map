@@ -7,9 +7,10 @@ import QuickActions from '././QuickActions';
 import { SidebarPanel } from './SidebarPanel';
 import { ClosestCoolingCenterCard } from './ClosestCoolingCenterCard'; // Import the new component
 import { HeatIllnessGuide } from './heat-illness-guide/HeatIllnessGuide';
+import { ChatInterface } from './chat-sidebar/ChatInterface';
 
 interface DesktopSidebarContentProps {
-  activeTab: 'info' | 'layers' | 'heat-illness';
+  activeTab: 'info' | 'layers' | 'heat-illness' | 'chat';
   map: any; // Accept map prop
 }
 
@@ -29,6 +30,9 @@ export const DesktopSidebarContent: React.FC<DesktopSidebarContentProps> = ({ ac
       </SidebarPanel>
       <SidebarPanel isActive={activeTab === 'heat-illness'} className="space-y-4 bg-white">
         <HeatIllnessGuide />
+      </SidebarPanel>
+      <SidebarPanel isActive={activeTab === 'chat'} className="space-y-4 bg-white">
+        <ChatInterface />
       </SidebarPanel>
     </div>
   );
