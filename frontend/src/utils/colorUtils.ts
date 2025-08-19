@@ -1,11 +1,10 @@
 // utils/colorUtils.ts
 
 export function getColorByTemperature(temp: number): string {
-  if (temp <= 0) return '#blue';
-  if (temp <= 10) return '#78a9d1';
-  if (temp <= 20) return '#a2d6f9';
-  if (temp <= 25) return '#f1c40f';
-  if (temp <= 30) return '#f39c12';
-  if (temp <= 35) return '#e67e22';
-  return '#e74c3c';
+  if (temp <= 25) return '#FFFACD'; // Lemon Chiffon
+  if (temp <= 28) return '#FFD700'; // Gold
+  if (temp <= 30) return '#FF8C00'; // Dark Orange
+  if (temp <= 33) return '#FF4500'; // OrangeRed
+  if (temp <= 35) return '#FF0000'; // Red
+  return '#B22222'; // Firebrick
 }

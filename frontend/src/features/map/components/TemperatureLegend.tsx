@@ -1,20 +1,23 @@
 // components/TemperatureLegend.tsx
 
+import { getColorByTemperature } from '../../../utils/colorUtils';
+
 export const TemperatureLegend = () => {
-  const tempRanges = [
-    { color: '#a2d6f9', label: '≤ 20°C' },
-    { color: '#f1c40f', label: '≤ 25°C' },
-    { color: '#f39c12', label: '≤ 30°C' },
-    { color: '#e67e22', label: '≤ 35°C' },
-    { color: '#e74c3c', label: '> 35°C' },
+  const temperatureRanges = [
+    { temp: 25, label: '25°C' },
+    { temp: 28, label: '28°C' },
+    { temp: 30, label: '30°C' },
+    { temp: 33, label: '33°C' },
+    { temp: 35, label: '35°C' },
+    { temp: 38, label: '38°C+' },
   ];
 
   return (
     <div style={legendStyle}>
-      {tempRanges.map((item, idx) => (
+      {temperatureRanges.map((item, idx) => (
         <div key={idx} style={{ display: 'flex', alignItems: 'center', marginBottom: 6 }}>
           <div style={{
-            width: 16, height: 16, backgroundColor: item.color, marginRight: 8,
+            width: 16, height: 16, backgroundColor: getColorByTemperature(item.temp), marginRight: 8,
           }} />
           <span style={{ fontSize: 14 }}>{item.label}</span>
         </div>
