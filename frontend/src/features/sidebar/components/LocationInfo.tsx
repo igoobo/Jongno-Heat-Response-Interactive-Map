@@ -1,22 +1,11 @@
-import { useEffect, useState } from 'react';
 import { useMapLocation } from '../../../context/MapLocationContext';
-import { fetchRegionName } from '../../../services/kakaoMapsService';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { MapPin } from 'lucide-react';
+import { useRegionName } from '../../../hooks/useRegionName'; // New import
 
 const LocationInfo = () => {
   const { location } = useMapLocation();
-  const [regionName, setRegionName] = useState('');
-
-  useEffect(() => {
-    const getRegionName = async () => {
-      if (location.lat && location.lng) {
-        const name = await fetchRegionName(location.lat, location.lng);
-        setRegionName(name);
-      }
-    };
-    getRegionName();
-  }, [location]);
+  const regionName = useRegionName({ location }); // Use the new hook
 
   return (
     <Card className="flex flex-col gap-2">

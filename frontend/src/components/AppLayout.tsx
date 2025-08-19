@@ -11,7 +11,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ isDesktop, map, children }
   return (
     <div className="h-screen w-full bg-background flex flex-col md:flex-row overflow-hidden">
       <div className="flex-1 p-3 md:p-6">
-        <div className="h-full w-full">
+        <div className="h-full w-full ">
           {children}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FOOTER_CONTENT } from '../constants/footerContent'; // Import the new constant
 
 interface DesktopSidebarFooterProps {
   children?: React.ReactNode;
@@ -10,28 +11,22 @@ export const DesktopSidebarFooter: React.FC<DesktopSidebarFooterProps> = ({ chil
       {children}
       <div className="text-center space-y-1">
         <p className="text-xs text-muted-foreground">
-          Jongno Heat Response Interactive Map
+          {FOOTER_CONTENT.mainText}
         </p>
         <footer className="text-xs text-muted-foreground">
           <div>
-            Weather data provided by <a href="https://openweathermap.org/">OpenWeather</a> © 2012–2025 OpenWeather®
+            {FOOTER_CONTENT.openWeather} <a href={FOOTER_CONTENT.openWeatherLink}>{FOOTER_CONTENT.openWeatherText}</a> © 2012–2025 OpenWeather®
           </div>
           <div>
-            and <a href="https://apihub.kma.go.kr/">
-            Korea Meteorological Administration (KMA)</a>
-            <span> (KOGL 제1유형)</span>
+            {FOOTER_CONTENT.kma} <a href={FOOTER_CONTENT.kmaLink}>
+            {FOOTER_CONTENT.kmaText}</a>
+            <span>{FOOTER_CONTENT.kmaLicense}</span>
           </div>
 
           <details>
-            <summary className="cursor-pointer underline">자세히</summary>
-            <div className="mt-1 leading-relaxed">
-              본 저작물은 '기상청'에서 '2025년' 작성하여 공공누리 제1유형으로 개방한 <br/> 
-              '기온 예보 자료(API)'를 이용하였으며, 해당 저작물은 <br/> 
-              '기상청, https://apihub.kma.go.kr/'에서 무료로 다운받으실 수 있습니다.
-            </div>
+            <summary className="cursor-pointer underline">{FOOTER_CONTENT.detailsSummary}</summary>
+            <div className="mt-1 leading-relaxed" dangerouslySetInnerHTML={{ __html: FOOTER_CONTENT.detailsContent }} />
           </details>
-
-
 
 
         </footer>

@@ -10,7 +10,7 @@ interface DesktopSidebarProps {
   map: any; // Accept map prop
 }
 
-export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ map }) => { // Destructure map prop
+export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ map }) => {
   const [activeTab, setActiveTab] = useState<SidebarTab>('info');
 
   return (

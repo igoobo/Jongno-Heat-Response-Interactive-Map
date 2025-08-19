@@ -1,20 +1,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { useEffect, useState } from 'react';
 import { Button } from '../../../components/ui/button';
-// import { Navigation, Layers, Info, FileText } from 'lucide-react'; // For Help Button - Don't delete this line
-import { Navigation, Layers, FileText } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { useMapStore } from '../../../stores/useMapStore';
-import { useCurrentLocation } from '../../../hooks/useCurrentLocation'; // 아까 만든 훅
-import { moveToCurrentLocation } from '../../map/components/MapControls/moveToCurrentLocation'; // 아까 만든 함수
-import { moveToFullView } from '../../map/components/MapControls/moveToFullView'; // ✅ 추가
-import { useMapLayer } from '../../../context/MapLayerContext'; // ✅ 추가
-import HeatGuideModal from './HeatGuideModal'; // 방금 만든 모달 임포트
-const quickActions = [
-  { label: '현재 위치', icon: Navigation },
-  { label: '전체보기', icon: Layers },
-  // { label: '도움말', icon: Info }, - Don't delete this line
-  { label: '온열질환 예방가이드', icon: FileText },
-];
+import { useCurrentLocation } from '../../../hooks/useCurrentLocation';
+import { moveToCurrentLocation } from '../../map/components/MapControls/moveToCurrentLocation';
+import { moveToFullView } from '../../map/components/MapControls/moveToFullView';
+import { useMapLayer } from '../../../context/MapLayerContext';
+import HeatGuideModal from './HeatGuideModal';
+import { QUICK_ACTIONS_DATA } from '../constants/quickActionsData';
+
+const IconMap: { [key: string]: React.ElementType } = {
+  Navigation: LucideIcons.Navigation,
+  Layers: LucideIcons.Layers,
+  FileText: LucideIcons.FileText,
+};
 
 const QuickActions = () => {
   const map = useMapStore((state: any) => state.map);
@@ -29,17 +29,35 @@ const QuickActions = () => {
     }
   }, [position, map]);
 
-  const handleClick = (label: string) => {
-    if (label === '현재 위치') {
-      console.log('🖱 현재 위치 버튼 클릭');
-       getLocation(map); // ✅ 항상 현재 지도 기준으로 이동
-    }else if (label === '전체보기') {
-      if (map) {
-        setAllLayers(true); // ✅ 레이어 전부 활성화
-        moveToFullView(map); // ✅ 적당한 위치로 지도 이동
-      }
-    }else if (label === '온열질환 예방가이드') {
-      setHeatGuideVisible(true);
+  const handleCurrentLocationClick = () => {
+    console.log('🖱 현재 위치 버튼 클릭');
+    getLocation(map); // ✅ 항상 현재 지도 기준으로 이동
+  };
+
+  const handleFullViewClick = () => {
+    if (map) {
+      setAllLayers(true); // ✅ 레이어 전부 활성화
+      moveToFullView(map); // ✅ 적당한 위치로 지도 이동
+    }
+  };
+
+  const handleHeatGuideClick = () => {
+    setHeatGuideVisible(true);
+  };
+
+  const handleClick = (type: string) => {
+    switch (type) {
+      case 'currentLocation':
+        handleCurrentLocationClick();
+        break;
+      case 'fullView':
+        handleFullViewClick();
+        break;
+      case 'heatGuide':
+        handleHeatGuideClick();
+        break;
+      default:
+        break;
     }
   };
 
@@ -50,17 +68,20 @@ const QuickActions = () => {
           <CardTitle className="text-lg">빠른 작업</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
-          {quickActions.map((action) => (
-            <Button
-              key={action.label}
-              variant="ghost"
-              className="text-base w-full justify-start gap-3 h-auto py-3"
-              onClick={() => handleClick(action.label)}
-            >
-              <action.icon className="w-4 h-4" />
-              {action.label}
-            </Button>
-          ))}
+          {QUICK_ACTIONS_DATA.map((action) => {
+            const Icon = IconMap[action.icon];
+            return (
+              <Button
+                key={action.type}
+                variant="ghost"
+                className="text-base w-full justify-start gap-3 h-auto py-3"
+                onClick={() => handleClick(action.type)}
+              >
+                {Icon && <Icon className="w-4 h-4" />}
+                {action.label}
+              </Button>
+            );
+          })}
         </CardContent>
       </Card>
       <HeatGuideModal

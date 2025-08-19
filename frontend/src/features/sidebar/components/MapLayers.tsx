@@ -3,12 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui
 import { ToggleSwitch } from './ToggleSwitch';
 import { Layers } from 'lucide-react';
 import { useMapLayer } from '../../../context/MapLayerContext';
-
-const mapLayers = [
-  { id: 'tempDist', name: '온도 분포', color: 'bg-red-500' },
-  { id: 'coolingCenter', name: '무더위 쉼터', color: 'bg-green-500' },
-  { id: 'area', name: '행정경계', color: 'bg-blue-500' },
-];
+import { MAP_LAYERS_DATA } from '../constants/mapLayersData'; // Import the new constant
 
 const MapLayers = () => {
   const { layerStates, toggleLayer } = useMapLayer();
@@ -22,7 +17,7 @@ const MapLayers = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">
-        {mapLayers.map((layer) => (
+        {MAP_LAYERS_DATA.map((layer) => (
           <div key={layer.id} className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className={`w-3 h-3 rounded-full ${layer.color}`} />

@@ -1,5 +1,6 @@
 import { MapPin } from 'lucide-react';
 import * as React from 'react';
+import { SIDEBAR_HEADER_CONTENT } from '../constants/sidebarHeaderContent'; // Import the new constant
 
 export const DesktopSidebarHeader: React.FC = () => {
   return (
@@ -9,8 +10,8 @@ export const DesktopSidebarHeader: React.FC = () => {
           <MapPin className="w-5 h-5 text-primary-foreground" />
         </div>
         <div>
-          <h2 className="font-semibold text-lg">종로구 지도</h2>
-          <p className="text-sm text-muted-foreground">Seoul, South Korea</p>
+          <h2 className="font-semibold text-lg">{SIDEBAR_HEADER_CONTENT.title}</h2>
+          <p className="text-sm text-muted-foreground">{SIDEBAR_HEADER_CONTENT.subtitle}</p>
         </div>
       </div>
     </div>
