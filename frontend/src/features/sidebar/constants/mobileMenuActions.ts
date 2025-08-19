@@ -17,7 +17,7 @@ export const MOBILE_MENU_ACTIONS = [
   {
     type: 'heatGuide',
     label: '온열질환 예방가이드',
-    icon: 'Info', // Placeholder for icon name
+    icon: 'FileText', // Placeholder for icon name
   },
   // {
   //   type: 'help',

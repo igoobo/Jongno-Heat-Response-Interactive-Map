@@ -5,7 +5,7 @@ import * as LucideIcons from 'lucide-react';
 const IconMap: { [key: string]: React.ElementType } = {
   Navigation: LucideIcons.Navigation,
   Layers: LucideIcons.Layers,
-  Info: LucideIcons.Info,
+  FileText: LucideIcons.FileText,
   MapPin: LucideIcons.MapPin,
   // Add other icons as needed
 };
