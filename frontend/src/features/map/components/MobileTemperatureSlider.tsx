@@ -61,7 +61,7 @@ export const MobileTemperatureSlider: React.FC<Props> = ({ hourIndex, max, onCha
   return (
     <div className="absolute top-3 right-3 z-10 w-[60vw] p-3 bg-white rounded-lg shadow-md">
       {/* ▶ 재생/일시정지 버튼 */}
-      <button onClick={() => setIsPlaying((prev) => !prev)} className="absolute right-3 top-22  -translate-y-1/2 bg-white border border-gray-300 rounded-md px-3 py-1 text-lg cursor-pointer shadow-sm">
+      <button onClick={() => setIsPlaying((prev) => !prev)} className="absolute right-0.5 top-22  -translate-y-1/2 bg-white border border-gray-300 rounded-md px-3 py-1 text-lg cursor-pointer shadow-sm">
         {isPlaying ? '⏸ 정지' : '▶ 재생'}
       </button>
 
