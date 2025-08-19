@@ -1,25 +1,25 @@
 
 
-import { getColorByTemperature } from '../../../utils/colorUtils';
+import { TEMPERATURE_RANGES } from '../constants/temperatureRanges'; // Import shared constant
+import { TemperatureLegendBase } from './TemperatureLegendBase'; // New import
 
 export const MobileTemperatureLegend = () => {
-  const tempRanges = [
-    { temp: 25, label: '≤ 25°C' },
-    { temp: 28, label: '≤ 28°C' },
-    { temp: 30, label: '≤ 30°C' },
-    { temp: 33, label: '≤ 33°C' },
-    { temp: 35, label: '≤ 35°C' },
-    { temp: 38, label: '> 35°C' },
-  ];
+  // Adjust labels for mobile view
+  const mobileTempRanges = TEMPERATURE_RANGES.map((range, idx) => {
+    if (idx === TEMPERATURE_RANGES.length - 1) {
+      return { ...range, label: `> ${range.temp - 3}°C` }; // Adjust for last item
+    }
+    return { ...range, label: `≤ ${range.temp}°C` };
+  });
 
   return (
     <div className="absolute top-23 left-4 z-10 p-2 bg-white/60 rounded-lg shadow-md h-14vh w-20vw">
-      {tempRanges.map((item, idx) => (
-        <div key={idx} className="flex items-center mb-1">
-          <div className="w-3 h-3 mr-2" style={{ backgroundColor: getColorByTemperature(item.temp) }} />
-          <span className="text-[16px]">{item.label}</span>
-        </div>
-      ))}
+      <TemperatureLegendBase
+        ranges={mobileTempRanges}
+        itemClassName="flex items-center mb-1"
+        squareClassName="w-3 h-3 mr-2"
+        labelClassName="text-[16px]"
+      />
     </div>
   );
 };

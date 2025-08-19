@@ -1,6 +1,6 @@
 import React from 'react';
-import { TemperatureLegend } from './TemperatureLegend';
-import { TemperatureSlider } from './TemperatureSlider';
+import { TemperatureLegend } from './DesktopTemperatureLegend';
+import { TemperatureSlider } from './DesktopTemperatureSlider';
 import { MobileTemperatureLegend } from './MobileTemperatureLegend';
 import { MobileTemperatureSlider } from './MobileTemperatureSlider';
 import type { LayerStates } from '../../../context/MapLayerContext'; // Assuming this type is available

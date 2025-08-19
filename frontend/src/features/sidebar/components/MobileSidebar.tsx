@@ -4,7 +4,7 @@ import MobileMapLayersSidebar from './MobileMapLayersSidebar';
 import MobileLocationSidebar from './MobileLocationSidebar';
 import WeatherCard from '../../weather/components/WeatherCard';
 import { HeatIllnessGuide } from './heat-illness-guide/HeatIllnessGuide'; // Import HeatIllnessGuide
-import { MapLayersFab } from '../../map/components/MapLayersFab'; // Import MapLayersFa
+import { MapLayersFab } from '../../map/components/MobileMapLayersFab'; // Import MapLayersFa
 import { X } from 'lucide-react'; // Import X
 
 export const MobileSidebar = () => {

@@ -1,9 +1,11 @@
 import { MapPolygonLayer } from './layers/MapPolygonLayer';
 import { MapCoolingCenterLayer } from './layers/MapCoolingCenterLayer';
 
+import type { LayerStates } from '../../../context/MapLayerContext'; // Corrected Import LayerStates
+
 interface LayersProps {
-  map: any;
-  layerStates: any;
+  map: any; // Reverted to any
+  layerStates: LayerStates;
   tempsByPolygon: number[][];
   setTempsByPolygon: (temps: number[][]) => void;
   hourIndex: number;

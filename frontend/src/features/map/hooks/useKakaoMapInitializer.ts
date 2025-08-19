@@ -76,8 +76,6 @@ export const useKakaoMapInitializer = ({
           await initMap();
         } else if (scriptError) { // Handle script loading error
           console.error('Script error:', scriptError);
-        } else {
-          console.log('Script not yet loaded, waiting...');
         }
       } catch (err) {
         console.error('Error in loadEverything:', err);
