@@ -46,14 +46,14 @@ const QuickActions = () => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">빠른 작업</CardTitle>
+          <CardTitle className="text-lg">빠른 작업</CardTitle>
         </CardHeader>
         <CardContent className="space-y-2">
           {quickActions.map((action) => (
             <Button
               key={action.label}
               variant="ghost"
-              className="w-full justify-start gap-3 h-auto py-3"
+              className="text-base w-full justify-start gap-3 h-auto py-3"
               onClick={() => handleClick(action.label)}
             >
               <action.icon className="w-4 h-4" />

@@ -16,7 +16,7 @@ const MapLayers = () => {
   return (
     <Card>
       <CardHeader className="pb-3">
-        <CardTitle className="text-base flex items-center gap-2">
+        <CardTitle className="text-lg flex items-center gap-2">
           <Layers className="w-4 h-4" />
           지도 레이어
         </CardTitle>
@@ -26,7 +26,7 @@ const MapLayers = () => {
           <div key={layer.id} className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className={`w-3 h-3 rounded-full ${layer.color}`} />
-              <span className="text-lg md:text-sm">{layer.name}</span>
+              <span className="text-lg md:text-base">{layer.name}</span>
             </div>
             <ToggleSwitch
               id={layer.id} // Pass unique ID

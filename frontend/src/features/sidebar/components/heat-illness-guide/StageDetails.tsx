@@ -10,13 +10,13 @@ interface StageDetailsProps {
 
 export const StageDetails: React.FC<StageDetailsProps> = ({ stage }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div className="text-center">
         <p className="text-gray-700 leading-relaxed">{stage.description}</p>
       </div>
 
       <div className="space-y-3">
-        <h4 className="text-lg md:text-sm font-semibold text-gray-800">주요 온열질환:</h4>
+        <h4 className="text-lg md:text-base font-semibold text-gray-800">주요 온열질환:</h4>
         <div className="grid grid-cols-2 gap-2">
           {stage.mainIllness.map((item, index) => (
             <InteractiveTextCard key={index} text={item.illness} extraInfo={item.extraInfo} color={stage.color} />
@@ -25,7 +25,7 @@ export const StageDetails: React.FC<StageDetailsProps> = ({ stage }) => {
       </div>
 
       <div className="space-y-3">
-        <h4 className="text-lg md:text-sm font-semibold text-gray-800">주요 증상:</h4>
+        <h4 className="text-lg md:text-base font-semibold text-gray-800">주요 증상:</h4>
         <div className="grid grid-cols-2 gap-2">
           {stage.symptoms.map((symptom, index) => (
             <SymptomItem key={index} symptom={symptom} color={stage.color} />

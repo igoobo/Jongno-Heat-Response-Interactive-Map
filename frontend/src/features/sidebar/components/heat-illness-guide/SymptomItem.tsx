@@ -55,7 +55,7 @@ export const SymptomItem: React.FC<SymptomItemProps> = ({ symptom, color }) => {
         className="w-2 h-2 rounded-full"
         style={{ backgroundColor: color }}
       />
-      <span className="text-lg md:text-sm flex items-center gap-1">
+      <span className="text-lg md:text-base flex items-center gap-1">
         {symptom.symptom}
         {symptom.extraInfo && <Info size={14} className="text-gray-400" />}
       </span>

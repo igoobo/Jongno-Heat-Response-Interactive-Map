@@ -6,9 +6,9 @@ interface DesktopSidebarFooterProps {
 
 export const DesktopSidebarFooter: React.FC<DesktopSidebarFooterProps> = ({ children }) => {
   return (
-    <div className="mt-auto p-6 border-t border-border">
+    <div className="mt-auto px-6 py-4 border-t border-border">
       {children}
-      <div className="text-center space-y-2 mt-4">
+      <div className="text-center space-y-1">
         <p className="text-xs text-muted-foreground">
           Jongno Heat Response Interactive Map
         </p>

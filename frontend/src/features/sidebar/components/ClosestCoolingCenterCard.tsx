@@ -54,15 +54,15 @@ export const ClosestCoolingCenterCard: React.FC<ClosestCoolingCenterCardProps> =
   return (
     <Card>
       <CardHeader>
-        <CardTitle>가장 가까운 무더위 쉼터 찾기</CardTitle>
+        <CardTitle className="text-lg">가장 가까운 무더위 쉼터 찾기</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="mb-4">
-          <label htmlFor="facilityType" className="block text-sm font-medium text-gray-700 mb-1">시설 유형:</label>
+          <label htmlFor="facilityType" className="block text-base font-medium text-gray-700 mb-1">시설 유형:</label>
           <select
             id="facilityType"
             name="facilityType"
-            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-base rounded-md"
             value={selectedFacilityType}
             onChange={(e) => setSelectedFacilityType(e.target.value)}
           >
@@ -76,7 +76,7 @@ export const ClosestCoolingCenterCard: React.FC<ClosestCoolingCenterCardProps> =
           if (!layerStates.coolingCenter) {
             toggleLayer('coolingCenter');
           }
-        }} className="w-full">
+        }} className="text-base w-full">
           현재 위치에서 찾기
         </Button>
         {closestCenter && (
