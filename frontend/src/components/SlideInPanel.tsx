@@ -32,12 +32,12 @@ export const SlideInPanel: React.FC<SlideInPanelProps> = ({
         ...animationStyle,
       }}
     >
-      <div className="flex justify-end p-4">
+      <div className="flex justify-end p-1">
         <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
           <X size={24} />
         </button>
       </div>
-      <div className="px-4 pb-4">
+      <div className="px-2 pb-2">
         {children}
       </div>
     </div>

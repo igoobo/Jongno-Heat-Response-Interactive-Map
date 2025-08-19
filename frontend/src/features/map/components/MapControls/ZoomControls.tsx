@@ -47,7 +47,7 @@ const containerStyle: React.CSSProperties = {
   borderRadius: '10px',
   padding: '6px',
   boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  zIndex: 10000,
+  zIndex: 1000,
 };
 
 const buttonStyle: React.CSSProperties = {
