@@ -47,6 +47,7 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    allowedHosts: ['.trycloudflare.com']
   },
   plugins: [react(), tailwindcss(), removeVersionSpecifiers()],
   resolve: {
