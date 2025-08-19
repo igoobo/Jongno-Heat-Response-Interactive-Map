@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 import { useEffect, useState } from 'react';
 import { Button } from '../../../components/ui/button';
-import { Navigation, Layers, Info, FileText } from 'lucide-react';
+// import { Navigation, Layers, Info, FileText } from 'lucide-react'; // For Help Button
+import { Navigation, Layers, FileText } from 'lucide-react';
 import { useMapStore } from '../../../stores/useMapStore';
 import { useCurrentLocation } from '../../../hooks/useCurrentLocation'; // 아까 만든 훅
 import { moveToCurrentLocation } from '../../map/components/MapControls/moveToCurrentLocation'; // 아까 만든 함수
@@ -11,7 +12,7 @@ import HeatGuideModal from './HeatGuideModal'; // 방금 만든 모달 임포트
 const quickActions = [
   { label: '현재 위치', icon: Navigation },
   { label: '전체보기', icon: Layers },
-  { label: '도움말', icon: Info },
+  // { label: '도움말', icon: Info },
   { label: '온열질환 예방가이드', icon: FileText },
 ];
 

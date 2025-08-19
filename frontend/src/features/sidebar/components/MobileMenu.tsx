@@ -1,4 +1,5 @@
-import { X, Navigation, Layers, Info, MapPin } from 'lucide-react'; // Import MapPin icon
+// import { X, Navigation, Layers, Info, MapPin } from 'lucide-react'; // For Help Button
+import { X, Navigation, Layers, MapPin } from 'lucide-react'; // Import MapPin icon
 import { Button } from '../../../components/ui/button';
 import { useMapStore } from '../../../stores/useMapStore';
 import { moveToFullView } from '../../map/components/MapControls/moveToFullView';
@@ -130,14 +131,14 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
               <option value="특정계층이용시설">특정계층이용시설</option>
             </select>
           </div>
-          <Button
+          {/* <Button
             variant="ghost"
             className="text-lg md:text-sm w-full justify-start gap-3 h-auto py-3"
             onClick={() => handleActionClick('help')}
           >
             <Info className="w-4 h-4" />
             도움말
-          </Button>
+          </Button> */}
           
         </div>
       </div>
