@@ -5,3 +5,11 @@ export async function fetchKmaTemperatureExtremes(nx: number, ny: number, base_d
   }
   return response.json();
 }
+
+export async function fetchKmaWeatherWarnings() {
+  const response = await fetch('/api/kma-weather-warnings');
+  if (!response.ok) {
+    throw new Error('Failed to fetch KMA weather warnings');
+  }
+  return response.json();
+}

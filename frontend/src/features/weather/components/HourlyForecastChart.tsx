@@ -1,5 +1,5 @@
 // components/HourlyForecastChart.tsx
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo } from "react";
 import {
   AreaChart,
   Area,
@@ -11,19 +11,11 @@ import {
 } from "recharts";
 import { useHourlyForecast } from "../hooks/useHourlyForecast";
 import { useMapLocation } from "../../../context/MapLocationContext";
-
-const formatHour = (dt: number) => {
-  const date = new Date(dt * 1000);
-  return `${date.getHours()}시`;
-};
+import { formatHour } from "../../../utils/timeUtils";
 
 function HourlyForecastChartComponent() {
   const { location } = useMapLocation();
   const { data, loading } = useHourlyForecast(location);
-
-  useEffect(() => {
-    console.log("날씨 데이터 로딩됨:", data);
-  }, [data]);
 
   const chartData = useMemo(() => {
     return data.map((item) => ({

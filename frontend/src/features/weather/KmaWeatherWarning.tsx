@@ -1,58 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useKmaWeatherWarnings } from './hooks/useKmaWeatherWarnings';
 
-interface KmaWarning {
-  REG_UP: string;
-  REG_UP_KO: string;
-  REG_ID: string;
-  REG_KO: string;
-  TM_FC: string;
-  TM_EF: string;
-  WRN: string;
-  LVL: string;
-  CMD: string;
-  ED_TM: string;
-}
+const WARNING_COLORS: { [key: string]: string } = {
+  '주의': 'bg-yellow-400',
+  '경보': 'bg-red-600',
+};
 
 const KmaWeatherWarning = () => {
-  const [warnings, setWarnings] = useState<KmaWarning[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchWarnings = async () => {
-      try {
-        const response = await fetch('/api/kma-weather-warnings');
-        if (!response.ok) {
-          throw new Error('Failed to fetch KMA weather warnings');
-        }
-        const data = await response.json();
-        setWarnings(data);
-      } catch (error) {
-        console.error(error);
-        setWarnings([]); // Clear warnings on error
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchWarnings();
-  }, []);
+  const { warnings, loading, error } = useKmaWeatherWarnings();
 
   const getWarningColor = (level: string) => {
-    switch (level) {
-      case '주의':
-        return 'bg-yellow-400';
-      case '경보':
-        return 'bg-red-600';
-      default:
-        return 'bg-gray-400';
-    }
+    return WARNING_COLORS[level] || 'bg-gray-400';
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  const heatWarnings = warnings.filter(warning => warning.WRN.includes(''));
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const heatWarnings = warnings.filter(warning => warning.WRN.includes('폭염'));
 
   if (heatWarnings.length === 0) {
     return (

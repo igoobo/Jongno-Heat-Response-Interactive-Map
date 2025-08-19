@@ -29,3 +29,8 @@ export const formatLabel = (hourIndex: number, baseDate: Date): string => {
   
   return timeFormat;
 };
+
+export const formatHour = (dt: number) => {
+  const date = new Date(dt * 1000);
+  return `${date.getHours()}시`;
+};
