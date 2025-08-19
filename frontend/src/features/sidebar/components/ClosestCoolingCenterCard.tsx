@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Card, CardHeader, CardTitle, CardContent } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useMapLayer } from "@/context/MapLayerContext";
+import { useState } from "react";
 
 interface ClosestCoolingCenterCardProps {
   map: any;
@@ -11,6 +12,8 @@ interface ClosestCoolingCenterCardProps {
 export const ClosestCoolingCenterCard: React.FC<ClosestCoolingCenterCardProps> = ({ map }) => {
   const [closestCenter, setClosestCenter] = useState<any>(null);
   const [selectedFacilityType, setSelectedFacilityType] = useState<string>('');
+
+  const { toggleLayer, layerStates } = useMapLayer();
 
   const findClosestCoolingCenter = async () => {
     if (!map) return;
@@ -68,7 +71,12 @@ export const ClosestCoolingCenterCard: React.FC<ClosestCoolingCenterCardProps> =
             <option value="특정계층이용시설">특정계층이용시설</option>
           </select>
         </div>
-        <Button onClick={findClosestCoolingCenter} className="w-full">
+        <Button onClick={() => {
+          findClosestCoolingCenter();
+          if (!layerStates.coolingCenter) {
+            toggleLayer('coolingCenter');
+          }
+        }} className="w-full">
           현재 위치에서 찾기
         </Button>
         {closestCenter && (
