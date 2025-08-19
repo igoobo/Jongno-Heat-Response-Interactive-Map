@@ -1,8 +1,8 @@
 /* frontend/src/components/NotificationBanner.css */
 .notification-banner {
   position: absolute;
-  top: 10px; /* Adjust as needed */
-  left: calc(80% - 300px); /* Align to left edge of viewport */
+  top: 10px; /* Adjust  as needed */
+  left: calc(50% - 300px); /* Align to left edge of viewport */
   background-color: rgba(255, 255, 255, 0.9); /* Light, semi-transparent background */
   color: #333; /* Dark text for contrast */
   padding: 10px 20px;
@@ -19,6 +19,12 @@
   min-height: 60px; /* Added min-height to prevent size changes */
 }
 
+@media (max-width: 768px) {
+  .notification-banner {
+    left: calc(80% - 300px);
+  }
+}
+
 .notification-banner.hidden {
   opacity: 0;
   visibility: hidden;
@@ -27,11 +33,12 @@
 
 .notification-banner p {
   margin: 0;
-  font-size: 0.9em;
+  font-size: 1.4em;
 }
 
 .notification-icon {
   display: flex;
+  margin-right: 16px;
   align-items: center;
   color: #333; /* Icon color, matching text */
 }
