@@ -6,16 +6,10 @@ import { useMapLayer } from '../../../context/MapLayerContext';
 import LoadingOverlay from '../../../components/LoadingOverlay';
 import { useKakaoMap } from '../hooks/useKakaoMap';
 import { Layers } from './Layers';
-import { TemperatureLegend } from './TemperatureLegend';
-import { TemperatureSlider } from './TemperatureSlider';
-import  ZoomControls from './MapControls/ZoomControls';
-import { MobileTemperatureLegend } from './MobileTemperatureLegend';
-import { MobileTemperatureSlider } from './MobileTemperatureSlider';
-import KakaoMapLicense from '../../../components/KakaoMapLicense';
 import { useMapLoading } from '../hooks/useMapLoading';
-import FixedCenterMarker from './FixedCenterMarker';
-import NotificationBanner from '../../../components/NotificationBanner';
 import useChatNotification from '../../../hooks/useChatNotification'; // New import
+import { MapTemperatureControls } from './MapTemperatureControls'; // New import
+import { MapUIControls } from './MapUIControls'; // New import
 
 interface MapContainerProps {
   onMapInstanceLoad: (map: any) => void;
@@ -56,16 +50,17 @@ const MapContainer: React.FC<MapContainerProps> = ({ onMapInstanceLoad }) => {
   return (
     <>
       {totalLoading && <LoadingOverlay />}
-      <div id="map" style={{ width: "100%", height: "100vh", position: "relative" }}>
-        <FixedCenterMarker />
-        <NotificationBanner
-          message={notificationMessage}
-          isVisible={showNotification}
-          onClose={dismissNotification} // Use the dismiss function from the hook
-        />
-      </div>
-      {isDesktop && <KakaoMapLicense />}
-
+      <MapUIControls
+        map={map}
+        isDesktop={isDesktop}
+        notificationMessage={notificationMessage}
+        showNotification={showNotification}
+        dismissNotification={dismissNotification}
+      >
+        <div id="map" style={{ width: "100%", height: "100vh", position: "relative" }}>
+          {/* The actual map will be rendered here by KakaoMap API */}
+        </div>
+      </MapUIControls>
 
       {map && (
         <Layers
@@ -79,30 +74,13 @@ const MapContainer: React.FC<MapContainerProps> = ({ onMapInstanceLoad }) => {
         />
       )}
 
-      {layerStates.tempDist && tempsByPolygon.length > 0 && (
-        <>
-          {isDesktop ? (
-            <>
-              <TemperatureLegend />
-              <TemperatureSlider
-                hourIndex={hourIndex}
-                max={tempsByPolygon[0].length - 1}
-                onChange={(val: number) => setHourIndex(val)}
-              />
-            </>
-          ) : (
-            <>
-              <MobileTemperatureLegend />
-              <MobileTemperatureSlider
-                hourIndex={hourIndex}
-                max={tempsByPolygon[0].length - 1}
-                onChange={(val: number) => setHourIndex(val)}
-              />
-            </>
-          )}
-        </>
-      )}
-      {isDesktop && <ZoomControls map={map} defaultLevel={5} />}
+      <MapTemperatureControls
+        isDesktop={isDesktop}
+        layerStates={layerStates}
+        tempsByPolygon={tempsByPolygon}
+        hourIndex={hourIndex}
+        setHourIndex={setHourIndex}
+      />
     </>
   );
 };

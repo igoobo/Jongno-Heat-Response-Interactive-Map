@@ -33,6 +33,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src",
-"src/common/types" ]
+    "include": ["src",
+"src/common/types",
+"src/global.d.ts" ]
 }

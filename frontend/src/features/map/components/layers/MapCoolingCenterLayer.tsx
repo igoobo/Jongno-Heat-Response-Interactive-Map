@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
 import { useCoolingCenters } from '../../hooks/useCoolingCenters';
+import { useCoolingCenterVisibility } from '../../hooks/useCoolingCenterVisibility'; // New import
+import { useMapClickInfoWindowCloser } from '../../hooks/useMapClickInfoWindowCloser'; // New import
 
 interface MapCoolingCenterLayerProps {
   map: any;
@@ -14,39 +15,18 @@ export const MapCoolingCenterLayer: React.FC<MapCoolingCenterLayerProps> = ({
 }) => {
   const { markersRef, openInfoWindowRef, fixedInfoWindowRef } = useCoolingCenters(map, layerStates, onLoad);
 
-  useEffect(() => {
-    if (!map || markersRef.current.length === 0) return;
+  useCoolingCenterVisibility({
+    map,
+    layerStates,
+    markersRef,
+    openInfoWindowRef,
+    fixedInfoWindowRef,
+  });
 
-    if (!layerStates.coolingCenter) {
-      if (openInfoWindowRef.current) {
-        openInfoWindowRef.current.close();
-        openInfoWindowRef.current = null;
-      }
-      if (fixedInfoWindowRef.current) {
-        fixedInfoWindowRef.current.close();
-        fixedInfoWindowRef.current = null;
-      }
-    }
-
-    markersRef.current.forEach((marker: any) => {
-      marker.setMap(layerStates.coolingCenter ? map : null);
-    });
-  }, [layerStates.coolingCenter, map]);
-
-  useEffect(() => {
-    if (map) {
-      const handleClick = () => {
-        if (fixedInfoWindowRef.current) {
-          fixedInfoWindowRef.current.close();
-          fixedInfoWindowRef.current = null;
-        }
-      };
-      window.kakao.maps.event.addListener(map, 'click', handleClick);
-      return () => {
-        window.kakao.maps.event.removeListener(map, 'click', handleClick);
-      };
-    }
-  }, [map]);
+  useMapClickInfoWindowCloser({
+    map,
+    fixedInfoWindowRef,
+  });
 
   return null;
 };

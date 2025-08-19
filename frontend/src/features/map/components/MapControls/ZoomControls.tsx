@@ -1,8 +1,6 @@
-import React from 'react';
-
 interface ZoomControlsProps {
-  map: kakao.maps.Map | null;
-  defaultLevel?: number;
+  map: any;
+  defaultLevel: number;
 }
 
 const ZoomControls: React.FC<ZoomControlsProps> = ({ map, defaultLevel = 5 }) => {

@@ -1,7 +1,7 @@
 // src/context/MapLayerContext.tsx
 import { createContext, useContext, useState, useMemo } from 'react';
 
-type LayerStates = {
+export type LayerStates = {
   tempDist: boolean;
   coolingCenter: boolean;
   area: boolean;
