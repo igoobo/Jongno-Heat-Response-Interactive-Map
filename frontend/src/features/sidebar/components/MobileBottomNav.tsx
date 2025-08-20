@@ -16,7 +16,7 @@ const MobileBottomNav: React.FC<MobileBottomNavProps> = ({ onSidebarChange, acti
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 z-10000 w-full h-20 bg-white border-t border-gray-200">
+      <div className="fixed bottom-0 left-0 z-10000 w-full h-20 bg-white border-t border-gray-200 min-w-[360px]">
         <div className="grid h-full max-w-lg grid-cols-4 mx-auto font-medium">
           {MOBILE_NAV_BUTTONS.map((button) => (
             <button

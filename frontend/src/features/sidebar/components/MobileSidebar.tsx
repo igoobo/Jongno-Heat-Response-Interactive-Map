@@ -36,7 +36,7 @@ export const MobileSidebar = () => {
           bottom: activeMobileSidebar === 'heatGuide' ? '4rem' : '-100%', // Move off-screen when closed
           overflowY: 'auto', // Enable scrolling for content
         }}
-        containerClassName="p-4 rounded-t-lg"
+        containerClassName="p-4 rounded-t-lg min-w-[360px]"
       >
         <div className="mt-4 space-y-4 pb-4">
           <HeatIllnessGuide />
@@ -51,7 +51,7 @@ export const MobileSidebar = () => {
           bottom: activeMobileSidebar === 'chat' ? '4rem' : '-100%',
           overflowY: 'auto',
         }}
-        containerClassName="p-4 rounded-t-lg"
+        containerClassName="p-4 rounded-t-lg min-w-[360px]"
       >
         <div className="mt-4 space-y-4 pb-4">
           <ChatTabContent />

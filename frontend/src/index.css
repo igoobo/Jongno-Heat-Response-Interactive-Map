@@ -1,3 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "./styles/globals.css";
+
+@media (max-width: 767px) {
+  html, body {
+    min-width: 360px;
+    overflow-x: scroll; /* Explicitly force horizontal scrollbar */
+  }
+}

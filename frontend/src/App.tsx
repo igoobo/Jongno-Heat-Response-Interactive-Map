@@ -10,7 +10,7 @@ export default function App() {
   const [map, setMap] = useState<any>(null); // State to hold the map instance
 
   return (
-    <div className="h-screen w-full bg-background flex flex-col md:flex-row overflow-hidden">
+    <div className="h-screen w-full bg-background flex flex-col md:flex-row">
       <AppProviders>
         <AppLayout isDesktop={isDesktop} map={map}>
           <MapContainer onMapInstanceLoad={setMap} />

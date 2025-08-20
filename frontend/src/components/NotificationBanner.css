@@ -22,8 +22,8 @@
 
 @media (max-width: 768px) {
   .notification-banner {
-    left: calc(50% - 250px); /* Center for mobile, considering max-width of 500px */
-    max-width: 500px; /* Ensure max-width is applied for mobile as well */
+    left: calc(95% - 320px); /* Center for mobile, considering max-width of 500px */
+    max-width: 400px; /* Ensure max-width is applied for mobile as well */
   }
 }
 

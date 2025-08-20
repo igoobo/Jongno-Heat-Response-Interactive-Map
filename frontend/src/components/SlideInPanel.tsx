@@ -28,7 +28,7 @@ export const SlideInPanel: React.FC<SlideInPanelProps> = ({
       style={{
         bottom: isOpen ? '0' : '-100%', // Default slide from bottom
         maxHeight: isOpen ? 'calc(100vh - 4rem)' : '0', // Default height
-        overflow: 'hidden',
+        overflowY: 'auto', // Changed from overflow: 'hidden' to overflowY: 'auto'
         ...animationStyle,
       }}
     >

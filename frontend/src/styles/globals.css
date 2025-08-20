@@ -134,11 +134,7 @@
     @apply min-w-[360px] overflow-x-auto;
   }
 
-  @screen md {
-    html, body, #root {
-      @apply min-w-0; /* 데스크탑에서는 제한 해제 가능 */
-    }
-  }
+  
 }
 /**
  * Base typography. This is not applied to elements which have an ancestor with a Tailwind text class.
