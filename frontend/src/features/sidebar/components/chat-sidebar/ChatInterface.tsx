@@ -25,9 +25,14 @@ export function ChatInterface() {
   
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest'
+    });
   };
 
   useEffect(() => {
@@ -112,7 +117,7 @@ export function ChatInterface() {
       {/* Chat Messages */}
       <Card className="flex-1 flex flex-col min-h-0">
         <CardContent className="flex-1 p-0">
-          <ScrollArea className="h-full p-4">
+          <ScrollArea className="h-full p-4" ref={scrollAreaRef}>
             {messages.map((message) => (
               <MessageBubble
                 key={message.id}
@@ -141,7 +146,9 @@ export function ChatInterface() {
         </CardContent>
         
         {/* Chat Input */}
-        <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
+        <div className="flex-shrink-0">
+          <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
+        </div>
       </Card>
     </div>
   );
