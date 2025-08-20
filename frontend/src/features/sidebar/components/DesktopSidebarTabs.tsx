@@ -2,8 +2,8 @@ import * as React from 'react';
 import { SIDEBAR_TABS } from '../constants/sidebarTabs'; // Import the new constant
 
 interface DesktopSidebarTabsProps {
-  activeTab: 'info' | 'layers' | 'heat-illness';
-  setActiveTab: (tab: 'info' | 'layers' | 'heat-illness') => void;
+  activeTab: 'info' | 'layers' | 'heat-illness' | 'chat';
+  setActiveTab: (tab: 'info' | 'layers' | 'heat-illness' | 'chat') => void;
 }
 
 export const DesktopSidebarTabs: React.FC<DesktopSidebarTabsProps> = ({ activeTab, setActiveTab }) => {

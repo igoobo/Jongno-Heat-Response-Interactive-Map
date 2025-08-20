@@ -8,7 +8,6 @@ import { GlobalOverlays } from './components/GlobalOverlays'; // New import
 export default function App() {
   const isDesktop = useMediaQuery('(min-width: 768px)');
   const [map, setMap] = useState<any>(null); // State to hold the map instance
-  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
 
   return (
     <div className="h-screen w-full bg-background flex flex-col md:flex-row overflow-hidden">
@@ -17,11 +16,7 @@ export default function App() {
           <MapContainer onMapInstanceLoad={setMap} />
         </AppLayout>
       </AppProviders>
-      <GlobalOverlays
-        isDesktop={isDesktop}
-        isChatModalOpen={isChatModalOpen}
-        setIsChatModalOpen={setIsChatModalOpen}
-      />
+      <GlobalOverlays />
     </div>
   );
 }
