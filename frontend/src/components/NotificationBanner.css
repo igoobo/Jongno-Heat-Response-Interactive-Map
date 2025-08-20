@@ -2,7 +2,8 @@
 .notification-banner {
   position: absolute;
   top: 10px; /* Adjust  as needed */
-  left: calc(50% - 300px); /* Align to left edge of viewport */
+  left: calc(30vw - 30px); /* Position to the right of the sidebar and center in remaining space */
+  max-width: 800px; /* Set a max-width for the banner */
   background-color: rgba(255, 255, 255, 0.9); /* Light, semi-transparent background */
   color: #333; /* Dark text for contrast */
   padding: 10px 20px;
@@ -21,7 +22,8 @@
 
 @media (max-width: 768px) {
   .notification-banner {
-    left: calc(80% - 300px);
+    left: calc(50% - 250px); /* Center for mobile, considering max-width of 500px */
+    max-width: 500px; /* Ensure max-width is applied for mobile as well */
   }
 }
 
