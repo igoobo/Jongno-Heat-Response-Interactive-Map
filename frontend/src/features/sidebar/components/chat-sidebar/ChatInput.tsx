@@ -31,7 +31,7 @@ export function ChatInput({ onSendMessage, disabled }: ChatInputProps) {
       <Input
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyPress}
         placeholder="온열질환 증상이나 예방, 치료에 대해 궁금한 걸 물어보세요"
         disabled={disabled}
         className="flex-1"

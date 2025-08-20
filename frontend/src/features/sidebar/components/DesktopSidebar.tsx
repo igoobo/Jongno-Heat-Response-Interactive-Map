@@ -18,7 +18,7 @@ export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ map, activeTab, 
       <DesktopSidebarTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       <div className="w-full h-full bg-white flex flex-col relative">
         <DesktopSidebarHeader />
-        <div className="absolute top-24 right-0 w-full ">
+        <div className="absolute top-24 right-0 w-full" style={{ height: 'calc(100% - 180px)' }}>
           <DesktopSidebarContent activeTab={activeTab} map={map} />
         </div>
         <DesktopSidebarFooter />

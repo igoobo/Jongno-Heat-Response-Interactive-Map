@@ -16,7 +16,7 @@ interface DesktopSidebarContentProps {
 
 export const DesktopSidebarContent: React.FC<DesktopSidebarContentProps> = ({ activeTab, map }) => { // Destructure map prop
   return (
-    <div className="flex-1 min-h-0 overflow-y-auto p-6 space-y-4">
+    <div className="flex-1 min-h-0 p-6 space-y-4">
       <SidebarPanel isActive={activeTab === 'info'} className="space-y-8 bg-white">
         <LocationInfo />
         <WeatherCard />
@@ -31,7 +31,7 @@ export const DesktopSidebarContent: React.FC<DesktopSidebarContentProps> = ({ ac
       <SidebarPanel isActive={activeTab === 'heat-illness'} className="space-y-4 bg-white">
         <HeatIllnessGuide />
       </SidebarPanel>
-      <SidebarPanel isActive={activeTab === 'chat'} className="space-y-4 bg-white">
+      <SidebarPanel isActive={activeTab === 'chat'} className="space-y-8 bg-white overflow-y-auto">
         <ChatTabContent />
       </SidebarPanel>
     </div>
