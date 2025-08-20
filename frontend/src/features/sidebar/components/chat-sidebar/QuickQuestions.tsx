@@ -26,7 +26,7 @@ export function QuickQuestions({ onQuestionClick }: QuickQuestionsProps) {
             <Button
               key={index}
               variant="outline"
-              className="text-left h-auto p-3 whitespace-normal"
+              className="text-base text-left h-auto p-3 whitespace-normal"
               onClick={() => onQuestionClick(question)}
             >
               {question}

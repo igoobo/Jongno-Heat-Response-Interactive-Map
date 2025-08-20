@@ -1,4 +1,4 @@
-import { Menu, MapPin, Flame } from 'lucide-react';
+import { Menu, MapPin, Flame, MessageSquare } from 'lucide-react';
 
 export const MOBILE_NAV_BUTTONS = [
   {
@@ -13,7 +13,12 @@ export const MOBILE_NAV_BUTTONS = [
   },
   {
     sidebarType: 'heatGuide',
-    label: 'Heat Guide',
+    label: 'Heat',
     icon: Flame,
+  },
+  {
+    sidebarType: 'chat',
+    label: 'Chat',
+    icon: MessageSquare,
   },
 ];

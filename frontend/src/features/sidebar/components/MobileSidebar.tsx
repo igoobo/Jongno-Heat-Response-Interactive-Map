@@ -6,9 +6,10 @@ import WeatherCard from '../../weather/components/WeatherCard';
 import { HeatIllnessGuide } from './heat-illness-guide/HeatIllnessGuide'; // Import HeatIllnessGuide
 import { MapLayersFab } from '../../map/components/MobileMapLayersFab'; // Import MapLayersFa
 import { SlideInPanel } from '../../../components/SlideInPanel'; // New import  x
+import { ChatTabContent } from './chat-sidebar/ChatTabContent'; // New import
 
 export const MobileSidebar = () => {
-  const [activeMobileSidebar, setActiveMobileSidebar] = useState<'location' | 'layers' | 'menu' | 'heatGuide' | null>(null); // Add 'heatGuide'
+  const [activeMobileSidebar, setActiveMobileSidebar] = useState<'location' | 'layers' | 'menu' | 'heatGuide' | 'chat' | null>(null);
 
   return (
     <>
@@ -39,6 +40,21 @@ export const MobileSidebar = () => {
       >
         <div className="mt-4 space-y-4 pb-4">
           <HeatIllnessGuide />
+        </div>
+      </SlideInPanel>
+      {/* New SlideInPanel for ChatTabContent */}
+      <SlideInPanel
+        isOpen={activeMobileSidebar === 'chat'}
+        onClose={() => setActiveMobileSidebar(null)}
+        animationStyle={{
+          maxHeight: 'calc(100vh - 4rem)', // Same as other panels
+          bottom: activeMobileSidebar === 'chat' ? '4rem' : '-100%',
+          overflowY: 'auto',
+        }}
+        containerClassName="p-4 rounded-t-lg"
+      >
+        <div className="mt-4 space-y-4 pb-4">
+          <ChatTabContent />
         </div>
       </SlideInPanel>
     </>

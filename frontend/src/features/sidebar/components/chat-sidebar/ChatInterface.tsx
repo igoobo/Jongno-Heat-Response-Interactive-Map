@@ -101,7 +101,7 @@ export function ChatInterface() {
             </div>
             <div>
               <CardTitle className="text-xl">온열질환 정보 도우미</CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-base md:text-sm text-muted-foreground mt-1">
                 온열질환, 예방, 치료에 대한 신뢰할 수 있는 정보 제공
               </p>
             </div>
