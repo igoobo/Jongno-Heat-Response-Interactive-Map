@@ -10,6 +10,7 @@ import { useMapLoading } from '../hooks/useMapLoading';
 import useChatNotification from '../../../hooks/useChatNotification'; // New import
 import { MapTemperatureControls } from './MapTemperatureControls'; // New import
 import { MapUIControls } from './MapUIControls'; // New import
+import FixedCenterMarker from './FixedCenterMarker'; // Import FixedCenterMarker
 
 interface MapContainerProps {
   onMapInstanceLoad: (map: any) => void;
@@ -59,6 +60,7 @@ const MapContainer: React.FC<MapContainerProps> = ({ onMapInstanceLoad }) => {
       >
         <div id="map" style={{ width: "100%", height: "100vh", position: "relative" }}>
           {/* The actual map will be rendered here by KakaoMap API */}
+          <FixedCenterMarker /> {/* Render FixedCenterMarker inside the map div */}
         </div>
       </MapUIControls>
 
