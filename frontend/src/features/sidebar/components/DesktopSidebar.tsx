@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 import { DesktopSidebarHeader } from './DesktopSidebarHeader';
 import { DesktopSidebarTabs } from './DesktopSidebarTabs';
 import { DesktopSidebarContent } from './DesktopSidebarContent';
@@ -8,18 +8,18 @@ type SidebarTab = 'info' | 'layers' | 'heat-illness' | 'chat';
 
 interface DesktopSidebarProps {
   map: any; // Accept map prop
+  activeTab: SidebarTab;
+  setActiveTab: (tab: SidebarTab) => void;
 }
 
-export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ map }) => {
-  const [activeTab, setActiveTab] = useState<SidebarTab>('info');
-
+export const DesktopSidebar: React.FC<DesktopSidebarProps> = ({ map, activeTab, setActiveTab }) => {
   return (
-    <div className="hidden md:flex h-full bg-gray-50 border-l border-border shadow-lg">
+    <div className="hidden md:flex h-full bg-gray-50 border-l border-border shadow-lg z-150">
       <DesktopSidebarTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="w-full h-full bg-white flex flex-col">
+      <div className="w-full h-full bg-white flex flex-col relative">
         <DesktopSidebarHeader />
-        <div className="absolute top-24 right-0 w-110 z-40 ">
-          <DesktopSidebarContent activeTab={activeTab} map={map} /> {/* Pass map prop */}
+        <div className="absolute top-24 right-0 w-full ">
+          <DesktopSidebarContent activeTab={activeTab} map={map} />
         </div>
         <DesktopSidebarFooter />
       </div>
