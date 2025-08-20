@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 interface UsePolygonInitializationProps {
   map: any;
-  layerStates: any;
   onLoad: () => void;
   polygonsRef: React.RefObject<any[]>;
   polygonColorMapRef: React.RefObject<Map<any, string>>;
@@ -13,7 +12,6 @@ interface UsePolygonInitializationProps {
 
 export const usePolygonInitialization = ({
   map,
-  layerStates,
   onLoad,
   polygonsRef,
   polygonColorMapRef,
@@ -39,16 +37,16 @@ export const usePolygonInitialization = ({
         geojson.features.forEach((feature: any) => {
           const coords = feature.geometry.coordinates[0];
           const path = coords.map(([lon, lat]: number[]) => new window.kakao.maps.LatLng(lat, lon));
-          let originalFillColor = '#ffffff';
+          let originalFillColor = 'transparent';
 
           const polygon = new window.kakao.maps.Polygon({
-            map: layerStates.area ? map : null,
+            map: map,
             path,
             strokeWeight: 2,
             strokeColor: '#004c80',
             strokeOpacity: 0.8,
-            fillColor: originalFillColor,
-            fillOpacity: 0.3,
+            fillColor: '#ffffff',
+            fillOpacity: 0.0, // Start with transparent fill
           });
           polygonColorMapRef.current.set(polygon, originalFillColor);
 
@@ -58,13 +56,13 @@ export const usePolygonInitialization = ({
           polygonsRef.current.push(polygon);
 
           window.kakao.maps.event.addListener(polygon, 'mouseover', () => {
-            const currentColor = polygonColorMapRef.current.get(polygon) ?? '#ffffff';
+            const currentColor = polygonColorMapRef.current.get(polygon) ?? originalFillColor;
             polygonColorMapRef.current.set(polygon, currentColor);
             polygon.setOptions({ fillColor: '#09f' });
           });
 
           window.kakao.maps.event.addListener(polygon, 'mouseout', () => {
-            const original = polygonColorMapRef.current.get(polygon) ?? '#ffffff';
+            const original = polygonColorMapRef.current.get(polygon) ?? originalFillColor;
             polygon.setOptions({ fillColor: original });
           });
 

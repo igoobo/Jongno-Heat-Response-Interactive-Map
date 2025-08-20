@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import type { LayerStates } from '../../../context/MapLayerContext'; // Import LayerStates
+
 import { usePolygonInitialization } from './usePolygonInitialization'; // New import
 
-export const usePolygons = (map: any, layerStates: LayerStates, setTempsByPolygon: (temps: number[][]) => void, onLoad: () => void) => {
+export const usePolygons = (map: any, setTempsByPolygon: (temps: number[][]) => void, onLoad: () => void) => {
   const polygonsRef = useRef<any[]>([]);
   const polygonCentersRef = useRef<{ polygon: any; centerLat: number; centerLon: number }[]>([]);
   const polygonColorMapRef = useRef<Map<any, string>>(new Map());
@@ -40,7 +40,6 @@ export const usePolygons = (map: any, layerStates: LayerStates, setTempsByPolygo
 
     usePolygonInitialization({
     map,
-    layerStates,
     onLoad,
     polygonsRef,
     polygonColorMapRef,

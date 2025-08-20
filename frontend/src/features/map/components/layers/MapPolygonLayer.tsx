@@ -19,13 +19,17 @@ export const MapPolygonLayer: React.FC<MapPolygonLayerProps> = ({
   hourIndex,
   onLoad,
 }) => {
-  const { polygonsRef, polygonColorMapRef, polygonCentersRef } = usePolygons(map, layerStates, setTempsByPolygon, onLoad);
+  const { polygonsRef, polygonColorMapRef, polygonCentersRef } = usePolygons(map, setTempsByPolygon, onLoad);
 
   useEffect(() => {
     if (!map || polygonsRef.current.length === 0) return;
 
     polygonsRef.current.forEach((polygon: any) => {
-      polygon.setMap(layerStates.area ? map : null);
+      if (layerStates.area) {
+        polygon.setOptions({ strokeColor: '#004c80', strokeOpacity: 0.8 });
+      } else {
+        polygon.setOptions({ strokeOpacity: 0 });
+      }
     });
   }, [layerStates.area, map]);
 

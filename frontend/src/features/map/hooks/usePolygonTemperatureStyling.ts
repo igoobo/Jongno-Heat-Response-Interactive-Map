@@ -24,7 +24,7 @@ export const usePolygonTemperatureStyling = ({
   useEffect(() => {
     if (!layerStates.tempDist) {
       polygonsRef.current.forEach((polygon: any) => {
-        polygon.setOptions({ fillColor: '#ffffff' });
+        polygon.setOptions({ fillColor: '#ffffff', fillOpacity: 0.0 }); // Set fill to transparent
         polygonColorMapRef.current.set(polygon, '#ffffff');
       });
       return;
@@ -34,7 +34,7 @@ export const usePolygonTemperatureStyling = ({
       const temp = tempsByPolygon[index]?.[hourIndex];
       if (temp != null) {
         const fillColor = getColorByTemperature(temp);
-        polygon.setOptions({ fillColor });
+        polygon.setOptions({ fillColor, fillOpacity: 0.3 }); // Apply temperature color with opacity
         polygonColorMapRef.current.set(polygon, fillColor);
       }
     });
