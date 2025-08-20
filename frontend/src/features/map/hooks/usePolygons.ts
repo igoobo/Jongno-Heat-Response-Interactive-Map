@@ -8,7 +8,7 @@ export const usePolygons = (map: any, setTempsByPolygon: (temps: number[][]) => 
   const polygonColorMapRef = useRef<Map<any, string>>(new Map());
   const [lastFetchTimestamp, setLastFetchTimestamp] = useState(0);
 
-  const CACHE_TTL_MS = 100 * 60 * 1000; // 100 minutes, matches backend cache TTL
+  const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes, matches backend cache TTL
 
   const calculateCentroid = (coords: number[][]): { lat: number; lon: number } => {
     const lats = coords.map((coord) => coord[1]);
