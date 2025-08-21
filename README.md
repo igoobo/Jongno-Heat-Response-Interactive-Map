@@ -4,8 +4,8 @@ Welcome to the Jongno Heat Response Interactive Map! This project provides a mod
 
 ## Live Demo
 
-*   **Frontend (Vercel):** [https://jongno-heat-map-frontend.vercel.app](https://jongno-heat-map-frontend.vercel.app)
-*   **Backend (Hugging Face Spaces):** [https://huggingface.co/spaces/your-username/jongno-heat-map-backend](https://huggingface.co/spaces/your-username/jongno-heat-map-backend)
+*   **Frontend (Vercel):** [https://jongno-heat-response-interactive-ma.vercel.app/](https://jongno-heat-response-interactive-ma.vercel.app/)
+*   **Backend (Hugging Face Spaces):** [https://huggingface.co/spaces/igoobo/Jongno-Heat-Response-Interactive-Map](https://huggingface.co/spaces/igoobo/Jongno-Heat-Response-Interactive-Map)
 
 ## Features
 
