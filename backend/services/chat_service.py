@@ -37,8 +37,9 @@ def load_rag_pipeline():
     global faiss_index, chunks_with_metadata, embedding_model
     logging.info("RAG 파이프라인 로드를 시작합니다.")
     
-    logging.info("임베딩 모델을 로드합니다. (ko-sbert-nli)")
-    embedding_model = SentenceTransformer('jhgan/ko-sbert-nli')
+    model_name = "jhgan/ko-sbert-nli"
+    logging.info("임베딩 모델을 로드합니다. ({model_name})")
+    embedding_model = SentenceTransformer(model_name)
 
     if not os.path.exists(FAISS_INDEX_PATH) or not os.path.exists(CHUNKS_PATH):
         logging.error(f"전처리된 파일을 찾을 수 없습니다. '{FAISS_INDEX_PATH}' 또는 '{CHUNKS_PATH}'가 필요합니다.")
