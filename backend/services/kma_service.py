@@ -3,8 +3,8 @@ import json
 from typing import Any, List
 from fastapi import HTTPException
 
-from ..api_clients import fetch_external_api, fetch_external_text_api, ExternalAPIError # Added this import
-from ..cache import kma_warnings_cache
+from api_clients import fetch_external_api, fetch_external_text_api, ExternalAPIError # Added this import
+from cache import kma_warnings_cache
 
 def get_kma_temperature_extremes_data(base_date: str, base_time: str, nx: int = 60, ny: int = 127) -> List[Any]:
     if not os.environ.get("KMA_API_KEY"):

@@ -8,11 +8,11 @@ from openai import OpenAI
 from datetime import datetime
 from sentence_transformers import SentenceTransformer
 
-from ..models import Coordinates
-from .weather_service import get_weather_data
-from ..cache import kma_warnings_cache
-from ..api_clients import FRIENDLI_TOKENS
-from .kma_service import get_kma_temperature_extremes_data
+from models import Coordinates
+from services.weather_service import get_weather_data
+from cache import kma_warnings_cache
+from api_clients import FRIENDLI_TOKENS
+from services.kma_service import get_kma_temperature_extremes_data
 
 # --- 로깅 설정 ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -24,7 +24,7 @@ client = OpenAI(
 )
 
 # --- RAG 관련 전역 변수 및 모델 ---
-STORAGE_DIR = "backend/storage"
+STORAGE_DIR = "storage"
 FAISS_INDEX_PATH = os.path.join(STORAGE_DIR, "vector.index")
 CHUNKS_PATH = os.path.join(STORAGE_DIR, "chunks_with_metadata.json")
 
@@ -201,7 +201,7 @@ def get_rag_response(question: str) -> Dict[str, Any]:
         context_parts.append(f"[출처: {item['source']}]\n{item['content']}")
     context = "\n\n---\n\n".join(context_parts)
     
-    logging.info(f"검색된 컨텍스트:\n{context[:500]}...")
+    # logging.info(f"검색된 컨텍스트:\n{context[:500]}...")
 
     # 4. FriendliAI에 전달할 프롬프트 구성
     prompt = f"""당신은 주어진 여러 메뉴얼 내용을 종합하여 사용자의 질문에 답변하는 AI 전문가입니다.
@@ -228,7 +228,7 @@ def get_rag_response(question: str) -> Dict[str, Any]:
             max_tokens=500,
         )
         answer = completion.choices[0].message.content
-        logging.info(f"FriendliAI 응답: {answer}")
+        # logging.info(f"FriendliAI 응답: {answer}")
         
         return {"answer": answer, "retrieved_context": retrieved_data}
 
