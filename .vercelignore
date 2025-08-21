@@ -1,0 +1,4 @@
+**/.cache/**
+**/.torch/**
+**/.easyocr/**
+**/.sentence_transformers/**
