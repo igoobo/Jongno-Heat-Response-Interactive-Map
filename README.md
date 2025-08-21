@@ -101,7 +101,7 @@ Make sure you have the following installed on your system:
     -   **Preprocess data for AI Chat:**
         This step is crucial for the AI chat functionality. It extracts text from PDF documents, creates embeddings, and builds a FAISS index.
         ```bash
-        python preprocess.py
+        python preprocess.py (Optional)
         ```
     -   Create a `.env` file in the `backend` directory and add your API keys:
         ```
