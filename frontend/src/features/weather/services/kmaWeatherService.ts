@@ -1,15 +1,9 @@
+import { apiClient } from '../../../apiClient';
+
 export async function fetchKmaTemperatureExtremes(nx: number, ny: number, base_date: string, base_time: string) {
-  const response = await fetch(`/api/kma-temperature-extremes?nx=${nx}&ny=${ny}&base_date=${base_date}&base_time=${base_time}`);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch KMA temperature extremes: ${response.statusText}`);
-  }
-  return response.json();
+  return apiClient<any>(`/api/kma-temperature-extremes?nx=${nx}&ny=${ny}&base_date=${base_date}&base_time=${base_time}`);
 }
 
 export async function fetchKmaWeatherWarnings() {
-  const response = await fetch('/api/kma-weather-warnings');
-  if (!response.ok) {
-    throw new Error('Failed to fetch KMA weather warnings');
-  }
-  return response.json();
+  return apiClient<any>('/api/kma-weather-warnings');
 }

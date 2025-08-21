@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { apiClient } from '../../../apiClient';
 
 interface UsePolygonInitializationProps {
   map: any;
@@ -20,9 +21,7 @@ export const usePolygonInitialization = ({
   fetchAndSetTemperatures,
 }: UsePolygonInitializationProps) => {
   const loadGeoJSON = async () => {
-    const response = await fetch('/api/geojson');
-    if (!response.ok) throw new Error('Failed to load GeoJSON file.');
-    return await response.json();
+    return apiClient<any>('/api/geojson');
   };
 
   useEffect(() => {

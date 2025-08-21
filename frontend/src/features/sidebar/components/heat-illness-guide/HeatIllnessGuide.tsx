@@ -4,6 +4,7 @@ import { HEAT_ILLNESS_STAGES } from './stages';
 import { InfographicGauge } from './InfographicGauge';
 import { StageDetails } from './StageDetails';
 import type { Stage } from './types';
+import { apiClient } from '../../../../apiClient';
 
 export const HeatIllnessGuide: React.FC = () => {
   const [score, setScore] = useState<number | null>(null);
@@ -12,12 +13,7 @@ export const HeatIllnessGuide: React.FC = () => {
   useEffect(() => {
     const fetchHeatStages = async () => {
       try {
-        const response = await fetch('/api/heat-stages');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
+        const data = await apiClient<any>('/api/heat-stages');
 
         if (data.answer !== undefined) {
           setScore(data.answer);

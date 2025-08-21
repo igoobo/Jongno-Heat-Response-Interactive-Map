@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-
+import { apiClient } from '../../../apiClient';
 import { usePolygonInitialization } from './usePolygonInitialization'; // New import
 
 export const usePolygons = (map: any, setTempsByPolygon: (temps: number[][]) => void, onLoad: () => void) => {
@@ -20,15 +20,13 @@ export const usePolygons = (map: any, setTempsByPolygon: (temps: number[][]) => 
 
   const loadTemperatureData = async (polygonCenters: { lat: number; lon: number }[]) => {
     const coords = polygonCenters.map(center => ({ lat: center.lat, lng: center.lon }));
-    const response = await fetch('/api/polygon-temperatures', {
+    return apiClient<any>('/api/polygon-temperatures', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(coords),
     });
-    if (!response.ok) throw new Error('Failed to fetch polygon temperatures from backend');
-    return response.json();
   };
 
   const fetchAndSetTemperatures = async (currentPolygonCenters: { lat: number; lon: number }[]) => {

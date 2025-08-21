@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import type { LayerStates } from '../../../context/MapLayerContext'; // Import LayerStates
+import { apiClient } from '../../../apiClient';
 
 interface UseClosestCoolingCenterActionProps {
   map: any;
@@ -29,11 +30,7 @@ export const useClosestCoolingCenterAction = ({
       if (selectedFacilityType) {
         url += `&facility_type1=${selectedFacilityType}`;
       }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch closest cooling center');
-      }
-      const data = await response.json();
+      const data = await apiClient<any>(url);
       if (map && data.lat && data.lon) {
         if (window.kakao && window.kakao.maps) {
           const moveLatLon = new window.kakao.maps.LatLng(parseFloat(data.lat), parseFloat(data.lon));

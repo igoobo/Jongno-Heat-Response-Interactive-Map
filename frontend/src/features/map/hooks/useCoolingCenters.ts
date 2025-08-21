@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'; // Import useState
+import { apiClient } from '../../../apiClient';
 import { useCenterMarker } from '../../../context/CenterMarkerContext'; // Import the new hook
 import { useCoolingCenterMarkerInitialization } from './useCoolingCenterMarkerInitialization'; // New import
 
@@ -10,9 +11,7 @@ export const useCoolingCenters = (map: any, layerStates: any, onLoad: any) => {
   const [coolingCenterData, setCoolingCenterData] = useState<any>(null); // State to store fetched data
 
   const fetchCoolingCenterData = async () => {
-    const response = await fetch('/api/cooling-centers');
-    if (!response.ok) throw new Error('Failed to load cooling center data.');
-    return await response.json();
+    return apiClient<any>('/api/cooling-centers');
   };
 
   useEffect(() => {
