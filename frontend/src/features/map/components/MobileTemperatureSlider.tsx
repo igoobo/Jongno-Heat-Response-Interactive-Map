@@ -27,12 +27,12 @@ export const MobileTemperatureSlider: React.FC<Props> = ({ hourIndex, max, onCha
       allHourIndices={allHourIndices}
       labelInterval={6} // Pass 6 for mobile
       // Tailwind classes for mobile styling
-      sliderContainerClassName="absolute top-3 right-3 z-10 w-[60vw] p-3 bg-white rounded-lg shadow-md"
-      playButtonClassName="absolute right-0.5 top-22 -translate-y-1/2 bg-white border border-gray-300 rounded-md px-3 py-1 text-lg cursor-pointer shadow-sm"
+      sliderContainerClassName="absolute top-3 right-3 z-10 w-[60vw] p-3 bg-white rounded-lg shadow-md min-w-[210px]"
+      playButtonClassName="absolute right-0.5 top-22 -translate-y-1/2 bg-white border border-gray-300 rounded-md px-3 py-1 text-sm cursor-pointer shadow-sm"
       inputClassName="w-full"
       ticksContainerClassName="flex justify-between w-full mt-2 px-1 box-border"
       tickClassName="text-center text-lg text-gray-700 flex-1 pointer-events-none"
-      spanClassName="text-[16px]" // Original font size
+      spanClassName="text-base" // Original font size
     />
   );
 };

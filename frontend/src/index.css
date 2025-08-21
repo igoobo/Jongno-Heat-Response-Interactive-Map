@@ -4,7 +4,7 @@
 
 @media (max-width: 767px) {
   html, body {
-    min-width: 360px;
+    min-width: 320px;
     overflow-x: scroll; /* Explicitly force horizontal scrollbar */
   }
 }

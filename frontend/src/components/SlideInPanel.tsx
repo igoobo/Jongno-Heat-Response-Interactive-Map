@@ -37,7 +37,7 @@ export const SlideInPanel: React.FC<SlideInPanelProps> = ({
           <X size={24} />
         </button>
       </div>
-      <div className="px-2 pb-2">
+      <div className="px-2 pb-2 overflow-x-auto">
         {children}
       </div>
     </div>

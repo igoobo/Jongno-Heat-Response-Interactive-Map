@@ -15,7 +15,7 @@ export const InfographicGauge: React.FC<InfographicGaugeProps> = ({ score, color
   const needleAngle = score !== null ? -157.5 + 67.5 + (score * 1.8) : -157.5 + 67.5; // Adjusted needle angle calculation
   
   return (
-    <div className="relative w-56 h-56 flex items-center justify-center">
+    <div className="relative w-56 h-56 flex items-center justify-center ">
       <svg width="200" height="200" className="absolute">
         {[0, 1, 2, 3].map((segment) => {
           const startAngle = segment * 45 - 180;

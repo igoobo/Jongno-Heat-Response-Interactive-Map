@@ -131,7 +131,7 @@
 
 @layer base {
   html, body, #root {
-    @apply min-w-[360px] overflow-x-auto;
+    @apply min-w-[320px] overflow-x-auto;
   }
 
   
