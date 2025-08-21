@@ -4,9 +4,9 @@ from typing import List
 
 from fastapi import APIRouter, Body, Depends
 
-from .models import Coordinates, QueryRequest
-from .services.weather_service import get_weather_data, get_polygon_temperatures_data
-from .services import geojson_service, kakao_service, cooling_center_service, kma_service, chat_service
+from models import Coordinates, QueryRequest
+from services.weather_service import get_weather_data, get_polygon_temperatures_data
+from services import geojson_service, kakao_service, cooling_center_service, kma_service, chat_service
 
 
 router = APIRouter()
@@ -60,7 +60,7 @@ def chat():
     coords = Coordinates(lat=37.5760, lng=126.9769)
     return chat_service.get_notification_response(coords)
 
-from .cache import cache # Import cache
+from cache import cache # Import cache
 
 # ... (other imports)
 
@@ -73,7 +73,7 @@ def get_heat_stages(): # Renamed function for clarity
 
     cached_data = cache.get(CACHE_KEY)
     if cached_data:
-        return {"answer": cached_data}
+        return cached_data
 
     # Coordinates for the center of Gwanghwmun
     coords = Coordinates(lat=37.5760, lng=126.9769)
@@ -84,8 +84,9 @@ def get_heat_stages(): # Renamed function for clarity
         reasoning = response_data.get("reasoning")
         try:
             answer_float = float(answer)
-            cache.set(CACHE_KEY, answer_float, CACHE_TTL)
-            return {"answer": answer_float, "reasoning": reasoning}
+            data_to_cache = {"answer": answer_float, "reasoning": reasoning}
+            cache.set(CACHE_KEY, data_to_cache, CACHE_TTL)
+            return data_to_cache
         except (ValueError, TypeError):
             time.sleep(2)
             continue

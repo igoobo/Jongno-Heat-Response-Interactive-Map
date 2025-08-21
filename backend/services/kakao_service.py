@@ -1,14 +1,14 @@
 from typing import Any, Optional, Dict
 from fastapi import HTTPException
 
-from ..api_clients import (
+from api_clients import (
     fetch_external_api,
     get_from_cache,
     set_in_cache,
     KAKAO_REST_API_KEY,
     ExternalAPIError # Added this import
 )
-from ..models import Coordinates
+from models import Coordinates
 
 def get_kakao_data(coords: Coordinates) -> Any:
     if not KAKAO_REST_API_KEY:

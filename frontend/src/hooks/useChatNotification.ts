@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { apiClient } from '../apiClient';
 
 interface ChatNotification {
   message: string;
@@ -20,8 +21,7 @@ const useChatNotification = (): ChatNotification => {
     const fetchChatResponse = async () => {
       setIsChatLoading(true);
       try {
-        const response = await fetch('/api/notification');
-        const data = await response.json();
+        const data = await apiClient<any>('/api/notification');
         if (data && data.answer) {
           setNotificationMessage(data.answer);
           setShowNotification(true);

@@ -1,3 +1,5 @@
+import { apiClient } from '../../../apiClient';
+
 // src/services/openWeatherService.ts
 
 // Cache structure: Map<key, { data: any, timestamp: number }>
@@ -15,10 +17,7 @@ async function fetchWithCache(url: string, type: 'weather' | 'forecast', lat: nu
   }
 
   console.log(`Cache miss for ${key}, fetching...`);
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`Failed to fetch ${type} data from proxy`);
-
-  const data = await res.json();
+  const data = await apiClient<any>(url);
   cache.set(key, { data, timestamp: now });
   return data;
 }

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useMapLayer } from "@/context/MapLayerContext";
 import { useState } from "react";
+import { apiClient } from '@/apiClient';
 
 interface ClosestCoolingCenterCardProps {
   map: any;
@@ -29,11 +30,7 @@ export const ClosestCoolingCenterCard: React.FC<ClosestCoolingCenterCardProps> =
       if (selectedFacilityType) {
         url += `&facility_type1=${selectedFacilityType}`;
       }
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch closest cooling center');
-      }
-      const data = await response.json();
+      const data = await apiClient<any>(url);
       setClosestCenter(data);
       toast.success("지도 중심에서 가장 가까운 무더위 쉼터를 찾았습니다!");
 

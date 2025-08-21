@@ -3,7 +3,7 @@ import json
 from typing import Any, Optional
 from fastapi import HTTPException
 
-from ..utils import haversine
+from utils import haversine
 
 def get_cooling_centers_data() -> Any:
     cooling_centers_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'seoul_jongno_rest.json')

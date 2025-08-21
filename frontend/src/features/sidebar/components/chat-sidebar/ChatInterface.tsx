@@ -5,6 +5,7 @@ import { MessageBubble } from './MessageBubble';
 import { ChatInput } from './ChatInput';
 import { QuickQuestions } from './QuickQuestions';
 import { Thermometer, AlertTriangle } from 'lucide-react';
+import { apiClient } from '@/apiClient';
 
 interface Message {
   id: string;
@@ -51,7 +52,7 @@ export function ChatInterface() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/ask', {
+      const data = await apiClient<any>('/api/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,11 +60,6 @@ export function ChatInterface() {
         body: JSON.stringify({ question: content }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
       const aiResponseContent = data.answer || "Sorry, I couldn't get a clear answer.";
 
       const aiResponse: Message = {
