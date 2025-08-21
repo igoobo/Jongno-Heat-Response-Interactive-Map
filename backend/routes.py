@@ -81,11 +81,11 @@ def get_heat_stages(): # Renamed function for clarity
     for _ in range(3):
         response_data = chat_service.get_heat_stages_response(coords)
         answer = response_data.get("answer")
-
+        reasoning = response_data.get("reasoning")
         try:
             answer_float = float(answer)
             cache.set(CACHE_KEY, answer_float, CACHE_TTL)
-            return {"answer": answer_float}
+            return {"answer": answer_float, "reasoning": reasoning}
         except (ValueError, TypeError):
             time.sleep(2)
             continue

@@ -129,6 +129,7 @@ def get_heat_stages_response(coords: Coordinates) -> Any:
     weather_desc = weather_data.get("weather", [{}])[0].get("description")
 
     warnings_str = ""
+    warnings_list = []
     if kma_warnings:
         warnings_list = [w.get("WRN") + " " + w.get("LVL") for w in kma_warnings[:1] if w.get("WRN") and w.get("LVL")]
         if warnings_list:
