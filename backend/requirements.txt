@@ -10,3 +10,4 @@ sentence-transformers
 faiss-cpu
 numpy
 langchain
+torch==2.3.1+cpu
